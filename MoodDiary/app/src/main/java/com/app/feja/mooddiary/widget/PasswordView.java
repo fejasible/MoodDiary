@@ -12,7 +12,7 @@ import android.view.View;
 
 import com.app.feja.mooddiary.R;
 
-public class PasswordBorder extends View{
+public class PasswordView extends BaseView{
 
     /** 画笔 */
     private Paint paint;
@@ -22,8 +22,6 @@ public class PasswordBorder extends View{
     private boolean pressDown = false;
     /** 点击位置 */
     private float touchX, touchY;
-    /** 控件宽高*/
-    private int width, height;
     /** 数字键盘尺寸 */
     private int dx, dy, keyboardY;
     /** 数字键盘矩形范围 */
@@ -40,17 +38,17 @@ public class PasswordBorder extends View{
     /** “输入密码”文字 */
     private String enterString;
 
-    public PasswordBorder(Context context) {
+    public PasswordView(Context context) {
         super(context);
         this.init();
     }
 
-    public PasswordBorder(Context context, AttributeSet attrs, int defStyle) {
+    public PasswordView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         this.init();
     }
 
-    public PasswordBorder(Context context, AttributeSet attrs) {
+    public PasswordView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.init();
     }
@@ -60,9 +58,10 @@ public class PasswordBorder extends View{
         themeColor = ContextCompat.getColor(getContext(), R.color.lightSkyBlue);
         this.paint = new Paint();
     }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(measureWidth(widthMeasureSpec), measureHeight(heightMeasureSpec));
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         initSize();
     }
 
@@ -207,43 +206,6 @@ public class PasswordBorder extends View{
         }
         invalidate();
         return true;
-    }
-
-
-    private int measureWidth(int widthMeasureSpec) {
-        int width;
-        int mode = MeasureSpec.getMode(widthMeasureSpec);
-        int size = MeasureSpec.getSize(widthMeasureSpec);
-        if (mode == MeasureSpec.EXACTLY) {
-            width = size;
-        } else {
-            int desire = size + getPaddingLeft() + getPaddingRight();
-            if (mode == MeasureSpec.AT_MOST) {
-                width = Math.min(desire, size);
-            } else {
-                width = desire;
-            }
-        }
-        this.width = width;
-        return width;
-    }
-
-    private int measureHeight(int heightMeasureSpec) {
-        int height;
-        int mode = MeasureSpec.getMode(heightMeasureSpec);
-        int size = MeasureSpec.getSize(heightMeasureSpec);
-        if (mode == MeasureSpec.EXACTLY) {
-            height = size;
-        } else {
-            int desire = size + getPaddingTop() + getPaddingBottom();
-            if (mode == MeasureSpec.AT_MOST) {
-                height = Math.min(desire, size);
-            } else {
-                height = desire;
-            }
-        }
-        this.height = height;
-        return height;
     }
 
     public void setOnEnterFinishListener(OnEnterFinishListener listener){

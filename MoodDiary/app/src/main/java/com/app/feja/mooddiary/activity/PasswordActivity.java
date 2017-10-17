@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.widget.PasswordBorder;
+import com.app.feja.mooddiary.widget.PasswordView;
 
 public class PasswordActivity extends Activity {
 
@@ -15,17 +15,18 @@ public class PasswordActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password);
 
-        PasswordBorder passwordBorder = (PasswordBorder) findViewById(R.id.password_border);
-        passwordBorder.setOnEnterFinishListener(new PasswordBorder.OnEnterFinishListener() {
+        PasswordView passwordView = (PasswordView) findViewById(R.id.password_border);
+        passwordView.setOnEnterFinishListener(new PasswordView.OnEnterFinishListener() {
             @Override
             public void enterFinish(String password) {
                 Toast.makeText(getApplicationContext(), password, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent();
                 intent.setClass(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
-        passwordBorder.setOnHelpClickListener(new PasswordBorder.OnHelpClickListener() {
+        passwordView.setOnHelpClickListener(new PasswordView.OnHelpClickListener() {
             @Override
             public void onClick() {
                 Toast.makeText(getApplicationContext(), "help", Toast.LENGTH_SHORT).show();
