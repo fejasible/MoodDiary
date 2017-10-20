@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <com.app.feja.mooddiary.widget.ArticleBrowseTitleBar
+        android:id="@+id/article_browse_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x100"
+        android:background="@color/lightSkyBlue"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+</LinearLayout>

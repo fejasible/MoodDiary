@@ -22,7 +22,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper{
 
     private DatabaseHelper(Context context)
     {
-        super(context, DATABASE_NAME, null, 3);
+        super(context, DATABASE_NAME, null, 5);
     }
 
     @Override

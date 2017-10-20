@@ -6,13 +6,17 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.fragment.MainFragment;
+import com.app.feja.mooddiary.fragment.ArticleListFragment;
 import com.app.feja.mooddiary.fragment.SettingsFragment;
+import com.app.feja.mooddiary.model.entity.DiaryEntity;
+import com.app.feja.mooddiary.model.entity.TypeEntity;
 import com.app.feja.mooddiary.widget.TabView;
+
+import java.util.Date;
 
 public class MainActivity extends FragmentActivity {
 
-    private MainFragment mainFragment;
+    private ArticleListFragment articleListFragment;
     private SettingsFragment settingsFragment;
 
     @Override
@@ -20,17 +24,17 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(mainFragment == null){
-            mainFragment = new MainFragment();
+        if(articleListFragment == null){
+            articleListFragment = new ArticleListFragment();
         }
-        getFragmentManager().beginTransaction().replace(R.id.fragment_container, mainFragment).commit();
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container, articleListFragment).commit();
 
         TabView tabView = (TabView) this.findViewById(R.id.tab_view);
         tabView.setOnItemClickListener(new TabView.OnItemClickListener() {
             @Override
             public void onClick(int item) {
-                if(mainFragment == null){
-                    mainFragment = new MainFragment();
+                if(articleListFragment == null){
+                    articleListFragment = new ArticleListFragment();
                 }
                 if(settingsFragment == null){
                     settingsFragment = new SettingsFragment();
@@ -39,7 +43,7 @@ public class MainActivity extends FragmentActivity {
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 switch (item){
                     case 0:
-                        fragmentTransaction.replace(R.id.fragment_container, mainFragment);
+                        fragmentTransaction.replace(R.id.fragment_container, articleListFragment);
                         break;
                     case 1:
                         Intent intent = new Intent();

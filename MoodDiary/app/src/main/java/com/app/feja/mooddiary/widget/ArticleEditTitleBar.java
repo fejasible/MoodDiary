@@ -11,16 +11,19 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 import com.app.feja.mooddiary.R;
+import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.widget.base.TouchListenView;
 
 public class ArticleEditTitleBar extends TouchListenView {
 
     private Paint paint;
 
-    private String categoryString = "未分类";
-
     private String cancelString;
     private String saveString;
+    private String noCategoryString;
+    private String editString;
+
+    private DiaryEntity diaryEntity;
 
     private OnTitleBarClickListener onTitleBarClickListener;
 
@@ -48,10 +51,20 @@ public class ArticleEditTitleBar extends TouchListenView {
         this.onTitleBarClickListener = onTitleBarClickListener;
     }
 
+    public DiaryEntity getDiaryEntity() {
+        return diaryEntity;
+    }
+
+    public void setDiaryEntity(DiaryEntity diaryEntity) {
+        this.diaryEntity = diaryEntity;
+    }
+
     private void init(){
         this.paint = new Paint();
         this.cancelString = getResources().getString(R.string.cancel);
         this.saveString = getResources().getString(R.string.save);
+        this.noCategoryString = getResources().getString(R.string.no_sort);
+        this.editString = getResources().getString(R.string.edit);
         this.setOnItemTouchListener(new OnItemTouchListener() {
             @Override
             public void onItemTouch(int item, Rect touchRect, MotionEvent event) {
@@ -60,10 +73,10 @@ public class ArticleEditTitleBar extends TouchListenView {
                         onTitleBarClickListener.onCancelClick();
                         break;
                     case 1:
-                        onTitleBarClickListener.onCategoryClick();
+                        onTitleBarClickListener.onCategoryClick(diaryEntity);
                         break;
                     case 2:
-                        onTitleBarClickListener.onSaveClick();
+                        onTitleBarClickListener.onSaveClick(diaryEntity);
                         break;
                     default:
                         break;
@@ -87,16 +100,26 @@ public class ArticleEditTitleBar extends TouchListenView {
         paint.setColor(Color.WHITE);
         this.drawCenterText(this.cancelString, this.getRects()[0].centerX(),
                 this.getRects()[0].centerY(), paint, canvas);
-        this.drawCenterText(this.categoryString, this.getRects()[1].centerX(),
-                this.getRects()[1].centerY(), paint, canvas);
-        this.drawCenterText(this.saveString, this.getRects()[2].centerX(),
-                this.getRects()[2].centerY(), paint, canvas);
+        if(diaryEntity == null || diaryEntity.getType() == null
+                || diaryEntity.getType().getType() == null){
+            this.drawCenterText(noCategoryString, this.getRects()[1].centerX(),
+                    this.getRects()[1].centerY(), paint, canvas);
+        }else{
+            this.drawCenterText(diaryEntity.getType().getType(), this.getRects()[1].centerX(),
+                    this.getRects()[1].centerY(), paint, canvas);
+        }
+        if(diaryEntity == null || diaryEntity.getId() == null){
+            this.drawCenterText(this.saveString, this.getRects()[2].centerX(),
+                    this.getRects()[2].centerY(), paint, canvas);
+        }else{
+            this.drawCenterText(this.editString, this.getRects()[2].centerX(),
+                    this.getRects()[2].centerY(), paint, canvas);
+        }
     }
 
     public interface OnTitleBarClickListener{
         void onCancelClick();
-        void onCategoryClick();
-        void onSaveClick();
+        void onCategoryClick(DiaryEntity diaryEntity);
+        void onSaveClick(DiaryEntity diaryEntity);
     }
-
 }

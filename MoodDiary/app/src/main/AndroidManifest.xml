@@ -3,6 +3,7 @@
     package="com.app.feja.mooddiary">
 
     <application
+        android:name=".application.ApplicationContext"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -27,11 +28,15 @@
             android:name=".ui.activity.PasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" />
-
         <activity
             android:name=".ui.activity.ArticleEditActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity
+            android:name=".ui.activity.ArticleBrowseActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar">
+        </activity>
     </application>
 
 </manifest>

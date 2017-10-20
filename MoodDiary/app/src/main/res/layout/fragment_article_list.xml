@@ -11,41 +11,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
-        <com.app.feja.mooddiary.widget.ArticleView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/x200"
-            android:background="@color/whiteSmoke"
-            android:gravity="center" />
-        <com.app.feja.mooddiary.widget.ArticleView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/x200"
-            android:background="@color/whiteSmoke"
-            android:gravity="center" />
-        <com.app.feja.mooddiary.widget.ArticleView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/x200"
-            android:background="@color/whiteSmoke"
-            android:gravity="center" />
-        <com.app.feja.mooddiary.widget.ArticleView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/x200"
-            android:background="@color/whiteSmoke"
-            android:gravity="center" />
-        <com.app.feja.mooddiary.widget.ArticleView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/x200"
-            android:background="@color/whiteSmoke"
-            android:gravity="center" />
-        <com.app.feja.mooddiary.widget.ArticleView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/x200"
-            android:background="@color/whiteSmoke"
-            android:gravity="center" />
-        <com.app.feja.mooddiary.widget.ArticleView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/x200"
-            android:background="@color/whiteSmoke"
-            android:gravity="center" />
     </LinearLayout>
 </ScrollView>

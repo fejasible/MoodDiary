@@ -21,13 +21,12 @@ import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.constant.FACE;
+import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.util.DateTime;
 import com.app.feja.mooddiary.widget.base.BaseView;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.UUID;
 
 
 public class ArticleView extends BaseView {
@@ -49,12 +48,8 @@ public class ArticleView extends BaseView {
 
     private OnArticleViewClickListener listener;
 
-    private FACE face = FACE.CALM;
-
-    private DateTime today = new DateTime();
-    private String articleAbstract = "欢乐，悲伤，难过，喜悦，都留在过去\n明天将会是新的冒险\n心情日记，记录心情";
-
-    private final String ARTICLE_VIEW_ID = UUID.randomUUID().toString();
+    private DiaryEntity diaryEntity;
+    private DateTime today;
 
     public ArticleView(Context context) {
     super(context);
@@ -71,30 +66,6 @@ public class ArticleView extends BaseView {
         this.init();
     }
 
-    public void setToday(DateTime today){
-        this.today = today;
-    }
-
-    public DateTime getToday(){
-        return this.today;
-    }
-
-    public void setArticleAbstract(String articleAbstract){
-        this.articleAbstract = articleAbstract;
-    }
-
-    public String getArticleAbstract(){
-        return this.articleAbstract;
-    }
-
-    public FACE getFace() {
-        return face;
-    }
-
-    public void setFace(FACE face) {
-        this.face = face;
-    }
-
     public OnArticleViewClickListener getListener() {
         return listener;
     }
@@ -103,8 +74,13 @@ public class ArticleView extends BaseView {
         this.listener = listener;
     }
 
-    public String getARTICLE_VIEW_ID() {
-        return ARTICLE_VIEW_ID;
+    public DiaryEntity getDiaryEntity() {
+        return diaryEntity;
+    }
+
+    public void setDiaryEntity(DiaryEntity diaryEntity) {
+        this.diaryEntity = diaryEntity;
+        this.today = new DateTime(diaryEntity.getCreateTime());
     }
 
     @Override
@@ -123,7 +99,11 @@ public class ArticleView extends BaseView {
         canvas.drawLine(this.width/4, 0, this.width/4, this.height, paint);
         int rad = this.width < this.height ? this.width/10 : this.height/10;
 
-        this.drawFace(this.width/4, this.height/3, rad, face, paint, canvas);
+        if(diaryEntity == null || diaryEntity.getMood() == null){
+            this.drawFace(this.width/4, this.height/3, rad, DiaryEntity.CALM, paint, canvas);
+        }else{
+            this.drawFace(this.width/4, this.height/3, rad, diaryEntity.getMood(), paint, canvas);
+        }
         this.drawDate(0, 0, this.width/4, this.height, paint, canvas);
         this.drawTextBoard(this.width/4+this.width/20, 0, this.width, this.height, paint, canvas);
     }
@@ -136,24 +116,24 @@ public class ArticleView extends BaseView {
 
         listener = new OnArticleViewClickListener() {
             @Override
-            public void onFaceClick(String s) {
+            public void onFaceClick(ArticleView articleView) {
                 Toast.makeText(getContext(), "face", Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onDateClick(String s) {
+            public void onDateClick(ArticleView articleView) {
                 Toast.makeText(getContext(), "date", Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onAbstractClick(String s) {
+            public void onAbstractClick(ArticleView articleView) {
                 Toast.makeText(getContext(), "abstract", Toast.LENGTH_SHORT).show();
             }
         };
     }
 
 
-    private void drawFace(int x, int y, int rad, FACE face, Paint paint, Canvas canvas){
+    private void drawFace(int x, int y, int rad, int face, Paint paint, Canvas canvas){
         paint.reset();
         paint.setAntiAlias(true);
 
@@ -173,29 +153,29 @@ public class ArticleView extends BaseView {
         canvas.drawCircle(x, y, rad, paint);
         paint.setColor(themeColor);
         switch(face){
-            case MIRTHFUL:
+            case DiaryEntity.MIRTHFUL:
 //                canvas.drawBitmap(mirthfulFace, x-mirthfulFace.getWidth()/2,
 //                        y-mirthfulFace.getHeight()/2, paint);
                 canvas.drawArc(rectLeft, 180, 180, false, paint);
                 canvas.drawArc(rectRight, 180, 180, false, paint);
                 canvas.drawArc(rectBottom, 0, 180, false, paint);
                 break;
-            case SMILING:
+            case DiaryEntity.SMILING:
                 canvas.drawLine(x-rad*2/3, y-rad/4, x-rad/3, y-rad/4, paint);
                 canvas.drawLine(x+rad/3, y-rad/4, x+rad*2/3, y-rad/4, paint);
                 canvas.drawArc(rectBottom, 0, 180, false, paint);
                 break;
-            case CALM:
+            case DiaryEntity.CALM:
                 canvas.drawLine(x-rad*2/3, y-rad/4, x-rad/3, y-rad/4, paint);
                 canvas.drawLine(x+rad/3, y-rad/4, x+rad*2/3, y-rad/4, paint);
                 canvas.drawLine(x-rad/4, y+rad/3, x+rad/4, y+rad/3, paint);
                 break;
-            case DISAPPOINTED:
+            case DiaryEntity.DISAPPOINTED:
                 canvas.drawArc(rectLeft, 0, 180, false, paint);
                 canvas.drawArc(rectRight, 0, 180, false, paint);
                 canvas.drawLine(x-rad/4, y+rad/2, x+rad/4, y+rad/2, paint);
                 break;
-            case SAD:
+            case DiaryEntity.SAD:
                 rectLeft.offset(0, -rad/8);
                 rectRight.offset(0, -rad/8);
                 rectBottom.offset(0, rad/4);
@@ -219,10 +199,14 @@ public class ArticleView extends BaseView {
             paint.setColor(themeColor);
         }
         paint.setTextSize(baseTextSize);
+        if(diaryEntity == null || diaryEntity.getCreateTime() == null){
+            today = new DateTime();
+        }
         canvas.drawText(""+today.getDay(), centerX-baseTextSize*3/2, top + height/3, paint);
         paint.setTextSize(baseTextSize/2);
         canvas.drawText(""+today.getWeek(), centerX, top + height/3, paint);
         canvas.drawText(today.toString(DateTime.Format.READABLE_MONTH), centerX-baseTextSize, centerY, paint);
+
     }
 
     private void drawTextBoard(int left, int top, int right, int bottom, Paint paint,
@@ -256,18 +240,6 @@ public class ArticleView extends BaseView {
         path.close();
         canvas.drawPath(path, paint);
 
-//        float[] points2 = { // 边框路线
-//                left, top+height/3, left+width/20, top+height*2/9,
-//                left+width/20, top+height*2/9, left+width/20, top+height/10,
-//                left+width/20, top+height/10, right-width/20, top+height/10,
-//                right-width/20, top+height/10, right-width/20, bottom-height/9,
-//                right-width/20, bottom-height/9, left+width/20, bottom-height/9,
-//                left+width/20, bottom-height/9, left+width/20, top+height*4/9,
-//                left+width/20, top+height*4/9, left, top+height/3};
-//        paint.setColor(themeColor);
-//        canvas.drawLines(points2, 0, points2.length, paint); // 绘制边框路线
-
-
         textPaint.setColor(Color.DKGRAY);
         textPaint.setTextSize(baseTextSize);
         textPaint.setAntiAlias(true);
@@ -289,10 +261,17 @@ public class ArticleView extends BaseView {
                             int.class, TextPaint.class, int.class, Layout.Alignment.class,
                             TextDirectionHeuristic.class, float.class, float.class, boolean.class,
                             TextUtils.TruncateAt.class, int.class, int.class);
-                    layout = (StaticLayout) constructor.newInstance(articleAbstract, 0,
-                            articleAbstract.length(), textPaint, outerWidth,
-                            Layout.Alignment.ALIGN_NORMAL, TextDirectionHeuristics.FIRSTSTRONG_LTR,
-                            1.0F, 1.0F, true, TextUtils.TruncateAt.MARQUEE, 10, 3);
+                    if(diaryEntity == null || diaryEntity.getContent() == null) {
+                        layout = (StaticLayout) constructor.newInstance("", 0,
+                                "".length(), textPaint, outerWidth,
+                                Layout.Alignment.ALIGN_NORMAL, TextDirectionHeuristics.FIRSTSTRONG_LTR,
+                                1.0F, 1.0F, true, TextUtils.TruncateAt.MARQUEE, 10, 3);
+                    }else{
+                        layout = (StaticLayout) constructor.newInstance(diaryEntity.getContent(), 0,
+                                diaryEntity.getContent().length(), textPaint, outerWidth,
+                                Layout.Alignment.ALIGN_NORMAL, TextDirectionHeuristics.FIRSTSTRONG_LTR,
+                                1.0F, 1.0F, true, TextUtils.TruncateAt.MARQUEE, 10, 3);
+                    }
                 } catch (NoSuchMethodException e) {
                     e.printStackTrace();
                 } catch (IllegalAccessException e) {
@@ -307,9 +286,9 @@ public class ArticleView extends BaseView {
         if(layout == null){
             // 计算需要省略字符的长度
             int bufferEnd;
-            bufferEnd = articleAbstract.length() < outerWidth * 3/baseTextSize
-                    ? articleAbstract.length() : outerWidth * 3/baseTextSize;
-            layout = new StaticLayout(articleAbstract, 0, bufferEnd, textPaint,
+            bufferEnd = diaryEntity.getContent().length() < outerWidth * 3/baseTextSize
+                    ? diaryEntity.getContent().length() : outerWidth * 3/baseTextSize;
+            layout = new StaticLayout(diaryEntity.getContent(), 0, bufferEnd, textPaint,
                     outerWidth, Layout.Alignment.ALIGN_NORMAL, 1.0F, 1.0F, true, TextUtils.TruncateAt.END, 10);
         }
 
@@ -320,7 +299,12 @@ public class ArticleView extends BaseView {
 
         // 绘制时间
         paint.setColor(themeColor);
-        canvas.drawText(today.toString(DateTime.Format.READABLE_TIME), left+width/15, bottom-height/6, paint);
+        if(today == null){
+            today = new DateTime();
+            canvas.drawText(today.toString(DateTime.Format.READABLE_TIME), left+width/15, bottom-height/6, paint);
+        }else {
+            canvas.drawText(today.toString(DateTime.Format.READABLE_TIME), left + width / 15, bottom - height / 6, paint);
+        }
     }
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
@@ -342,11 +326,11 @@ public class ArticleView extends BaseView {
                 pressFace = false;
                 pressAbstract = false;
                 if(abstractRect.contains((int)this.touchX, (int)this.touchY)){
-                    listener.onAbstractClick(ARTICLE_VIEW_ID);
+                    listener.onAbstractClick(this);
                 }else if(dateRect.contains((int)this.touchX, (int)this.touchY)){
-                    listener.onDateClick(ARTICLE_VIEW_ID);
+                    listener.onDateClick(this);
                 }else if(faceRect.contains((int)this.touchX, (int)this.touchY)){
-                    listener.onFaceClick(ARTICLE_VIEW_ID);
+                    listener.onFaceClick(this);
                 }
                 break;
             default:
@@ -361,9 +345,9 @@ public class ArticleView extends BaseView {
     }
 
     public interface OnArticleViewClickListener{
-        void onFaceClick(String articleViewId);
-        void onDateClick(String articleViewId);
-        void onAbstractClick(String articleViewId);
+        void onFaceClick(ArticleView articleView);
+        void onDateClick(ArticleView articleView);
+        void onAbstractClick(ArticleView articleView);
     }
 
 

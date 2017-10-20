@@ -20,8 +20,10 @@ public class ArticleEditActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_edit);
 
-        articleEditFragment = new ArticleEditFragment();
-        getFragmentManager().beginTransaction().replace(R.id.id_container, articleEditFragment)
+        if(articleEditFragment == null) {
+            articleEditFragment = new ArticleEditFragment();
+        }
+        getFragmentManager().beginTransaction().replace(R.id.id_container_article_edit, articleEditFragment)
                 .commit();
 
 

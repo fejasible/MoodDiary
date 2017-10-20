@@ -3,8 +3,11 @@ package com.app.feja.mooddiary.model.entity;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
 @DatabaseTable(tableName = "tb_type")
-public class TypeEntity extends BaseEntity{
+public class TypeEntity extends BaseEntity implements Serializable{
 
     @DatabaseField(generatedId = true)
     private Integer id;

@@ -30,8 +30,8 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.3.0'
     compile 'com.android.support:design:25.3.0'
     compile 'com.contrarywind:Android-PickerView:3.2.6'
-    testCompile 'junit:junit:4.12'
     compile 'com.j256.ormlite:ormlite-android:5.0'
     compile 'com.j256.ormlite:ormlite-core:5.0'
     compile 'org.easybatch:easybatch-gson:5.1.0'
+    testCompile 'junit:junit:4.12'
 }
