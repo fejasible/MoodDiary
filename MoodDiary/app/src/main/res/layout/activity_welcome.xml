@@ -4,15 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.app.feja.mooddiary.activity.WelcomeActivity">
+    tools:context="com.app.feja.mooddiary.ui.activity.WelcomeActivity">
 
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/x40"
+        android:textSize="@dimen/x60"
+        android:textStyle="italic"
+        android:textColor="@color/lightSkyBlue"
         android:text="@string/app_name_ch" />
 </RelativeLayout>

@@ -1,7 +1,9 @@
-package com.app.feja.mooddiary.widget;
+package com.app.feja.mooddiary.widget.base;
 
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -57,5 +59,11 @@ public class BaseView extends View{
             }
         }
         return height;
+    }
+
+    public final void drawCenterText(String text, int x, int y, Paint paint, Canvas canvas){
+        paint.setTextAlign(Paint.Align.CENTER);
+        Paint.FontMetricsInt fontMetricsInt = paint.getFontMetricsInt();
+        canvas.drawText(text, x, y-(fontMetricsInt.top+fontMetricsInt.bottom)/2, paint);
     }
 }

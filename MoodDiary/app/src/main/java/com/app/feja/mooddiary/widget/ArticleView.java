@@ -2,14 +2,12 @@ package com.app.feja.mooddiary.widget;
 
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.drawable.shapes.PathShape;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.text.Layout;
@@ -19,34 +17,44 @@ import android.text.TextDirectionHeuristics;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.View;
+import android.view.MotionEvent;
+import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.constant.FACE;
 import com.app.feja.mooddiary.util.DateTime;
+import com.app.feja.mooddiary.widget.base.BaseView;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Date;
+import java.util.UUID;
 
 
-public class ArticleView extends BaseView{
+public class ArticleView extends BaseView {
 
     private Paint paint;
     private TextPaint textPaint;
 
     private int themeColor, backgroundColor;
 
-//    private static Bitmap mirthfulFace;
-//    private static Bitmap smilingFace;
-//    private static Bitmap calmFace;
-//    private static Bitmap disappointedFace;
-//    private static Bitmap sadFace;
+    private float touchX, touchY;
+
+    private Rect abstractRect = new Rect();
+    private Rect dateRect = new Rect();
+    private Rect faceRect = new Rect();
+
+    private boolean pressAbstract = false;
+    private boolean pressDate = false;
+    private boolean pressFace = false;
+
+    private OnArticleViewClickListener listener;
 
     private FACE face = FACE.CALM;
 
-    private DateTime today = new DateTime(System.currentTimeMillis());
-    private String articleAbstract = "欢乐，悲伤，喜悦，寂寞，都留在过去\n明天将会是新的冒险\n心情日记，记录心情";
+    private DateTime today = new DateTime();
+    private String articleAbstract = "欢乐，悲伤，难过，喜悦，都留在过去\n明天将会是新的冒险\n心情日记，记录心情";
+
+    private final String ARTICLE_VIEW_ID = UUID.randomUUID().toString();
 
     public ArticleView(Context context) {
     super(context);
@@ -87,12 +95,35 @@ public class ArticleView extends BaseView{
         this.face = face;
     }
 
+    public OnArticleViewClickListener getListener() {
+        return listener;
+    }
+
+    public void setListener(OnArticleViewClickListener listener) {
+        this.listener = listener;
+    }
+
+    public String getARTICLE_VIEW_ID() {
+        return ARTICLE_VIEW_ID;
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        this.abstractRect.set(this.width/4+this.width/20, 0, this.width, this.height);
+        this.dateRect.set(0, 0, this.width/4, this.height);
+        int rad = this.width < this.height ? this.width/10 : this.height/10;
+        this.faceRect.set(this.width/4-rad, this.height/3-rad, this.width/4+rad, this.height/3+rad);
+    }
+
     @Override
     public void onDraw(Canvas canvas){
         paint.reset();
         paint.setColor(themeColor);
         canvas.drawLine(this.width/4, 0, this.width/4, this.height, paint);
-        this.drawFace(this.width/4, this.height/3, this.width/30, face, paint, canvas);
+        int rad = this.width < this.height ? this.width/10 : this.height/10;
+
+        this.drawFace(this.width/4, this.height/3, rad, face, paint, canvas);
         this.drawDate(0, 0, this.width/4, this.height, paint, canvas);
         this.drawTextBoard(this.width/4+this.width/20, 0, this.width, this.height, paint, canvas);
     }
@@ -103,26 +134,22 @@ public class ArticleView extends BaseView{
         this.themeColor =  ContextCompat.getColor(getContext(), R.color.lightSkyBlue);
         this.backgroundColor = ContextCompat.getColor(getContext(), R.color.whiteMostly);
 
-//        if(ArticleView.mirthfulFace == null) {
-//            ArticleView.mirthfulFace = BitmapFactory.decodeResource(getResources(),
-//                    R.drawable.mirthful_50x50px);
-//        }
-//        if(ArticleView.smilingFace == null) {
-//            ArticleView.smilingFace = BitmapFactory.decodeResource(getResources(),
-//                    R.drawable.mirthful_50x50px);
-//        }
-//        if(ArticleView.calmFace == null) {
-//            ArticleView.calmFace = BitmapFactory.decodeResource(getResources(),
-//                    R.drawable.mirthful_50x50px);
-//        }
-//        if(ArticleView.disappointedFace == null) {
-//            ArticleView.disappointedFace = BitmapFactory.decodeResource(getResources(),
-//                    R.drawable.mirthful_50x50px);
-//        }
-//        if(ArticleView.sadFace == null) {
-//            ArticleView.sadFace = BitmapFactory.decodeResource(getResources(),
-//                    R.drawable.mirthful_50x50px);
-//        }
+        listener = new OnArticleViewClickListener() {
+            @Override
+            public void onFaceClick(String s) {
+                Toast.makeText(getContext(), "face", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onDateClick(String s) {
+                Toast.makeText(getContext(), "date", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAbstractClick(String s) {
+                Toast.makeText(getContext(), "abstract", Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 
 
@@ -134,10 +161,15 @@ public class ArticleView extends BaseView{
         RectF rectRight = new RectF(x+rad/3, y-rad/2, x+rad*2/3, y);
         RectF rectBottom = new RectF(x-rad/3, y, x+rad/3, y+rad/2);
 
-        paint.setColor(backgroundColor);
+        if(pressFace){
+            paint.setColor(Color.LTGRAY);
+        }else{
+            paint.setColor(backgroundColor);
+        }
         canvas.drawCircle(x, y, rad, paint);
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(themeColor);
+        paint.setStrokeWidth(2.0f);
         canvas.drawCircle(x, y, rad, paint);
         paint.setColor(themeColor);
         switch(face){
@@ -179,15 +211,18 @@ public class ArticleView extends BaseView{
         int width = right - left, height = bottom - top;
         int centerX = (left+right)/2;
         int centerY = (top+bottom)/2;
-        int baseTextSize = width/4;
-        today.setDay(16);
+        int baseTextSize = width < height ? width/4 : height/4;
         paint.reset();
-        paint.setColor(themeColor);
+        if(pressDate){
+            paint.setColor(Color.LTGRAY);
+        }else{
+            paint.setColor(themeColor);
+        }
         paint.setTextSize(baseTextSize);
         canvas.drawText(""+today.getDay(), centerX-baseTextSize*3/2, top + height/3, paint);
         paint.setTextSize(baseTextSize/2);
         canvas.drawText(""+today.getWeek(), centerX, top + height/3, paint);
-        canvas.drawText(today.getYear()+"."+today.getMonth(), centerX-baseTextSize, centerY, paint);
+        canvas.drawText(today.toString(DateTime.Format.READABLE_MONTH), centerX-baseTextSize, centerY, paint);
     }
 
     private void drawTextBoard(int left, int top, int right, int bottom, Paint paint,
@@ -197,7 +232,11 @@ public class ArticleView extends BaseView{
 
         paint.reset();
         paint.setTextSize(baseTextSize);
-        paint.setColor(Color.WHITE);
+        if(pressAbstract){
+            paint.setColor(Color.LTGRAY);
+        }else{
+            paint.setColor(Color.WHITE);
+        }
         paint.setAntiAlias(true);
 
         float[] points = { // 边框路线
@@ -281,7 +320,51 @@ public class ArticleView extends BaseView{
 
         // 绘制时间
         paint.setColor(themeColor);
-        canvas.drawText(today.getHour()+":"+today.getMinute(), left+width/15, bottom-height/6, paint);
+        canvas.drawText(today.toString(DateTime.Format.READABLE_TIME), left+width/15, bottom-height/6, paint);
     }
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        this.touchX = event.getX();
+        this.touchY = event.getY();
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                if(abstractRect.contains((int)this.touchX, (int)this.touchY)){
+                    pressAbstract = true;
+                }else if(dateRect.contains((int)this.touchX, (int)this.touchY)){
+                    pressDate = true;
+                }else if(faceRect.contains((int)this.touchX, (int)this.touchY)){
+                    pressFace = true;
+                }
+                break;
+
+            case MotionEvent.ACTION_UP:
+                pressDate = false;
+                pressFace = false;
+                pressAbstract = false;
+                if(abstractRect.contains((int)this.touchX, (int)this.touchY)){
+                    listener.onAbstractClick(ARTICLE_VIEW_ID);
+                }else if(dateRect.contains((int)this.touchX, (int)this.touchY)){
+                    listener.onDateClick(ARTICLE_VIEW_ID);
+                }else if(faceRect.contains((int)this.touchX, (int)this.touchY)){
+                    listener.onFaceClick(ARTICLE_VIEW_ID);
+                }
+                break;
+            default:
+                pressDate = false;
+                pressFace = false;
+                pressAbstract = false;
+                break;
+
+        }
+        invalidate();
+        return true;
+    }
+
+    public interface OnArticleViewClickListener{
+        void onFaceClick(String articleViewId);
+        void onDateClick(String articleViewId);
+        void onAbstractClick(String articleViewId);
+    }
+
 
 }

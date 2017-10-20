@@ -1,4 +1,4 @@
-package com.app.feja.mooddiary.activity;
+package com.app.feja.mooddiary.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;

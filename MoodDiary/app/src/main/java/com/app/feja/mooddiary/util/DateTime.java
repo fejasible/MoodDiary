@@ -3,6 +3,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class DateTime {
     public static final int YEAR = Calendar.YEAR;
@@ -13,7 +14,7 @@ public class DateTime {
     public static final int MINUTE = Calendar.MINUTE;
     public static final int SECOND = Calendar.SECOND;
     public static final int MILLISECOND = Calendar.MILLISECOND;
-    public static final int WEEK = Calendar.WEEK_OF_MONTH;
+    public static final int WEEK = Calendar.DAY_OF_WEEK;
 
     public static enum ComparisonType {
         YEAR,
@@ -28,13 +29,18 @@ public class DateTime {
         WEEK
     }
 
+    /**
+     * hh 12小时制
+     * HH 24小时制
+     */
     public static enum Format {
         DATE("yyyy-MM-dd"),
-        TIME("hh:mm:ss"),
-        DATETIME("yyyy-MM-dd hh:mm:ss"),
+        TIME("HH:mm:ss"),
+        DATETIME("yyyy-MM-dd HH:mm:ss"),
         READABLE_DATE("dd MMM yyyy"),
-        READABLE_TIME("hh:mm"),
-        READABLE_DATETIME("dd MMM yyyy hh:mm");
+        READABLE_TIME("HH:mm"),
+        READABLE_DATETIME("dd MMM yyyy HH:mm"),
+        READABLE_MONTH("yyyy.MM");
 
         private String format;
 
@@ -211,7 +217,7 @@ public class DateTime {
             case DAY:
                 return this.calendar.get(Calendar.DATE);
             case WEEK:
-                return this.calendar.get(Calendar.WEEK_OF_MONTH);
+                return this.calendar.get(Calendar.DAY_OF_WEEK);
         }
         return 0;
     }
@@ -226,6 +232,7 @@ public class DateTime {
 
     public int getDay() {
         return this.get(DAY);
+//        return Calendar.getInstance().get(Calendar.DATE);
     }
 
     public int getDayOfYear() {
@@ -249,7 +256,7 @@ public class DateTime {
     }
 
     public String getWeek(){
-        switch (this.get(WEEK)){
+        switch (get(WEEK)){
             case 1:
                 return "周日";
             case 2:

@@ -8,11 +8,11 @@ import android.graphics.Rect;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.View;
 
 import com.app.feja.mooddiary.R;
+import com.app.feja.mooddiary.widget.base.BaseView;
 
-public class PasswordView extends BaseView{
+public class PasswordView extends BaseView {
 
     /** 画笔 */
     private Paint paint;
@@ -232,6 +232,10 @@ public class PasswordView extends BaseView{
         this.circleNum = count;
     }
 
+    public int getNumberCount(){
+        return this.circleNum;
+    }
+
     /**
      * 当密码输入完毕时的监听操作
      */
@@ -245,5 +249,10 @@ public class PasswordView extends BaseView{
     public interface OnHelpClickListener{
         void onClick();
     }
+
+    public void clearPassword(){
+        this.password = "";
+    }
+
 
 }
