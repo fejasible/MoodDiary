@@ -17,7 +17,7 @@ public class TabView extends BaseView {
 
     private float touchX, touchY;
     private boolean pressDown;
-    private OnItemClickListener onItemClickListener = new OnItemClickListener() {
+    private OnTabClickListener onTabClickListener = new OnTabClickListener() {
         @Override
         public void onClick(int item) {
 
@@ -64,12 +64,12 @@ public class TabView extends BaseView {
         this.themeColor = themeColor;
     }
 
-    public OnItemClickListener getOnItemClickListener() {
-        return onItemClickListener;
+    public OnTabClickListener getOnTabClickListener() {
+        return onTabClickListener;
     }
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
+    public void setOnTabClickListener(OnTabClickListener onTabClickListener) {
+        this.onTabClickListener = onTabClickListener;
     }
 
     @Override
@@ -196,7 +196,7 @@ public class TabView extends BaseView {
                 this.pressDown = false;
                 for(int i=0; i<tabRects.length; i++){
                     if(tabRects[i].contains((int)this.touchX, (int)this.touchY)){
-                        this.onItemClickListener.onClick(i);
+                        this.onTabClickListener.onClick(i);
                     }
                 }
                 break;
@@ -205,7 +205,7 @@ public class TabView extends BaseView {
         return true;
     }
 
-    public interface OnItemClickListener {
+    public interface OnTabClickListener {
         void onClick(int item);
     }
 

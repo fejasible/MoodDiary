@@ -2,12 +2,14 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/id_container_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.app.feja.mooddiary.ui.activity.MainActivity">
 
     <com.app.feja.mooddiary.widget.MainTitleBar
+        android:id="@+id/main_title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/x100"
         android:background="@color/lightSkyBlue"/>

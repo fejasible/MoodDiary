@@ -1,4 +1,4 @@
-package com.app.feja.mooddiary.fragment;
+package com.app.feja.mooddiary.ui.fragment;
 
 
 import android.app.Fragment;
@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
+import com.app.feja.mooddiary.model.entity.TypeEntity;
 import com.app.feja.mooddiary.presenter.ArticleEditPresenter;
 import com.app.feja.mooddiary.ui.view.ArticleEditView;
 import com.app.feja.mooddiary.widget.ArticleEditTitleBar;
@@ -48,7 +49,7 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView{
 
             @Override
             public void onCategoryClick(DiaryEntity diaryEntity) {
-                Toast.makeText(getActivity().getApplicationContext(), "category", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), diaryEntity.toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -68,7 +69,7 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView{
     @Override
     public void onLoadArticle(DiaryEntity diaryEntity) {
         editText.setText(diaryEntity.getContent());
-        editText.setSelection(diaryEntity.getContent() == null ? 0 :diaryEntity.getContent().length());
+        editText.setSelection(diaryEntity.getContent().length());
         titleBar.setDiaryEntity(diaryEntity);
     }
 }

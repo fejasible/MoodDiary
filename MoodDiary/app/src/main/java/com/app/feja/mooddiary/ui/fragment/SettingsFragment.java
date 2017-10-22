@@ -1,4 +1,4 @@
-package com.app.feja.mooddiary.fragment;
+package com.app.feja.mooddiary.ui.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;

@@ -2,12 +2,9 @@ package com.app.feja.mooddiary.ui.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.fragment.ArticleEditFragment;
-import com.app.feja.mooddiary.widget.ArticleEditTitleBar;
-
+import com.app.feja.mooddiary.ui.fragment.ArticleEditFragment;
 
 
 public class ArticleEditActivity extends Activity{

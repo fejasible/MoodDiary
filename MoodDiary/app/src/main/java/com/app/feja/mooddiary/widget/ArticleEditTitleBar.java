@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
+import com.app.feja.mooddiary.model.entity.TypeEntity;
 import com.app.feja.mooddiary.widget.base.TouchListenView;
 
 public class ArticleEditTitleBar extends TouchListenView {

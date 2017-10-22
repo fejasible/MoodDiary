@@ -9,6 +9,4 @@ public interface ArticleListView extends BaseView{
 
     void onLoadArticles(List<DiaryEntity> diaryEntities);
 
-    List<DiaryEntity> getArticles();
-
 }

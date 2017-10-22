@@ -4,6 +4,7 @@ package com.app.feja.mooddiary.model.dao;
 import com.app.feja.mooddiary.model.entity.TypeEntity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface TypeDao {
 
@@ -13,6 +14,8 @@ public interface TypeDao {
 
     int updateType(TypeEntity typeEntity);
 
-    ArrayList<TypeEntity> getAllType();
+    TypeEntity selectType(String typeString);
+
+    List<TypeEntity> getAllType();
 
 }

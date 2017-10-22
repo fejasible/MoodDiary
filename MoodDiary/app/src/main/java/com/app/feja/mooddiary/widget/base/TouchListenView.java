@@ -87,7 +87,7 @@ public class TouchListenView extends BaseView{
 
     protected void defaultSettings(){
         this.touchZoneNum = 3;
-        this.rectPercents = new int[]{200, 250, 270};
+        this.rectPercents = new int[]{100, 520, 100};
         this.orientation = ORIENTATION.HORIZONTAL;
     }
 

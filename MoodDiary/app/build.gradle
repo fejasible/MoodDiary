@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.app.feja.mooddiary"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -24,6 +24,15 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile('com.github.gzu-liyujiang.AndroidPicker:WheelPicker:1.5.5') {
+        exclude group: 'com.android.support'
+    }
+    compile('com.github.gzu-liyujiang.AndroidPicker:FilePicker:1.5.5') {
+        exclude group: 'com.android.support'
+    }
+    compile('com.github.gzu-liyujiang.AndroidPicker:ColorPicker:1.5.5') {
+        exclude group: 'com.android.support'
+    }
     compile 'com.android.support:appcompat-v7:25.3.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:support-v4:25.3.0'
@@ -33,5 +42,9 @@ dependencies {
     compile 'com.j256.ormlite:ormlite-android:5.0'
     compile 'com.j256.ormlite:ormlite-core:5.0'
     compile 'org.easybatch:easybatch-gson:5.1.0'
+    compile 'com.jayway.android.robotium:robotium:5.6.3'
+    compile 'com.jayway.android.robotium:robotium-solo:5.6.3'
+    compile 'com.jayway.android.robotium:robotium-core:1.8.0-beta-2'
+    compile 'com.github.pinguo-zhouwei:CustomPopwindow:2.1.1'
     testCompile 'junit:junit:4.12'
 }

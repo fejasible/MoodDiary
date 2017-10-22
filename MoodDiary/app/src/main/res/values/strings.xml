@@ -10,13 +10,17 @@
     <string name="Thursday">周四</string>
     <string name="Friday">周五</string>
     <string name="Saturday">周六</string>
-    <string name="no_sort">未分类</string>
     <string name="search">搜索</string>
     <string name="cancel">取消</string>
     <string name="back">返回</string>
     <string name="save">保存</string>
     <string name="edit">修改</string>
     <string name="password_error">密码错误</string>
+    <string name="manage">管理</string>
+    <string name="no_sort">未分类</string>
+    <string name="all_sort">所有分类</string>
+    <string name="edit_my_category">编辑我的分类</string>
+    <string name="edit_category">编辑分类</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

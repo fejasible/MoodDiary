@@ -66,4 +66,10 @@ public class BaseView extends View{
         Paint.FontMetricsInt fontMetricsInt = paint.getFontMetricsInt();
         canvas.drawText(text, x, y-(fontMetricsInt.top+fontMetricsInt.bottom)/2, paint);
     }
+
+    public final void drawCenterText(String text, int x, int y, Paint paint, Canvas canvas, Paint.Align align){
+        paint.setTextAlign(align);
+        Paint.FontMetricsInt fontMetricsInt = paint.getFontMetricsInt();
+        canvas.drawText(text, x, y-(fontMetricsInt.top+fontMetricsInt.bottom)/2, paint);
+    }
 }

@@ -83,6 +83,14 @@ public class MainTitleBar extends BaseView {
         right.set(this.width-this.height, 0, this.width, this.height);
     }
 
+    public void setOnTitleBarClickListener(OnTitleBarClickListener listener){
+        this.listener = listener;
+    }
+
+    public OnTitleBarClickListener getOnTitleBarClickListener(){
+        return listener;
+    }
+
     public String getTitleString() {
         return titleString;
     }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    tools:context="com.app.feja.mooddiary.ui.activity.CategoryActivity">
+
+    <com.app.feja.mooddiary.widget.CategoryTitleBar
+        android:id="@+id/id_category_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x100"
+        android:background="@color/lightSkyBlue">
+
+    </com.app.feja.mooddiary.widget.CategoryTitleBar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:scrollbarThumbVertical="@color/lightSkyBlue"
+        android:scrollbarSize="@dimen/x5">
+
+        <LinearLayout
+            android:id="@+id/id_container_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.app.feja.mooddiary.widget.CategoryView
+                android:id="@+id/id_category_view_sample"
+                android:layout_marginTop="@dimen/x5"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x80"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

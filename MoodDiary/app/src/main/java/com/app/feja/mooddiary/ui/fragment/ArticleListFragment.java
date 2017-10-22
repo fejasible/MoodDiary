@@ -1,4 +1,4 @@
-package com.app.feja.mooddiary.fragment;
+package com.app.feja.mooddiary.ui.fragment;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -7,10 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.application.ApplicationContext;
 import com.app.feja.mooddiary.model.adapter.DiaryAdapter;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.presenter.ArticleListPresenter;
@@ -68,7 +66,7 @@ public class ArticleListFragment extends Fragment implements ArticleListView{
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(DiaryEntity.BUNDLE_NAME, articleView.getDiaryEntity());
                 intent.putExtras(bundle);
-                intent.setClass(ApplicationContext.getContext(), ArticleBrowseActivity.class);
+                intent.setClass(getActivity().getApplicationContext(), ArticleBrowseActivity.class);
                 startActivity(intent);
             }
         };
@@ -78,12 +76,6 @@ public class ArticleListFragment extends Fragment implements ArticleListView{
         }
 
     }
-
-    @Override
-    public List<DiaryEntity> getArticles() {
-        return this.diaryEntities;
-    }
-
 
     @Override
     public void onStart() {

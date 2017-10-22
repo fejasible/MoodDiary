@@ -19,7 +19,7 @@ public interface DiaryDao {
      * @param count
      * @return
      */
-    List<DiaryEntity> getDiary(int count);
+    List<DiaryEntity> getDiary(Long count);
     List<DiaryEntity> getDiaryByFace(int face);
     List<DiaryEntity> getDiary(TypeEntity typeEntity);
     List<DiaryEntity> getDiaryByWeather(WEATHER weather);

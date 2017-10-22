@@ -21,7 +21,27 @@ public class ArticleBrowseTitleBar extends TouchListenView{
     private DiaryEntity diaryEntity;
     private int themeColor;
     private String noCategoryString;
-    private OnTitleBarClickListener onTitleBarClickListener;
+    private OnTitleBarClickListener onTitleBarClickListener = new OnTitleBarClickListener() {
+        @Override
+        public void onBackClick() {
+
+        }
+
+        @Override
+        public void onCategoryClick() {
+
+        }
+
+        @Override
+        public void onGarbageClick() {
+
+        }
+
+        @Override
+        public void onPenClick() {
+
+        }
+    };
 
 
     public ArticleBrowseTitleBar(Context context, int touchZoneNum, @Nullable int[] rectPercents) {

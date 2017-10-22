@@ -1,6 +1,8 @@
 package com.app.feja.mooddiary.model.entity;
 
 
+import com.app.feja.mooddiary.R;
+import com.app.feja.mooddiary.application.ApplicationContext;
 import com.app.feja.mooddiary.constant.WEATHER;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -11,6 +13,38 @@ import java.util.Date;
 @SuppressWarnings("serial")
 @DatabaseTable(tableName = "tb_diary")
 public class DiaryEntity extends BaseEntity implements Serializable{
+
+    public static final String COLUMN_NAME_ID = "id";
+    public static final String COLUMN_NAME_TYPE = "type";
+    public static final String COLUMN_NAME_CREATE_TIME = "create_time";
+    public static final String COLUMN_NAME_MOOD = "mood";
+    public static final String COLUMN_NAME_CONTENT = "content";
+    public static final String COLUMN_NAME_WEATHER = "weather";
+    public static final String COLUMN_NAME_IS_DELETE = "is_delete";
+    public static final String COLUMN_NAME_BACKGROUND = "background";
+    public static final String COLUMN_NAME_TEXT_SIZE = "text_size";
+
+    public DiaryEntity() {
+        this.type = new TypeEntity(ApplicationContext.getContext().getResources().getString(R.string.no_sort));
+        this.createTime = new Date();
+        this.mood = DiaryEntity.CALM;
+        this.content = "";
+        this.weather = WEATHER.UNKNOWN.getIndex();
+        this.isDelete = IS_NOT_DELETE;
+        this.background = "";
+        this.textSize = 10;
+    }
+
+    public DiaryEntity(String content, TypeEntity type) {
+        this.createTime = new Date();
+        this.mood = DiaryEntity.CALM;
+        this.content = content;
+        this.weather = WEATHER.UNKNOWN.getIndex();
+        this.type = type;
+        this.isDelete = IS_NOT_DELETE;
+        this.background = "";
+        this.textSize = 10;
+    }
 
     public static final String BUNDLE_NAME = "DiaryEntity";
 
@@ -23,31 +57,32 @@ public class DiaryEntity extends BaseEntity implements Serializable{
     public static final Integer IS_DELETE = 0;
     public static final Integer IS_NOT_DELETE = 1;
 
-    @DatabaseField(generatedId = true)
+    @DatabaseField(generatedId = true, canBeNull = false, unique = true)
     private Integer id;
 
-    @DatabaseField(columnName = "create_time")
-    private Date createTime = new Date();
+    @DatabaseField(columnName = COLUMN_NAME_CREATE_TIME, canBeNull = false)
+    private Date createTime;
 
-    @DatabaseField(columnName = "mood")
+    @DatabaseField(columnName = COLUMN_NAME_MOOD, canBeNull = false)
     private Integer mood = CALM;
 
-    @DatabaseField(columnName = "content")
-    private String content = "";
+    @DatabaseField(columnName = COLUMN_NAME_CONTENT, canBeNull = false)
+    private String content;
 
-    @DatabaseField(columnName = "weather")
-    private Integer weather = WEATHER.UNKNOWN.getIndex();
+    @DatabaseField(columnName = COLUMN_NAME_WEATHER, canBeNull = false)
+    private Integer weather;
 
-    @DatabaseField(foreign = true, columnName = "type_id")
-    private TypeEntity type = new TypeEntity();
+    @DatabaseField(foreign = true, canBeNull = false, columnName = COLUMN_NAME_TYPE,
+            foreignAutoCreate = true, foreignColumnName = TypeEntity.COLUMN_ID, foreignAutoRefresh = true)
+    private TypeEntity type;
 
-    @DatabaseField(columnName = "is_delete")
-    private Integer isDelete = IS_NOT_DELETE;
+    @DatabaseField(columnName = COLUMN_NAME_IS_DELETE, canBeNull = false)
+    private Integer isDelete;
 
-    @DatabaseField(columnName = "background")
-    private String background = "";
+    @DatabaseField(columnName = COLUMN_NAME_BACKGROUND, canBeNull = false)
+    private String background;
 
-    @DatabaseField(columnName = "text_size")
+    @DatabaseField(columnName = COLUMN_NAME_TEXT_SIZE, canBeNull = false)
     private Integer textSize;
 
     public Integer getId() {

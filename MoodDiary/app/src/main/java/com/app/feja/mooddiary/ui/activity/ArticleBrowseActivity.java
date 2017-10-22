@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.fragment.ArticleBrowseFragment;
+import com.app.feja.mooddiary.ui.fragment.ArticleBrowseFragment;
 
 public class ArticleBrowseActivity extends Activity {
 

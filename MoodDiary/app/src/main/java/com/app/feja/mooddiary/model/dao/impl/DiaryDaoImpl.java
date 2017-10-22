@@ -1,6 +1,9 @@
 package com.app.feja.mooddiary.model.dao.impl;
 
 
+import android.content.Context;
+import android.widget.Toast;
+
 import com.app.feja.mooddiary.application.ApplicationContext;
 import com.app.feja.mooddiary.constant.WEATHER;
 import com.app.feja.mooddiary.model.DatabaseHelper;
@@ -12,15 +15,23 @@ import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class DiaryDaoImpl implements DiaryDao {
 
     private Dao<DiaryEntity, Integer> dao;
+
     public DiaryDaoImpl(){
         try {
             this.dao = DatabaseHelper.getHelper(ApplicationContext.getContext()).getDao(DiaryEntity.class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public DiaryDaoImpl(Context context){
+        try {
+            this.dao = DatabaseHelper.getHelper(context).getDao(DiaryEntity.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -47,51 +58,45 @@ public class DiaryDaoImpl implements DiaryDao {
     }
 
     @Override
-    public ArrayList<DiaryEntity> getDiary(DateTime dateTime) {
+    public List<DiaryEntity> getDiary(DateTime dateTime) {
         return null;
     }
 
     @Override
-    public ArrayList<DiaryEntity> getDiary(int count) {
+    public List<DiaryEntity> getDiary(Long count) {
+        try {
+            return dao.queryBuilder().orderBy(DiaryEntity.COLUMN_NAME_CREATE_TIME, false)
+                    .limit(count).where()
+                    .eq(DiaryEntity.COLUMN_NAME_IS_DELETE, DiaryEntity.IS_NOT_DELETE).query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<DiaryEntity> getDiaryByFace(int face) {
         return null;
     }
 
     @Override
-    public ArrayList<DiaryEntity> getDiaryByFace(int face) {
+    public List<DiaryEntity> getDiary(TypeEntity typeEntity) {
         return null;
     }
 
     @Override
-    public ArrayList<DiaryEntity> getDiary(TypeEntity typeEntity) {
-        return null;
-    }
-
-    @Override
-    public ArrayList<DiaryEntity> getDiaryByWeather(WEATHER weather) {
+    public List<DiaryEntity> getDiaryByWeather(WEATHER weather) {
         return null;
     }
 
     @Override
     public List<DiaryEntity> getAllDiary() {
         try {
-            return dao.queryForAll();
+            return dao.queryBuilder().where()
+                    .eq(DiaryEntity.COLUMN_NAME_IS_DELETE, DiaryEntity.IS_NOT_DELETE).query();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-//        List<DiaryEntity> diaryEntities = new ArrayList<>();
-//        TypeEntity typeEntity = new TypeEntity();
-//        typeEntity.setType("梦境");
-//        for(int i=0; i<10; i++){
-//            DiaryEntity diaryEntityTmp = new DiaryEntity();
-//            diaryEntityTmp.setId(i*4);
-//            diaryEntityTmp.setType(typeEntity);
-//            diaryEntityTmp.setCreateTime(new Date());
-//            diaryEntityTmp.setMood(DiaryEntity.MIRTHFUL);
-//            diaryEntityTmp.setContent("心情日记"+i);
-//            diaryEntities.add(diaryEntityTmp);
-//        }
-
         return new ArrayList<>();
     }
 
@@ -117,8 +122,9 @@ public class DiaryDaoImpl implements DiaryDao {
 
     @Override
     public int deleteDiary(DiaryEntity diaryEntity) {
+        diaryEntity.setIsDelete(DiaryEntity.IS_DELETE);
         try {
-            return dao.delete(diaryEntity);
+            return dao.update(diaryEntity);
         } catch (SQLException e) {
             e.printStackTrace();
         }
