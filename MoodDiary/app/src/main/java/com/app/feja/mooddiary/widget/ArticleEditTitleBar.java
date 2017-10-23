@@ -9,6 +9,7 @@ import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
@@ -57,6 +58,7 @@ public class ArticleEditTitleBar extends TouchListenView {
     }
 
     public void setDiaryEntity(DiaryEntity diaryEntity) {
+        this.invalidate();
         this.diaryEntity = diaryEntity;
     }
 

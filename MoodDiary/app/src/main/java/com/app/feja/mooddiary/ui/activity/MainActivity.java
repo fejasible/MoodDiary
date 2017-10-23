@@ -131,7 +131,6 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
 
             // “编辑我的分类”选项
             categoryView = new CategoryView(getApplicationContext());
-            categoryView.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.lightGrey));
             categoryView.setLayoutParams(params);
             categoryView.setCategoryString(getResources().getString(R.string.edit_my_category));
             categoryView.setOnClickListener(this);
@@ -145,7 +144,7 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
                     .size(ApplicationContext.getScreenWidth() * 3 / 5, ViewGroup.LayoutParams.WRAP_CONTENT)
                     .create();
         }
-        customPopWindow.showAsDropDown(mainTitleBar, ApplicationContext.getScreenWidth() / 5, 3);
+        customPopWindow.showAsDropDown(mainTitleBar, ApplicationContext.getScreenWidth() / 5, 5);
     }
 
     /**
@@ -158,7 +157,7 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
 
     @Override
     public void onLoadArticles(List<DiaryEntity> diaryEntities) {
-
+        articleListFragment.onLoadArticles(diaryEntities);
     }
 
 

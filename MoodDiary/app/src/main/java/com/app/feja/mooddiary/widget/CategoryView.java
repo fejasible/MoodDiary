@@ -82,8 +82,8 @@ public class CategoryView extends BaseView{
         paint.setColor(textColor);
 
         if(showDelete){
-            this.drawDeleteButton(this.width-this.height/2, this.height/2, this.height/4, paint, canvas);
             drawCenterText(categoryString+"("+categoryCount+")", textSize, height/2, paint, canvas, Paint.Align.LEFT);
+            this.drawDeleteButton(this.width-this.height/2, this.height/2, this.height/4, paint, canvas);
         }else {
             drawCenterText(categoryString, textSize, height / 2, paint, canvas, Paint.Align.LEFT);
         }
@@ -95,6 +95,7 @@ public class CategoryView extends BaseView{
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(Color.WHITE);
         canvas.drawCircle(x, y, r, paint);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
         canvas.drawLine(x-r/3, y-r/3, x+r/3, y+r/3, paint);
         canvas.drawLine(x+r/3, y-r/3, x-r/3, y+r/3, paint);
     }

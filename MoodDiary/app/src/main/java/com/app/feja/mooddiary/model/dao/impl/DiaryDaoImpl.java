@@ -81,7 +81,17 @@ public class DiaryDaoImpl implements DiaryDao {
 
     @Override
     public List<DiaryEntity> getDiary(TypeEntity typeEntity) {
-        return null;
+        try {
+            return dao.queryBuilder().orderBy(DiaryEntity.COLUMN_NAME_CREATE_TIME, false)
+                    .where()
+                    .eq(DiaryEntity.COLUMN_NAME_TYPE, typeEntity)
+                    .and()
+                    .eq(DiaryEntity.COLUMN_NAME_IS_DELETE, DiaryEntity.IS_NOT_DELETE)
+                    .query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 
     @Override

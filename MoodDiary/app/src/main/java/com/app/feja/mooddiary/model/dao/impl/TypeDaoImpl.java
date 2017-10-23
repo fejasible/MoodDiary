@@ -1,6 +1,8 @@
 package com.app.feja.mooddiary.model.dao.impl;
 
 
+import android.widget.Toast;
+
 import com.app.feja.mooddiary.application.ApplicationContext;
 import com.app.feja.mooddiary.model.DatabaseHelper;
 import com.app.feja.mooddiary.model.entity.TypeEntity;
@@ -46,6 +48,24 @@ public class TypeDaoImpl implements TypeDao {
     public int updateType(TypeEntity typeEntity) {
         try {
             return dao.update(typeEntity);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public int updateType(String type) {
+        try {
+            List<TypeEntity> typeEntities = dao.queryBuilder().where().eq(TypeEntity.COLUMN_TYPE, type).query();
+            if(typeEntities == null || typeEntities.size() != 1){
+                TypeEntity typeEntity = new TypeEntity(type);
+                dao.create(typeEntity);
+                return typeEntity.getId();
+            }else{
+                dao.update(typeEntities.get(0));
+                return typeEntities.get(0).getId();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

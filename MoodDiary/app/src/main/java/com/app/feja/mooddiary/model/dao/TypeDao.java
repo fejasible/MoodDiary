@@ -14,6 +14,8 @@ public interface TypeDao {
 
     int updateType(TypeEntity typeEntity);
 
+    int updateType(String type);
+
     TypeEntity selectType(String typeString);
 
     List<TypeEntity> getAllType();

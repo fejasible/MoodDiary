@@ -12,6 +12,7 @@
     <string name="Saturday">周六</string>
     <string name="search">搜索</string>
     <string name="cancel">取消</string>
+    <string name="confirm">确定</string>
     <string name="back">返回</string>
     <string name="save">保存</string>
     <string name="edit">修改</string>
@@ -21,6 +22,10 @@
     <string name="all_sort">所有分类</string>
     <string name="edit_my_category">编辑我的分类</string>
     <string name="edit_category">编辑分类</string>
+    <string name="input_limit">1~8个字符</string>
+    <string name="delete_category_">删除分类：</string>
+    <string name="delete_category_only">仅删除分类</string>
+    <string name="delete_category_and_diary">删分类和日记</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

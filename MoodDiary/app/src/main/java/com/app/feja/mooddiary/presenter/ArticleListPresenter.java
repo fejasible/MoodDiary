@@ -1,6 +1,8 @@
 package com.app.feja.mooddiary.presenter;
 
 
+import android.widget.Toast;
+
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.application.ApplicationContext;
 import com.app.feja.mooddiary.model.dao.DiaryDao;
@@ -59,6 +61,10 @@ public class ArticleListPresenter {
 
     public void loadCategories(){
         categoryView.onLoadCategories(this.typeDao.getAllType(), this.diaryDao.getAllDiary());
+    }
+
+    public void editTypes(String string){
+        this.typeDao.updateType(string);
     }
 
 }

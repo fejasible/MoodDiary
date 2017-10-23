@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/lightGrey"
+    android:alpha="0.9"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <EditText
+        android:layout_marginTop="@dimen/x30"
+        android:layout_marginLeft="@dimen/x30"
+        android:layout_marginRight="@dimen/x30"
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="8"
+        android:background="@color/white"
+        android:hint="@string/input_limit"
+        android:maxLines="1"
+        android:maxLength="8"
+        android:gravity="start"/>
+
+    <com.app.feja.mooddiary.widget.ConfirmCancelButton
+        android:id="@+id/id_confirm_cancel_button"
+        android:layout_margin="@dimen/x30"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
