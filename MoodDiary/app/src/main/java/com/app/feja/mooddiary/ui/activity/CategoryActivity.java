@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.application.ApplicationContext;
@@ -28,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 import cn.qqtheme.framework.picker.OptionPicker;
-import cn.qqtheme.framework.picker.SinglePicker;
 
 public class CategoryActivity extends Activity implements CategoryView, CategoryTitleBar.OnTitleBarClickListener, View.OnClickListener {
 
@@ -64,6 +61,11 @@ public class CategoryActivity extends Activity implements CategoryView, Category
         articleListPresenter.loadCategories();
     }
 
+    /**
+     * 加载分类
+     * @param typeEntities 分类队列
+     * @param diaryEntities 日记队列
+     */
     @Override
     public void onLoadCategories(List<TypeEntity> typeEntities, List<DiaryEntity> diaryEntities) {
         this.typeEntities = typeEntities;
@@ -86,19 +88,26 @@ public class CategoryActivity extends Activity implements CategoryView, Category
                     new com.app.feja.mooddiary.widget.CategoryView(this);
             categoryView.setLayoutParams(categoryParams);
             categoryView.setBackgroundColor(Color.LTGRAY);
-            categoryView.setCategoryString(entry.getKey());
             categoryView.setCategoryCount(entry.getValue());
+            categoryView.setShowCount(true);
+            categoryView.setCategoryString(entry.getKey());
             categoryView.setOnClickListener(this);
             category_list_container.addView(categoryView);
         }
 
     }
 
+    /**
+     * 返回按钮响应
+     */
     @Override
     public void onBackClick() {
         onBackPressed();
     }
 
+    /**
+     * 添加按钮响应
+     */
     @Override
     public void onAddClick() {
         if(customPopWindow == null){
@@ -159,9 +168,13 @@ public class CategoryActivity extends Activity implements CategoryView, Category
         customPopWindow.showAsDropDown(categoryTitleBar, ApplicationContext.getScreenWidth() / 6, 5);
     }
 
+    /**
+     * 单个分类被点击响应
+     * @param v 分类View
+     */
     @Override
     public void onClick(View v) {
-        com.app.feja.mooddiary.widget.CategoryView categoryView =
+        final com.app.feja.mooddiary.widget.CategoryView categoryView =
                 (com.app.feja.mooddiary.widget.CategoryView) v;
         if(categoryPicker == null){
             categoryPicker = new OptionPicker(this, new String[]{
@@ -174,8 +187,18 @@ public class CategoryActivity extends Activity implements CategoryView, Category
         categoryPicker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
             @Override
             public void onOptionPicked(int index, String item) {
-                Toast.makeText(CategoryActivity.this, index+":"+item, Toast.LENGTH_SHORT).show();
-                // TODO
+                switch (index){
+                    case 0:
+                        articleListPresenter.deleteTypeOnly(categoryView.getCategoryString());
+                        articleListPresenter.loadCategories();
+                        break;
+                    case 1:
+                        articleListPresenter.deleteTypeAndDiary(categoryView.getCategoryString());
+                        articleListPresenter.loadCategories();
+                        break;
+                    default:
+                        break;
+                }
             }
         });
         categoryPicker.show();

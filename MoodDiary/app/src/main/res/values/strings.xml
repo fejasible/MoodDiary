@@ -20,7 +20,7 @@
     <string name="manage">管理</string>
     <string name="no_sort">未分类</string>
     <string name="all_sort">所有分类</string>
-    <string name="edit_my_category">编辑我的分类</string>
+    <string name="edit_my_category">[编辑我的分类]</string>
     <string name="edit_category">编辑分类</string>
     <string name="input_limit">1~8个字符</string>
     <string name="delete_category_">删除分类：</string>

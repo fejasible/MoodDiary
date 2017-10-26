@@ -16,7 +16,7 @@ public class CategoryView extends BaseView{
     private Paint paint;
     private String categoryString;
     private int textColor = Color.WHITE;
-    private boolean showDelete = false;
+    private boolean showCount = false;
     private int categoryCount = 0;
 
     public CategoryView(Context context) {
@@ -57,12 +57,12 @@ public class CategoryView extends BaseView{
         this.textColor = textColor;
     }
 
-    public boolean isShowDelete() {
-        return showDelete;
+    public boolean isShowCount() {
+        return showCount;
     }
 
-    public void setShowDelete(boolean showDelete) {
-        this.showDelete = showDelete;
+    public void setShowCount(boolean showCount) {
+        this.showCount = showCount;
     }
 
     public int getCategoryCount() {
@@ -81,9 +81,8 @@ public class CategoryView extends BaseView{
         paint.setTextSize(textSize);
         paint.setColor(textColor);
 
-        if(showDelete){
+        if(showCount){
             drawCenterText(categoryString+"("+categoryCount+")", textSize, height/2, paint, canvas, Paint.Align.LEFT);
-            this.drawDeleteButton(this.width-this.height/2, this.height/2, this.height/4, paint, canvas);
         }else {
             drawCenterText(categoryString, textSize, height / 2, paint, canvas, Paint.Align.LEFT);
         }

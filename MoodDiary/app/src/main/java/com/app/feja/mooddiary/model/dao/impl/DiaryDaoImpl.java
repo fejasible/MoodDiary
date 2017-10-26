@@ -4,6 +4,7 @@ package com.app.feja.mooddiary.model.dao.impl;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.application.ApplicationContext;
 import com.app.feja.mooddiary.constant.WEATHER;
 import com.app.feja.mooddiary.model.DatabaseHelper;
@@ -133,6 +134,7 @@ public class DiaryDaoImpl implements DiaryDao {
     @Override
     public int deleteDiary(DiaryEntity diaryEntity) {
         diaryEntity.setIsDelete(DiaryEntity.IS_DELETE);
+        diaryEntity.setType(new TypeDaoImpl().selectType(ApplicationContext.getContext().getString(R.string.no_sort)));
         try {
             return dao.update(diaryEntity);
         } catch (SQLException e) {

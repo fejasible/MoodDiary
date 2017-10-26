@@ -4,7 +4,6 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +35,7 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
     private ArticleListPresenter presenter;
     private CustomPopWindow customPopWindow;
     private LinearLayout popupLayout;
+    private ViewGroup.LayoutParams params;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +108,7 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
 
 
             // 获取弹窗内容组件布局
-            ViewGroup.LayoutParams params = popupLayout.findViewById(R.id.category_view).getLayoutParams();
+            params = popupLayout.findViewById(R.id.category_view).getLayoutParams();
 
             // 初始化弹窗布局内容
             popupLayout.removeAllViews();
@@ -136,6 +136,32 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
             categoryView.setOnClickListener(this);
             popupLayout.addView(categoryView);
 
+        }else{
+            // 初始化弹窗布局内容
+            popupLayout.removeAllViews();
+
+            // “所有分类”选项
+            CategoryView categoryView = new CategoryView(getApplicationContext());
+            categoryView.setLayoutParams(params);
+            categoryView.setCategoryString(getResources().getString(R.string.all_sort));
+            categoryView.setOnClickListener(this);
+            popupLayout.addView(categoryView);
+
+            // 分类选项
+            for(TypeEntity typeEntity: typeEntities){
+                categoryView = new CategoryView(getApplicationContext());
+                categoryView.setOnClickListener(this);
+                categoryView.setLayoutParams(params);
+                categoryView.setCategoryString(typeEntity.getType());
+                popupLayout.addView(categoryView);
+            }
+
+            // “编辑我的分类”选项
+            categoryView = new CategoryView(getApplicationContext());
+            categoryView.setLayoutParams(params);
+            categoryView.setCategoryString(getResources().getString(R.string.edit_my_category));
+            categoryView.setOnClickListener(this);
+            popupLayout.addView(categoryView);
         }
 
         if(customPopWindow == null){
@@ -179,6 +205,8 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
             intent.setClass(this, CategoryActivity.class);
             startActivity(intent);
         }else{
+            mainTitleBar.setTitleString(categoryView.getCategoryString());
+            mainTitleBar.invalidate();
             presenter.loadArticles(categoryView.getCategoryString());
         }
         customPopWindow.dissmiss();

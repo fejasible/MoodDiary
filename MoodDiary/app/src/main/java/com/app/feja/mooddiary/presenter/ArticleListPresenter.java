@@ -9,6 +9,7 @@ import com.app.feja.mooddiary.model.dao.DiaryDao;
 import com.app.feja.mooddiary.model.dao.TypeDao;
 import com.app.feja.mooddiary.model.dao.impl.DiaryDaoImpl;
 import com.app.feja.mooddiary.model.dao.impl.TypeDaoImpl;
+import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.model.entity.TypeEntity;
 import com.app.feja.mooddiary.ui.view.ArticleListView;
 import com.app.feja.mooddiary.ui.view.CategoryView;
@@ -58,6 +59,10 @@ public class ArticleListPresenter {
         return typeDao.getAllType();
     }
 
+    public TypeEntity getType(String type){
+        return this.typeDao.selectType(type);
+    }
+
 
     public void loadCategories(){
         categoryView.onLoadCategories(this.typeDao.getAllType(), this.diaryDao.getAllDiary());
@@ -65,6 +70,30 @@ public class ArticleListPresenter {
 
     public void editTypes(String string){
         this.typeDao.updateType(string);
+    }
+
+    public void deleteTypeOnly(String type){
+        Toast.makeText(ApplicationContext.getContext(), type, Toast.LENGTH_SHORT).show();
+        TypeEntity typeEntity = typeDao.selectType(type);
+        List<DiaryEntity> diaryEntities = diaryDao.getDiary(typeEntity);
+        if(diaryEntities == null || diaryEntities.size() == 0){
+            typeDao.deleteType(typeEntity);
+        }else{
+            for(DiaryEntity diaryEntity: diaryEntities){
+                diaryEntity.setType(typeDao.selectType(NO_CATEGORY));
+                diaryDao.editDiary(diaryEntity);
+            }
+            typeDao.deleteType(typeEntity);
+        }
+    }
+
+    public void deleteTypeAndDiary(String type){
+        TypeEntity typeEntity = typeDao.selectType(type);
+        List<DiaryEntity> diaryEntities = diaryDao.getDiary(typeEntity);
+        for(DiaryEntity diaryEntity: diaryEntities){
+            diaryDao.deleteDiary(diaryEntity);
+        }
+        typeDao.deleteType(typeEntity);
     }
 
 }

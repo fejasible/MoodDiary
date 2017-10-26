@@ -93,12 +93,7 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
             // 初始化弹窗布局内容
             popupLayout.removeAllViews();
 
-            // “所有分类”选项
-            CategoryView categoryView = new CategoryView(getActivity());
-            categoryView.setLayoutParams(params);
-            categoryView.setCategoryString(getResources().getString(R.string.all_sort));
-            categoryView.setOnClickListener(this);
-            popupLayout.addView(categoryView);
+            CategoryView categoryView;
 
             // 分类选项
             for(TypeEntity typeEntity: typeEntities){
@@ -129,6 +124,7 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
 
     @Override
     public void onSaveClick(DiaryEntity diaryEntity) {
+        diaryEntity.setType(this.diaryEntity.getType());
         diaryEntity.setContent(editText.getText().toString());
         articleEditPresenter.editArticle(diaryEntity);
         getActivity().onBackPressed();
@@ -148,7 +144,7 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
             intent.setClass(this.getActivity(), CategoryActivity.class);
             startActivity(intent);
         }else{
-            diaryEntity.getType().setType(categoryView.getCategoryString());
+            diaryEntity.setType(articleListPresenter.getType(categoryView.getCategoryString()));
             titleBar.setDiaryEntity(diaryEntity);
         }
     }

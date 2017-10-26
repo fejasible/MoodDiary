@@ -55,19 +55,7 @@ public class ArticleBrowseFragment extends Fragment implements ArticleView{
 
             @Override
             public void onCategoryClick() {
-                List<TypeEntity> typeEntities = articleBrowsePresenter.getAllType();
-                List<String> items = new ArrayList<>();
-                for(TypeEntity typeEntity: typeEntities){
-                    items.add(typeEntity.getType());
-                }
-                SinglePicker<String> singlePicker = new SinglePicker<>(getActivity(), items);
-                singlePicker.setOnItemPickListener(new SinglePicker.OnItemPickListener<String>() {
-                    @Override
-                    public void onItemPicked(int index, String item) {
 
-                    }
-                });
-                singlePicker.show();
             }
 
             @Override
