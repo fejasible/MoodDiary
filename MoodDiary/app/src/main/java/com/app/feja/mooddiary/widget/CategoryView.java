@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 
 import com.app.feja.mooddiary.R;
+import com.app.feja.mooddiary.application.ApplicationContext;
 import com.app.feja.mooddiary.widget.base.BaseView;
 
 public class CategoryView extends BaseView{

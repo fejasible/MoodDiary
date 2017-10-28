@@ -4,10 +4,13 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.application.ApplicationContext;
@@ -17,12 +20,25 @@ import com.app.feja.mooddiary.presenter.ArticleListPresenter;
 import com.app.feja.mooddiary.ui.fragment.ArticleListFragment;
 import com.app.feja.mooddiary.ui.fragment.SettingsFragment;
 import com.app.feja.mooddiary.ui.view.ArticleListView;
+import com.app.feja.mooddiary.util.DateTime;
+import com.app.feja.mooddiary.widget.ArticleView;
 import com.app.feja.mooddiary.widget.CategoryView;
 import com.app.feja.mooddiary.widget.MainTitleBar;
+import com.app.feja.mooddiary.widget.Search.DataHelper;
+import com.app.feja.mooddiary.widget.Search.DiarySuggestion;
 import com.app.feja.mooddiary.widget.TabView;
+import com.arlib.floatingsearchview.FloatingSearchView;
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.example.zhouwei.library.CustomPopWindow;
+import com.github.sundeepk.compactcalendarview.CompactCalendarView;
+import com.github.sundeepk.compactcalendarview.domain.Event;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 
 public class MainActivity extends FragmentActivity implements TabView.OnTabClickListener,
@@ -34,8 +50,13 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
     private TabView tabView;
     private ArticleListPresenter presenter;
     private CustomPopWindow customPopWindow;
+    private LinearLayout mainLayout;
     private LinearLayout popupLayout;
     private ViewGroup.LayoutParams params;
+    private CompactCalendarView compactCalendarView;
+    private Date selectDate;
+    private FloatingSearchView floatingSearchView;
+    public static final long FIND_SUGGESTION_SIMULATED_DELAY = 250;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +70,14 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
 
         tabView = (TabView) this.findViewById(R.id.tab_view);
         mainTitleBar = (MainTitleBar) this.findViewById(R.id.main_title_bar);
+        mainLayout = (LinearLayout) this.findViewById(R.id.id_container_main);
         presenter = new ArticleListPresenter(this);
 
         tabView.setOnTabClickListener(this);
         mainTitleBar.setOnTitleBarClickListener(this);
+
     }
+
 
     /**
      * Tab被点击
@@ -85,12 +109,68 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
         fragmentTransaction.commit();
     }
 
+
+    private boolean isCalendarShowing = false;
     /**
      * 日历被点击
      */
     @Override
     public void onCalendarClick() {
+        if(compactCalendarView == null){
+            LinearLayout linearLayout = (LinearLayout) LayoutInflater.from(this)
+                    .inflate(R.layout.activity_calendar, null, false);
+            compactCalendarView = (CompactCalendarView) linearLayout.findViewById(R.id.compactcalendar_view);
+            linearLayout.removeView(compactCalendarView);
+            linearLayout = null;
+            mainLayout.addView(compactCalendarView, 1);
+            compactCalendarView.setFirstDayOfWeek(Calendar.SUNDAY);
+            compactCalendarView.setLocale(TimeZone.getDefault(), Locale.CHINESE);
+            compactCalendarView.setUseThreeLetterAbbreviation(true);
+            compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
+                @Override
+                public void onDayClick(Date dateClicked) {
+                    presenter.loadArticles(dateClicked);
+                    selectDate = dateClicked;
+                }
 
+                @Override
+                public void onMonthScroll(Date firstDayOfNewMonth) {
+                    mainTitleBar.changeDate(firstDayOfNewMonth.getTime());
+                    selectDate = firstDayOfNewMonth;
+                    presenter.loadArticles(selectDate);
+                }
+            });
+            selectDate = new DateTime().toDate();
+            mainTitleBar.changeDate(selectDate.getTime());
+            compactCalendarView.showCalendar();
+            presenter.loadArticles(selectDate);
+            isCalendarShowing = true;
+            this.refreshCalendarEvent();
+        }else if(!compactCalendarView.isAnimating()){
+            if(!isCalendarShowing){
+                isCalendarShowing = true;
+                this.refreshCalendarEvent();
+                presenter.loadArticles(selectDate);
+                mainTitleBar.changeDate();
+                compactCalendarView.showCalendarWithAnimation();
+            }else{
+                isCalendarShowing = false;
+                presenter.loadArticles(mainTitleBar.getTitleString());
+                mainTitleBar.changeTitle();
+                compactCalendarView.hideCalendarWithAnimation();
+            }
+        }
+    }
+
+    private void refreshCalendarEvent(){
+        compactCalendarView.removeAllEvents();
+        List<DiaryEntity> diaryEntities = presenter.getAllArticles();
+        List<Event> events = new ArrayList<>();
+        for(DiaryEntity diaryEntity: diaryEntities){
+            events.add(new Event(ContextCompat.getColor(this, R.color.lightSkyBlue_deeper),
+                    diaryEntity.getCreateTime().getTime()));
+        }
+        compactCalendarView.addEvents(events);
     }
 
     /**
@@ -173,11 +253,63 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
         customPopWindow.showAsDropDown(mainTitleBar, ApplicationContext.getScreenWidth() / 5, 5);
     }
 
+    private boolean isSearchBarShowing = false;
     /**
      * 搜索被点击
      */
     @Override
     public void onSearchClick() {
+//        if(floatingSearchView == null){
+//            LinearLayout linearLayout = (LinearLayout) LayoutInflater
+//                    .from(this)
+//                    .inflate(R.layout.layout_search_bar, null, false);
+//            floatingSearchView = (FloatingSearchView) linearLayout.findViewById(R.id.floating_search_view);
+//            linearLayout.removeView(floatingSearchView);
+//            mainLayout.addView(floatingSearchView, 1);
+//            isSearchBarShowing = true;
+//            mainTitleBar.changeSearch();
+//            floatingSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+//                @Override
+//                public void onSearchTextChanged(String oldQuery, String newQuery) {
+//                    if (!oldQuery.equals("") && newQuery.equals("")) {
+//                        floatingSearchView.clearSuggestions();
+//                    } else {
+//                        floatingSearchView.showProgress();
+//                        DataHelper.findSuggestions(MainActivity.this, newQuery, 5,
+//                                FIND_SUGGESTION_SIMULATED_DELAY, new DataHelper.OnFindSuggestionsListener() {
+//                                    @Override
+//                                    public void onResults(List<DiarySuggestion> results) {
+//                                        floatingSearchView.swapSuggestions(results);
+//                                        floatingSearchView.hideProgress();
+//                                    }
+//                                });
+//                    }
+//                }
+//            });
+//
+//            floatingSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
+//                @Override
+//                public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
+//                    Toast.makeText(MainActivity.this, searchSuggestion.getBody(), Toast.LENGTH_SHORT).show();
+//                }
+//
+//                @Override
+//                public void onSearchAction(String currentQuery) {
+//
+//                }
+//            });
+//
+//        }else if(isSearchBarShowing){
+//            isSearchBarShowing = false;
+//            mainTitleBar.changeTitle();
+//            mainLayout.removeView(floatingSearchView);
+//        }else{
+//            isSearchBarShowing = true;
+//            mainTitleBar.changeSearch();
+//            mainLayout.addView(floatingSearchView, 1);
+//        }
+
+
 
     }
 
@@ -210,5 +342,15 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
             presenter.loadArticles(categoryView.getCategoryString());
         }
         customPopWindow.dissmiss();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(isCalendarShowing){
+            presenter.loadArticles(selectDate);
+        }else{
+            presenter.loadArticles(mainTitleBar.getTitleString());
+        }
     }
 }

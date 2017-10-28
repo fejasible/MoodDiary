@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="lightSkyBlue">#87CEFA</color>
+    <color name="lightSkyBlue_lighter">#A4D3EE</color>
+    <color name="lightSkyBlue_deeper">#8DB6CD</color>
     <color name="white">#FFFFFF</color>
     <color name="whiteMostly">#F9F9F9</color>
     <color name="whiteSmoke">#F5F5F5</color>

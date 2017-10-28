@@ -60,7 +60,21 @@ public class DiaryDaoImpl implements DiaryDao {
 
     @Override
     public List<DiaryEntity> getDiary(DateTime dateTime) {
-        return null;
+        DateTime dateTime1 = dateTime.clone();
+        dateTime1.toZeroTime();
+        DateTime dateTime2 = dateTime1.clone();
+        dateTime2.addDay(1);
+        try {
+            return dao.queryBuilder().orderBy(DiaryEntity.COLUMN_NAME_CREATE_TIME, false)
+                    .where()
+                    .eq(DiaryEntity.COLUMN_NAME_IS_DELETE, DiaryEntity.IS_NOT_DELETE)
+                    .and()
+                    .between(DiaryEntity.COLUMN_NAME_CREATE_TIME, dateTime1.toDate(), dateTime2.toDate())
+                    .query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 
     @Override
@@ -105,6 +119,20 @@ public class DiaryDaoImpl implements DiaryDao {
         try {
             return dao.queryBuilder().where()
                     .eq(DiaryEntity.COLUMN_NAME_IS_DELETE, DiaryEntity.IS_NOT_DELETE).query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<DiaryEntity> getDiaryByKeyword(String keyword) {
+        try {
+            return dao.queryBuilder()
+                    .where()
+                    .eq(DiaryEntity.COLUMN_NAME_IS_DELETE, DiaryEntity.IS_NOT_DELETE)
+                    .and()
+                    .like(DiaryEntity.COLUMN_NAME_CONTENT, "%"+keyword+"%").query();
         } catch (SQLException e) {
             e.printStackTrace();
         }

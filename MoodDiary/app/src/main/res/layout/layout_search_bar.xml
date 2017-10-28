@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.arlib.floatingsearchview.FloatingSearchView
+        android:id="@+id/floating_search_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:floatingSearch_searchBarMarginLeft="@dimen/x10"
+        app:floatingSearch_searchBarMarginTop="@dimen/x10"
+        app:floatingSearch_searchBarMarginRight="@dimen/x10"
+        app:floatingSearch_searchHint="@string/enter_keyword"
+        app:floatingSearch_suggestionsListAnimDuration="150"
+        app:floatingSearch_showSearchKey="false"
+        app:floatingSearch_leftActionMode="noLeftAction"
+        app:floatingSearch_close_search_on_keyboard_dismiss="true"/>
+
+
+</LinearLayout>

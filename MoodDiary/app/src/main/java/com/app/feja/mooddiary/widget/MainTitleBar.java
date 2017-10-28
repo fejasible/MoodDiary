@@ -10,11 +10,16 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
+import com.app.feja.mooddiary.R;
+import com.app.feja.mooddiary.util.DateTime;
 import com.app.feja.mooddiary.widget.base.BaseView;
 
 public class MainTitleBar extends BaseView {
 
-    private String titleString = "所有分类";
+    private String titleString;
+    private String searchString;
+
+    private String today = "";
 
     private Paint paint;
 
@@ -23,6 +28,13 @@ public class MainTitleBar extends BaseView {
     private boolean pressCategoryDown = false;
     private boolean pressCalendarDown = false;
     private boolean pressSearchDown = false;
+
+    private boolean showDateTime = false;
+    private boolean showSearch = false;
+
+    private boolean enableCategory = true;
+    private boolean enableCalendar = true;
+    private boolean enableSearch = true;
 
     private Rect rectCategory = new Rect();
     private Rect rectCalendar = new Rect();
@@ -53,6 +65,8 @@ public class MainTitleBar extends BaseView {
 
     public void init(){
         this.paint = new Paint();
+        this.titleString = getResources().getString(R.string.all_sort);
+        this.searchString = getResources().getString(R.string.search);
         listener = new OnTitleBarClickListener() {
             @Override
             public void onCalendarClick() {
@@ -101,10 +115,67 @@ public class MainTitleBar extends BaseView {
 
     @Override
     public void onDraw(Canvas canvas){
-
-        this.drawCategory(rectCategory, paint, canvas);
+        if(this.showSearch){
+            this.drawSearch(rectSearch, paint, canvas);
+            this.drawSearchTitle(rectCategory, paint, canvas);
+            return ;
+        }
+        if(this.showDateTime){
+            this.drawDate(rectCategory.left, rectCategory.top, rectCategory.right, rectCategory.bottom, paint, canvas);
+            this.drawCalendarImage(rectCalendar, paint, canvas);
+            return ;
+        }
         this.drawCalendarImage(rectCalendar, paint, canvas);
+        this.drawCategory(rectCategory, paint, canvas);
         this.drawSearch(rectSearch, paint, canvas);
+    }
+
+    public void changeDate(long timestamp){
+        this.today = new DateTime(timestamp).toString(DateTime.Format.READABLE_MONTH);
+        this.enableSearch = false;
+        this.enableCategory = false;
+        this.showDateTime = true;
+        this.invalidate();
+    }
+
+    public void changeDate(){
+        this.enableSearch = false;
+        this.enableCategory = false;
+        this.showDateTime = true;
+        this.invalidate();
+    }
+
+    public void changeTitle(){
+        this.enableSearch = true;
+        this.enableCategory = true;
+        this.enableCalendar = true;
+        this.showDateTime = false;
+        this.showSearch = false;
+        this.invalidate();
+    }
+
+    public void changeSearch(){
+        this.enableCalendar = false;
+        this.enableCategory = false;
+        this.showSearch = true;
+        this.invalidate();
+    }
+
+    private void drawDate(int left, int top, int right, int bottom, Paint paint, Canvas canvas){
+        paint.reset();
+        paint.setAntiAlias(true);
+        paint.setTextSize(this.width/20);
+        paint.setColor(Color.WHITE);
+        drawCenterText(this.today, (left+right)/2, (top+bottom)/2, paint, canvas);
+    }
+
+    private void drawSearchTitle(Rect rect, Paint paint, Canvas canvas){
+        paint.reset();
+        int textSize = this.width/20;
+        paint.setTextSize(textSize);
+        paint.setAntiAlias(true);
+        paint.setColor(Color.WHITE);
+        drawCenterText(searchString, rect.centerX(), rect.centerY(), paint, canvas);
     }
 
     private void drawCategory(Rect rect, Paint paint, Canvas canvas){
@@ -176,11 +247,11 @@ public class MainTitleBar extends BaseView {
         this.touchY = event.getY();
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                if(center.contains((int)this.touchX, (int)this.touchY)){
+                if(enableCategory && center.contains((int)this.touchX, (int)this.touchY)){
                     this.pressCategoryDown = true;
-                }else if(left.contains((int)this.touchX, (int)this.touchY)){
+                }else if(enableCalendar && left.contains((int)this.touchX, (int)this.touchY)){
                     this.pressCalendarDown = true;
-                }else if(right.contains((int)this.touchX, (int)this.touchY)){
+                }else if(enableSearch && right.contains((int)this.touchX, (int)this.touchY)){
                     this.pressSearchDown = true;
                 }
                 break;
@@ -189,11 +260,11 @@ public class MainTitleBar extends BaseView {
                 this.pressCalendarDown = false;
                 this.pressCategoryDown = false;
                 this.pressSearchDown = false;
-                if(center.contains((int)this.touchX, (int)this.touchY)){
+                if(center.contains((int)this.touchX, (int)this.touchY) && enableCategory){
                     listener.onCategoryClick();
-                }else if(left.contains((int)this.touchX, (int)this.touchY)){
+                }else if(left.contains((int)this.touchX, (int)this.touchY) && enableCalendar){
                     listener.onCalendarClick();
-                }else if(right.contains((int)this.touchX, (int)this.touchY)){
+                }else if(right.contains((int)this.touchX, (int)this.touchY) && enableSearch){
                     listener.onSearchClick();
                 }
                 break;

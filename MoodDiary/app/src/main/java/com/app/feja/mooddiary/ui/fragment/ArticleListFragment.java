@@ -26,7 +26,6 @@ public class ArticleListFragment extends Fragment implements ArticleListView{
     private LinearLayout linearLayout;
     private ArticleListPresenter articleListPresenter;
     private ViewGroup.LayoutParams layoutParams;
-    private List<DiaryEntity> diaryEntities;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,7 +44,6 @@ public class ArticleListFragment extends Fragment implements ArticleListView{
 
     @Override
     public void onLoadArticles(final List<DiaryEntity> diaryEntities) {
-        this.diaryEntities = diaryEntities;
         if(diaryEntities == null){
             return ;
         }

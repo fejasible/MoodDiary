@@ -141,6 +141,14 @@ public class DateTime {
         return this;
     }
 
+    public DateTime toZeroTime(){
+        this.setHour(0);
+        this.setMinute(0);
+        this.setSecond(0);
+        this.setMillisecond(0);
+        return this;
+    }
+
 
     private DateTime set(int field, int value) {
         switch (field) {

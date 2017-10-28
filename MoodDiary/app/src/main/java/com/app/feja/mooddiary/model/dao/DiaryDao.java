@@ -24,6 +24,7 @@ public interface DiaryDao {
     List<DiaryEntity> getDiary(TypeEntity typeEntity);
     List<DiaryEntity> getDiaryByWeather(WEATHER weather);
     List<DiaryEntity> getAllDiary();
+    List<DiaryEntity> getDiaryByKeyword(String keyword);
 
     int addDiary(DiaryEntity diaryEntity);
 

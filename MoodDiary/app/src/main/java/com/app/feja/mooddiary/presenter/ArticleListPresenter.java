@@ -13,7 +13,9 @@ import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.model.entity.TypeEntity;
 import com.app.feja.mooddiary.ui.view.ArticleListView;
 import com.app.feja.mooddiary.ui.view.CategoryView;
+import com.app.feja.mooddiary.util.DateTime;
 
+import java.util.Date;
 import java.util.List;
 
 public class ArticleListPresenter {
@@ -52,6 +54,14 @@ public class ArticleListPresenter {
         if(typeEntity != null){
             articleListView.onLoadArticles(this.diaryDao.getDiary(typeEntity));
         }
+    }
+
+    public void loadArticles(Date date){
+        articleListView.onLoadArticles(this.diaryDao.getDiary(new DateTime(date)));
+    }
+
+    public List<DiaryEntity> getAllArticles(){
+        return this.diaryDao.getAllDiary();
     }
 
 
@@ -95,5 +105,6 @@ public class ArticleListPresenter {
         }
         typeDao.deleteType(typeEntity);
     }
+
 
 }
