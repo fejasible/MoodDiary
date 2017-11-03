@@ -1,7 +1,9 @@
 package com.app.feja.mooddiary.ui.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.inputmethod.InputMethodManager;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.ui.fragment.ArticleEditFragment;
@@ -24,5 +26,12 @@ public class ArticleEditActivity extends Activity{
                 .commit();
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+        super.onBackPressed();
     }
 }

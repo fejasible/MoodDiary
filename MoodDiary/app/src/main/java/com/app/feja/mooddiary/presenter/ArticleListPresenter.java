@@ -106,5 +106,8 @@ public class ArticleListPresenter {
         typeDao.deleteType(typeEntity);
     }
 
+    public void loadArticlesByKeyWord(String keyword){
+        articleListView.onLoadArticles(diaryDao.getDiaryByKeyword(keyword));
+    }
 
 }

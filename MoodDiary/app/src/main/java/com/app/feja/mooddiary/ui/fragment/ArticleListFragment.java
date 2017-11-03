@@ -3,9 +3,16 @@ package com.app.feja.mooddiary.ui.fragment;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.ScaleAnimation;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -26,19 +33,34 @@ public class ArticleListFragment extends Fragment implements ArticleListView{
     private LinearLayout linearLayout;
     private ArticleListPresenter articleListPresenter;
     private ViewGroup.LayoutParams layoutParams;
+    private LayoutAnimationController layoutAnimationController;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.articleListPresenter = new ArticleListPresenter(this);
+        this.initAnimation();
+        this.initLayout(inflater, container);
+        return view;
+    }
+
+    private void initAnimation(){
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
+        alphaAnimation.setDuration(500);
+
+        AnimationSet animationSet = new AnimationSet(true);
+        animationSet.addAnimation(alphaAnimation);
+
+        layoutAnimationController = new LayoutAnimationController(alphaAnimation, 0.3f);
+    }
+
+    private void initLayout(LayoutInflater inflater, ViewGroup container){
         view = inflater.inflate(R.layout.fragment_article_list, container, false);
         linearLayout = (LinearLayout) view.findViewById(R.id.layout_article_list);
-
+        linearLayout.setLayoutAnimation(layoutAnimationController);
         View articleViewLayout = inflater.inflate(R.layout.layout_article_view, container, false);
         ArticleView articleView = (ArticleView) articleViewLayout.findViewById(R.id.article_view);
         layoutParams = articleView.getLayoutParams();
-
-        return view;
     }
 
 
@@ -73,7 +95,7 @@ public class ArticleListFragment extends Fragment implements ArticleListView{
             ArticleView articleView = DiaryAdapter.getArticleView(diaryEntity, layoutParams, listener);
             linearLayout.addView(articleView);
         }
-
+        linearLayout.startLayoutAnimation();
     }
 
     @Override

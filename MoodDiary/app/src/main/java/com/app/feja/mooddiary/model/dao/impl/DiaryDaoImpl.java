@@ -65,7 +65,8 @@ public class DiaryDaoImpl implements DiaryDao {
         DateTime dateTime2 = dateTime1.clone();
         dateTime2.addDay(1);
         try {
-            return dao.queryBuilder().orderBy(DiaryEntity.COLUMN_NAME_CREATE_TIME, false)
+            return dao.queryBuilder()
+                    .orderBy(DiaryEntity.COLUMN_NAME_CREATE_TIME, false)
                     .where()
                     .eq(DiaryEntity.COLUMN_NAME_IS_DELETE, DiaryEntity.IS_NOT_DELETE)
                     .and()
@@ -80,7 +81,8 @@ public class DiaryDaoImpl implements DiaryDao {
     @Override
     public List<DiaryEntity> getDiary(Long count) {
         try {
-            return dao.queryBuilder().orderBy(DiaryEntity.COLUMN_NAME_CREATE_TIME, false)
+            return dao.queryBuilder()
+                    .orderBy(DiaryEntity.COLUMN_NAME_CREATE_TIME, false)
                     .limit(count).where()
                     .eq(DiaryEntity.COLUMN_NAME_IS_DELETE, DiaryEntity.IS_NOT_DELETE).query();
         } catch (SQLException e) {
@@ -97,7 +99,8 @@ public class DiaryDaoImpl implements DiaryDao {
     @Override
     public List<DiaryEntity> getDiary(TypeEntity typeEntity) {
         try {
-            return dao.queryBuilder().orderBy(DiaryEntity.COLUMN_NAME_CREATE_TIME, false)
+            return dao.queryBuilder()
+                    .orderBy(DiaryEntity.COLUMN_NAME_CREATE_TIME, false)
                     .where()
                     .eq(DiaryEntity.COLUMN_NAME_TYPE, typeEntity)
                     .and()
@@ -117,7 +120,9 @@ public class DiaryDaoImpl implements DiaryDao {
     @Override
     public List<DiaryEntity> getAllDiary() {
         try {
-            return dao.queryBuilder().where()
+            return dao.queryBuilder()
+                    .orderBy(DiaryEntity.COLUMN_NAME_CREATE_TIME, false)
+                    .where()
                     .eq(DiaryEntity.COLUMN_NAME_IS_DELETE, DiaryEntity.IS_NOT_DELETE).query();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -129,6 +134,7 @@ public class DiaryDaoImpl implements DiaryDao {
     public List<DiaryEntity> getDiaryByKeyword(String keyword) {
         try {
             return dao.queryBuilder()
+                    .orderBy(DiaryEntity.COLUMN_NAME_CREATE_TIME, false)
                     .where()
                     .eq(DiaryEntity.COLUMN_NAME_IS_DELETE, DiaryEntity.IS_NOT_DELETE)
                     .and()

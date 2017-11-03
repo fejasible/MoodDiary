@@ -20,7 +20,10 @@
         android:scrollbarSize="@dimen/x5">
 
         <EditText
-            android:layout_margin="@dimen/x2"
+            android:layout_marginLeft="@dimen/x10"
+            android:layout_marginRight="@dimen/x2"
+            android:layout_marginTop="@dimen/x10"
+            android:layout_marginBottom="@dimen/x10"
             android:id="@+id/editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,10 +34,10 @@
             android:gravity="start"/>
     </ScrollView>
 
-    <com.app.feja.mooddiary.widget.base.TouchListenView
+    <com.app.feja.mooddiary.widget.Search.EditToolBar
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x100"
-        android:background="@color/lightGrey"/>
+        android:layout_height="@dimen/x80"
+        android:background="@color/white"/>
 
 
 </LinearLayout>

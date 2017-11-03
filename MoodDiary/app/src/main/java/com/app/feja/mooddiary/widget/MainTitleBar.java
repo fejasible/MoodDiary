@@ -8,6 +8,8 @@ import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.AnimationSet;
 import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
@@ -18,6 +20,8 @@ public class MainTitleBar extends BaseView {
 
     private String titleString;
     private String searchString;
+
+    private AnimationSet animationSet;
 
     private String today = "";
 
@@ -83,6 +87,11 @@ public class MainTitleBar extends BaseView {
                 Toast.makeText(getContext(), "search", Toast.LENGTH_SHORT).show();
             }
         };
+
+        animationSet = new AnimationSet(false);
+        AlphaAnimation alphaAnimation2 = new AlphaAnimation(0.5f, 1.0f);
+        alphaAnimation2.setDuration(500);
+        animationSet.addAnimation(alphaAnimation2);
     }
 
     @Override
@@ -116,13 +125,15 @@ public class MainTitleBar extends BaseView {
     @Override
     public void onDraw(Canvas canvas){
         if(this.showSearch){
-            this.drawSearch(rectSearch, paint, canvas);
+//            this.drawSearch(rectSearch, paint, canvas);
+            this.drawUpArrow(rectSearch, paint, canvas);
             this.drawSearchTitle(rectCategory, paint, canvas);
             return ;
         }
         if(this.showDateTime){
             this.drawDate(rectCategory.left, rectCategory.top, rectCategory.right, rectCategory.bottom, paint, canvas);
-            this.drawCalendarImage(rectCalendar, paint, canvas);
+//            this.drawCalendarImage(rectCalendar, paint, canvas);
+            this.drawLeftUpArrow(rectCalendar, paint, canvas);
             return ;
         }
         this.drawCalendarImage(rectCalendar, paint, canvas);
@@ -136,6 +147,7 @@ public class MainTitleBar extends BaseView {
         this.enableCategory = false;
         this.showDateTime = true;
         this.invalidate();
+        this.startAnimation(animationSet);
     }
 
     public void changeDate(){
@@ -143,6 +155,7 @@ public class MainTitleBar extends BaseView {
         this.enableCategory = false;
         this.showDateTime = true;
         this.invalidate();
+        this.startAnimation(animationSet);
     }
 
     public void changeTitle(){
@@ -152,6 +165,7 @@ public class MainTitleBar extends BaseView {
         this.showDateTime = false;
         this.showSearch = false;
         this.invalidate();
+        this.startAnimation(animationSet);
     }
 
     public void changeSearch(){
@@ -159,6 +173,7 @@ public class MainTitleBar extends BaseView {
         this.enableCategory = false;
         this.showSearch = true;
         this.invalidate();
+        this.startAnimation(animationSet);
     }
 
     private void drawDate(int left, int top, int right, int bottom, Paint paint, Canvas canvas){
@@ -235,10 +250,45 @@ public class MainTitleBar extends BaseView {
             paint.setColor(Color.WHITE);
         }
         paint.setStrokeWidth(2.0f);
+        paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.STROKE);
 
         canvas.drawCircle(x, y, r, paint);
         canvas.drawLine(x+r, y+r, x+r/1.414f, y+r/1.414f, paint);
+    }
+
+    private void drawUpArrow(Rect rect, Paint paint, Canvas canvas){
+        int x = rect.centerX();
+        int y = rect.centerY();
+        int r = rect.width()/2;
+        paint.reset();
+        if(pressSearchDown){
+            paint.setColor(Color.GRAY);
+        }else {
+            paint.setColor(Color.WHITE);
+        }
+        paint.setStrokeWidth(2.0f);
+        paint.setAntiAlias(true);
+        paint.setStyle(Paint.Style.STROKE);
+        canvas.drawLine(x-r/2, y+r/3, x, y-r/3, paint);
+        canvas.drawLine(x, y-r/3, x+r/2, y+r/3, paint);
+    }
+
+    private void drawLeftUpArrow(Rect rect, Paint paint, Canvas canvas){
+        int x = rect.centerX();
+        int y = rect.centerY();
+        int r = rect.width()/2;
+        paint.reset();
+        if(pressSearchDown){
+            paint.setColor(Color.GRAY);
+        }else {
+            paint.setColor(Color.WHITE);
+        }
+        paint.setStrokeWidth(2.0f);
+        paint.setAntiAlias(true);
+        paint.setStyle(Paint.Style.STROKE);
+        canvas.drawLine(x-r/2, y, x, y, paint);
+        canvas.drawLine(x-r/2, y, x-r/2, y+r/2, paint);
     }
 
     @Override

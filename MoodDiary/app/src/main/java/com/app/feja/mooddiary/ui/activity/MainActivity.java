@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -26,6 +29,7 @@ import com.app.feja.mooddiary.widget.CategoryView;
 import com.app.feja.mooddiary.widget.MainTitleBar;
 import com.app.feja.mooddiary.widget.Search.DataHelper;
 import com.app.feja.mooddiary.widget.Search.DiarySuggestion;
+import com.app.feja.mooddiary.widget.SearchView;
 import com.app.feja.mooddiary.widget.TabView;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
@@ -42,7 +46,7 @@ import java.util.TimeZone;
 
 
 public class MainActivity extends FragmentActivity implements TabView.OnTabClickListener,
-        MainTitleBar.OnTitleBarClickListener, ArticleListView, View.OnClickListener{
+        MainTitleBar.OnTitleBarClickListener, ArticleListView, View.OnClickListener, TextWatcher, SearchView.OnAnimationListener {
 
     private ArticleListFragment articleListFragment;
     private SettingsFragment settingsFragment;
@@ -56,6 +60,7 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
     private CompactCalendarView compactCalendarView;
     private Date selectDate;
     private FloatingSearchView floatingSearchView;
+    private SearchView searchView;
     public static final long FIND_SUGGESTION_SIMULATED_DELAY = 250;
 
     @Override
@@ -253,16 +258,19 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
         customPopWindow.showAsDropDown(mainTitleBar, ApplicationContext.getScreenWidth() / 5, 5);
     }
 
-    private boolean isSearchBarShowing = false;
-    /**
-     * 搜索被点击
-     */
-    @Override
-    public void onSearchClick() {
+//    private boolean isSearchBarShowing = false;
+//    /**
+//     * 搜索被点击
+//     */
+//    @Override
+//    public void onSearchClick() {
 //        if(floatingSearchView == null){
 //            LinearLayout linearLayout = (LinearLayout) LayoutInflater
 //                    .from(this)
 //                    .inflate(R.layout.layout_search_bar, null, false);
+//
+//
+//
 //            floatingSearchView = (FloatingSearchView) linearLayout.findViewById(R.id.floating_search_view);
 //            linearLayout.removeView(floatingSearchView);
 //            mainLayout.addView(floatingSearchView, 1);
@@ -308,9 +316,36 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
 //            mainTitleBar.changeSearch();
 //            mainLayout.addView(floatingSearchView, 1);
 //        }
+//    }
 
-
-
+    private boolean isSearchBarShowing = false;
+    /**
+     * 搜索被点击
+     */
+    @Override
+    public void onSearchClick() {
+        if(searchView == null){
+            LinearLayout linearLayout = (LinearLayout) LayoutInflater
+                    .from(this)
+                    .inflate(R.layout.layout_search_bar, null, false);
+            searchView = (SearchView) linearLayout.findViewById(R.id.search_view);
+            linearLayout.removeView(searchView);
+            linearLayout = null;
+            mainLayout.addView(searchView, 1);
+            isSearchBarShowing = true;
+            mainTitleBar.changeSearch();
+            searchView.addTextChangedListener(this);
+            searchView.setOnAnimationListener(this);
+            searchView.showWithAnimation();
+        }else if(isSearchBarShowing){
+            isSearchBarShowing = false;
+            searchView.hideWithAnimation();
+            mainTitleBar.changeTitle();
+        }else{
+            isSearchBarShowing = true;
+            searchView.showWithAnimation();
+            mainTitleBar.changeSearch();
+        }
     }
 
     @Override
@@ -351,6 +386,35 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
             presenter.loadArticles(selectDate);
         }else{
             presenter.loadArticles(mainTitleBar.getTitleString());
+        }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        presenter.loadArticlesByKeyWord(s.toString());
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
+
+    @Override
+    public void onHideAnimationEnd() {
+        if(searchView.getSearchString() != null && !searchView.getSearchString().equals("")){
+            presenter.loadArticles(mainTitleBar.getTitleString());
+        }
+    }
+
+    @Override
+    public void onShowAnimationEnd() {
+        if(searchView.getSearchString() != null && !searchView.getSearchString().equals("")) {
+            presenter.loadArticlesByKeyWord(searchView.getSearchString());
         }
     }
 }

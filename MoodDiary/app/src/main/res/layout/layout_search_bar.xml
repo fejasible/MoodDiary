@@ -5,18 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.arlib.floatingsearchview.FloatingSearchView
-        android:id="@+id/floating_search_view"
+    <com.app.feja.mooddiary.widget.SearchView
+        android:id="@+id/search_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:floatingSearch_searchBarMarginLeft="@dimen/x10"
-        app:floatingSearch_searchBarMarginTop="@dimen/x10"
-        app:floatingSearch_searchBarMarginRight="@dimen/x10"
-        app:floatingSearch_searchHint="@string/enter_keyword"
-        app:floatingSearch_suggestionsListAnimDuration="150"
-        app:floatingSearch_showSearchKey="false"
-        app:floatingSearch_leftActionMode="noLeftAction"
-        app:floatingSearch_close_search_on_keyboard_dismiss="true"/>
-
+        android:layout_height="@dimen/x100">
+    </com.app.feja.mooddiary.widget.SearchView>
 
 </LinearLayout>

@@ -10,10 +10,22 @@
         android:layout_height="@dimen/x100"
         android:background="@color/lightSkyBlue"/>
 
-    <TextView
-        android:id="@+id/textView"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:scrollbarThumbVertical="@color/lightSkyBlue"
+        android:scrollbarSize="@dimen/x5">
+
+        <TextView
+            android:layout_marginLeft="@dimen/x10"
+            android:layout_marginRight="@dimen/x2"
+            android:layout_marginTop="@dimen/x10"
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </ScrollView>
+
 
 
 </LinearLayout>

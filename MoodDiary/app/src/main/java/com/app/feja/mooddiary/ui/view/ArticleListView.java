@@ -1,6 +1,8 @@
 package com.app.feja.mooddiary.ui.view;
 
 
+import android.support.annotation.Nullable;
+
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 
 import java.util.List;
