@@ -108,7 +108,7 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
                 startActivity(intent);
                 break;
             case 2:
-                fragmentTransaction.replace(R.id.fragment_container, settingsFragment);
+//                fragmentTransaction.replace(R.id.fragment_container, settingsFragment);
                 break;
         }
         fragmentTransaction.commit();

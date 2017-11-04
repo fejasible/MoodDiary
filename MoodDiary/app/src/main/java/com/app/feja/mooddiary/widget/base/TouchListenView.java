@@ -191,6 +191,12 @@ public class TouchListenView extends BaseView{
     }
 
     public interface OnItemTouchListener{
+        /**
+         * 点击响应
+         * @param item 第item个点击可区域，从0开始
+         * @param touchRect 第i个点击区域rect
+         * @param event 点击事件
+         */
         void onItemTouch(int item, Rect touchRect, MotionEvent event);
     }
 

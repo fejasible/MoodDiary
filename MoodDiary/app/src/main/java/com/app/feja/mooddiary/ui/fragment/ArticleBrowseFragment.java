@@ -3,33 +3,39 @@ package com.app.feja.mooddiary.ui.fragment;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import com.app.feja.mooddiary.R;
+import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.constant.CONSTANT;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
-import com.app.feja.mooddiary.model.entity.TypeEntity;
 import com.app.feja.mooddiary.presenter.ArticleBrowsePresenter;
 import com.app.feja.mooddiary.ui.activity.ArticleEditActivity;
 import com.app.feja.mooddiary.ui.view.ArticleView;
 import com.app.feja.mooddiary.widget.ArticleBrowseTitleBar;
+import com.lzy.imagepicker.bean.ImageItem;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import cn.qqtheme.framework.picker.SinglePicker;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ArticleBrowseFragment extends Fragment implements ArticleView{
 
     private View view;
     private ArticleBrowseTitleBar titleBar;
     private DiaryEntity diaryEntity;
-    private TextView textView;
+    private EditText editText;
     private ArticleBrowsePresenter articleBrowsePresenter;
 
     @Nullable
@@ -37,7 +43,7 @@ public class ArticleBrowseFragment extends Fragment implements ArticleView{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_article_browse, container, false);
         titleBar = (ArticleBrowseTitleBar) view.findViewById(R.id.article_browse_title_bar);
-        textView = (TextView) view.findViewById(R.id.textView);
+        editText = (EditText) view.findViewById(R.id.id_browse_edit_text);
         this.articleBrowsePresenter = new ArticleBrowsePresenter(this);
 
         Serializable serializable = getActivity().getIntent().getSerializableExtra(DiaryEntity.BUNDLE_NAME);
@@ -74,19 +80,75 @@ public class ArticleBrowseFragment extends Fragment implements ArticleView{
                 startActivity(intent);
             }
         });
-
         return view;
     }
 
     @Override
     public void onLoadArticle(DiaryEntity diaryEntity) {
         titleBar.setDiaryEntity(diaryEntity);
-        textView.setText(diaryEntity.getContent());
+        editText.setTextSize(diaryEntity.getTextSize());
+
+        editText.setText("");
+        String content = diaryEntity.getContent();
+        String[] split = content.split(CONSTANT.EDITABLE_IMAGE_TAG_START + ".*?"
+                + CONSTANT.EDITABLE_IMAGE_TAG_END);
+        Pattern pattern = Pattern.compile(CONSTANT.EDITABLE_IMAGE_TAG_START + "(.*?)" +
+                CONSTANT.EDITABLE_IMAGE_TAG_END);
+        Matcher matcher = pattern.matcher(content);
+        int i = 0;
+        editText.getEditableText().append(split[0]);
+        while(matcher.find()){
+            String path = matcher.group(1);
+            Bitmap bitmap = BitmapFactory.decodeFile(path);
+            if(bitmap != null){
+                path = CONSTANT.EDITABLE_IMAGE_TAG_START + path + CONSTANT.EDITABLE_IMAGE_TAG_END;
+                SpannableString spannableString = new SpannableString(path);
+                if(bitmap.getWidth() > ApplicationContext.getScreenWidth()){
+                    try {
+                        bitmap = Bitmap.createScaledBitmap(
+                                bitmap,
+                                ApplicationContext.getScreenWidth()-20,
+                                bitmap.getHeight()*(ApplicationContext.getScreenWidth()-20)/bitmap.getWidth(),
+                                false
+                        );
+                    }catch (IllegalArgumentException e){
+                        e.printStackTrace();
+                    }
+                }
+                ImageSpan imageSpan = new ImageSpan(getActivity(), bitmap);
+                spannableString.setSpan(imageSpan, 0, path.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                editText.getEditableText().append(spannableString);
+            }else{
+                editText.getEditableText().append(getString(R.string.image));
+            }
+            editText.getEditableText().append(split[i+1]);
+            i++;
+        }
+    }
+
+    private void appendImage(ImageItem imageItem, EditText editText){
+        int index = editText.getSelectionStart();
+        SpannableString newLine = new SpannableString("\n");
+        editText.getEditableText().insert(index, newLine);
+        String path = CONSTANT.EDITABLE_IMAGE_TAG_START + imageItem.path + CONSTANT.EDITABLE_IMAGE_TAG_END;
+        SpannableString spannableString = new SpannableString(path);
+        Bitmap bitmap = BitmapFactory.decodeFile(imageItem.path);
+        if(bitmap.getWidth() > ApplicationContext.getScreenWidth()){
+            bitmap = Bitmap.createScaledBitmap(bitmap, editText.getWidth(),
+                    bitmap.getHeight()*(editText.getWidth())/bitmap.getWidth(), false);
+        }
+        ImageSpan imageSpan = new ImageSpan(getActivity(), bitmap);
+        spannableString.setSpan(imageSpan, 0, path.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        if (index < 0 || index >= editText.getEditableText().length()) {
+            editText.getEditableText().append(spannableString);
+        } else {
+            editText.getEditableText().insert(index, spannableString);
+        }
     }
 
     @Override
-    public void onStart() {
+    public void onResume() {
         articleBrowsePresenter.loadArticle(diaryEntity);
-        super.onStart();
+        super.onResume();
     }
 }

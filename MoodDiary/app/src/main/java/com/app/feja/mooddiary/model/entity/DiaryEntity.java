@@ -32,7 +32,7 @@ public class DiaryEntity extends BaseEntity implements Serializable{
         this.weather = WEATHER.UNKNOWN.getIndex();
         this.isDelete = IS_NOT_DELETE;
         this.background = "";
-        this.textSize = 10;
+        this.textSize = 16;
     }
 
     public DiaryEntity(String content, TypeEntity type) {

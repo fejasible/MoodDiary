@@ -21,12 +21,15 @@ import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
+import com.app.feja.mooddiary.constant.CONSTANT;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.util.DateTime;
 import com.app.feja.mooddiary.widget.base.BaseView;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class ArticleView extends BaseView {
@@ -198,6 +201,7 @@ public class ArticleView extends BaseView {
         }else{
             paint.setColor(themeColor);
         }
+        paint.setAntiAlias(true);
         paint.setTextSize(baseTextSize);
         if(diaryEntity == null || diaryEntity.getCreateTime() == null){
             today = new DateTime();
@@ -267,8 +271,13 @@ public class ArticleView extends BaseView {
                                 Layout.Alignment.ALIGN_NORMAL, TextDirectionHeuristics.FIRSTSTRONG_LTR,
                                 1.0F, 1.0F, true, TextUtils.TruncateAt.MARQUEE, 10, 3);
                     }else{
-                        layout = (StaticLayout) constructor.newInstance(diaryEntity.getContent(), 0,
-                                diaryEntity.getContent().length(), textPaint, outerWidth,
+                        String content = diaryEntity.getContent();
+                        Pattern pattern = Pattern.compile(CONSTANT.EDITABLE_IMAGE_TAG_START + ".*?"
+                                + CONSTANT.EDITABLE_IMAGE_TAG_END);
+                        Matcher matcher = pattern.matcher(content);
+                        content = matcher.replaceAll(getResources().getString(R.string.image));
+                        layout = (StaticLayout) constructor.newInstance(content, 0,
+                                content.length(), textPaint, outerWidth,
                                 Layout.Alignment.ALIGN_NORMAL, TextDirectionHeuristics.FIRSTSTRONG_LTR,
                                 1.0F, 1.0F, true, TextUtils.TruncateAt.MARQUEE, 10, 3);
                     }

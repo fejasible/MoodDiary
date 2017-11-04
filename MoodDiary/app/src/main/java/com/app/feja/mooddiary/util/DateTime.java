@@ -203,7 +203,7 @@ public class DateTime {
     }
 
     public DateTime setDate(int year, int month, int day) {
-        return this.setTime(year, month, day, 0, 0, 0);
+        return this.set(YEAR, year).set(MONTH, month).set(DAY, day);
     }
 
     public DateTime setClock(int hour, int minute, int second) {

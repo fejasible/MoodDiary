@@ -17,13 +17,21 @@
         android:scrollbarThumbVertical="@color/lightSkyBlue"
         android:scrollbarSize="@dimen/x5">
 
-        <TextView
+        <EditText
+            android:id="@+id/id_browse_edit_text"
             android:layout_marginLeft="@dimen/x10"
-            android:layout_marginRight="@dimen/x2"
+            android:layout_marginRight="@dimen/x10"
             android:layout_marginTop="@dimen/x10"
-            android:id="@+id/textView"
+            android:layout_marginBottom="@dimen/x10"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:enabled="false"
+            android:focusable="false"
+            android:inputType="textMultiLine"
+            android:background="@color/white"
+            android:textCursorDrawable="@drawable/edit_cursor_color"
+            android:gravity="start"/>
     </ScrollView>
 
 

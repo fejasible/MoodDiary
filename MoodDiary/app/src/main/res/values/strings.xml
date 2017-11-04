@@ -26,7 +26,11 @@
     <string name="delete_category_">删除分类：</string>
     <string name="delete_category_only">仅删除分类</string>
     <string name="delete_category_and_diary">删分类和日记</string>
-    <string name="enter_keyword">输入关键字...</string>
+    <string name="enter_keyword">输入关键字…</string>
+    <string name="scale">大小</string>
+    <string name="current_text_size">当前字号</string>
+    <string name="general_max_per_image">图片过大，超过200k上限。</string>
+    <string name="image">[图片]</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

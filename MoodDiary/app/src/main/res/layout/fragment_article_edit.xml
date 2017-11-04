@@ -12,6 +12,7 @@
         android:background="@color/lightSkyBlue"/>
 
     <ScrollView
+        android:id="@+id/id_edit_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="0px"
         android:layout_weight="1"
@@ -20,11 +21,11 @@
         android:scrollbarSize="@dimen/x5">
 
         <EditText
+            android:id="@+id/editText"
             android:layout_marginLeft="@dimen/x10"
             android:layout_marginRight="@dimen/x2"
             android:layout_marginTop="@dimen/x10"
             android:layout_marginBottom="@dimen/x10"
-            android:id="@+id/editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -34,10 +35,10 @@
             android:gravity="start"/>
     </ScrollView>
 
-    <com.app.feja.mooddiary.widget.Search.EditToolBar
+    <com.app.feja.mooddiary.widget.EditToolBar
+        android:id="@+id/id_edit_tool_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/x80"
         android:background="@color/white"/>
-
 
 </LinearLayout>
