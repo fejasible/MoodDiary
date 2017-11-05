@@ -1,7 +1,6 @@
 package com.app.feja.mooddiary.model.dao;
 
 
-import com.app.feja.mooddiary.constant.WEATHER;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.model.entity.TypeEntity;
 import com.app.feja.mooddiary.util.DateTime;
@@ -22,7 +21,7 @@ public interface DiaryDao {
     List<DiaryEntity> getDiary(Long count);
     List<DiaryEntity> getDiaryByFace(int face);
     List<DiaryEntity> getDiary(TypeEntity typeEntity);
-    List<DiaryEntity> getDiaryByWeather(WEATHER weather);
+    List<DiaryEntity> getDiaryByWeather(int weather);
     List<DiaryEntity> getAllDiary();
     List<DiaryEntity> getDiaryByKeyword(String keyword);
 

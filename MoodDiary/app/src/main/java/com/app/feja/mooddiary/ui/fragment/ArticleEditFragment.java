@@ -39,7 +39,7 @@ import com.app.feja.mooddiary.widget.EditToolBar;
 import com.app.feja.mooddiary.widget.base.TouchListenView;
 import com.app.feja.mooddiary.widget.edit.FaceChooseView;
 import com.app.feja.mooddiary.widget.edit.MyRangeSeekBar;
-import com.app.feja.mooddiary.widget.edit.ScrollChooseView;
+import com.app.feja.mooddiary.widget.edit.WeatherView;
 import com.example.zhouwei.library.CustomPopWindow;
 import com.jaygoo.widget.RangeSeekBar;
 import com.lzy.imagepicker.ImagePicker;
@@ -74,6 +74,7 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
     private MyRangeSeekBar rangeSeekBar;
     private DateTimePicker dateTimePicker;
     private FaceChooseView faceChooseView;
+    private WeatherView weatherView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -121,6 +122,7 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
         }
         articleEditPresenter.loadArticle(diaryEntity);
         editToolBar.setFace(this.diaryEntity.getMood());
+        editToolBar.setWeatherModel(ApplicationContext.getWeatherModel());
     }
 
     /**
@@ -157,6 +159,14 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
                 editToolBar.setFace(item);
             }
         });
+
+        //天气
+        this.weatherView = new WeatherView(getActivity());
+        this.weatherView.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ApplicationContext.getScreenHeight() / 12
+        ));
+        this.weatherView.setWeatherModel(editToolBar.getWeatherModel());
     }
 
     /**
@@ -336,6 +346,9 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
      */
     @Override
     public void onItemTouch(int item, Rect touchRect, MotionEvent event) {
+        if(item == 4){
+            return ;
+        }
         InputMethodManager imm = (InputMethodManager) getActivity()
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
@@ -355,11 +368,12 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
             case 2:
                 dateTimePicker.show();
                 break;
+//            case 3:
+//                view.addView(this.weatherView);
+//                currentView = this.weatherView;
+//                editToolBar.setStatus(EditToolBar.UP);
+//                break;
             case 3:
-                view.addView(this.rangeSeekBar);
-                currentView = this.rangeSeekBar;
-                break;
-            case 4:
                 view.addView(this.faceChooseView);
                 currentView = this.faceChooseView;
                 editToolBar.setStatus(EditToolBar.UP);
@@ -388,7 +402,7 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
     }
 
     /**
-     * 点击ScorllView的响应
+     * 点击ScrollView的响应
      */
     private long timePassed;
     @Override

@@ -5,34 +5,31 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
+import com.app.feja.mooddiary.adapter.WeatherAdapter;
 import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.http.model.WeatherModel;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.model.entity.TypeEntity;
 import com.app.feja.mooddiary.presenter.ArticleListPresenter;
+import com.app.feja.mooddiary.presenter.WeatherPresenter;
 import com.app.feja.mooddiary.ui.fragment.ArticleListFragment;
 import com.app.feja.mooddiary.ui.fragment.SettingsFragment;
 import com.app.feja.mooddiary.ui.view.ArticleListView;
+import com.app.feja.mooddiary.ui.view.WeatherView;
 import com.app.feja.mooddiary.util.DateTime;
-import com.app.feja.mooddiary.widget.ArticleView;
 import com.app.feja.mooddiary.widget.CategoryView;
 import com.app.feja.mooddiary.widget.MainTitleBar;
-import com.app.feja.mooddiary.widget.Search.DataHelper;
-import com.app.feja.mooddiary.widget.Search.DiarySuggestion;
 import com.app.feja.mooddiary.widget.SearchView;
 import com.app.feja.mooddiary.widget.TabView;
 import com.arlib.floatingsearchview.FloatingSearchView;
-import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.example.zhouwei.library.CustomPopWindow;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
@@ -46,13 +43,15 @@ import java.util.TimeZone;
 
 
 public class MainActivity extends FragmentActivity implements TabView.OnTabClickListener,
-        MainTitleBar.OnTitleBarClickListener, ArticleListView, View.OnClickListener, TextWatcher, SearchView.OnAnimationListener {
+        MainTitleBar.OnTitleBarClickListener, ArticleListView, View.OnClickListener, TextWatcher,
+        SearchView.OnAnimationListener, WeatherView {
 
     private ArticleListFragment articleListFragment;
     private SettingsFragment settingsFragment;
     private MainTitleBar mainTitleBar;
     private TabView tabView;
     private ArticleListPresenter presenter;
+    private WeatherPresenter weatherPresenter;
     private CustomPopWindow customPopWindow;
     private LinearLayout mainLayout;
     private LinearLayout popupLayout;
@@ -77,10 +76,12 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
         mainTitleBar = (MainTitleBar) this.findViewById(R.id.main_title_bar);
         mainLayout = (LinearLayout) this.findViewById(R.id.id_container_main);
         presenter = new ArticleListPresenter(this);
+        weatherPresenter = new WeatherPresenter(this);
 
         tabView.setOnTabClickListener(this);
         mainTitleBar.setOnTitleBarClickListener(this);
 
+//        weatherPresenter.getWeather();
     }
 
 
@@ -415,6 +416,13 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
     public void onShowAnimationEnd() {
         if(searchView.getSearchString() != null && !searchView.getSearchString().equals("")) {
             presenter.loadArticlesByKeyWord(searchView.getSearchString());
+        }
+    }
+
+    @Override
+    public void onLoadWeather(WeatherModel weatherModel) {
+        if(weatherModel != null){
+            ApplicationContext.setWeatherModel(weatherModel);
         }
     }
 }

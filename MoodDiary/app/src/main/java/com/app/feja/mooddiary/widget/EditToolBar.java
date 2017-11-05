@@ -1,6 +1,8 @@
 package com.app.feja.mooddiary.widget;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -10,6 +12,8 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 
 import com.app.feja.mooddiary.R;
+import com.app.feja.mooddiary.adapter.WeatherAdapter;
+import com.app.feja.mooddiary.http.model.WeatherModel;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.widget.base.TouchListenView;
 
@@ -23,6 +27,8 @@ public class EditToolBar extends TouchListenView{
     private Paint backgroundPaint;
     private int status = UP;
     private int face = DiaryEntity.CALM;
+    private WeatherModel weatherModel = new WeatherModel();
+    private Bitmap weatherBitmap;
 
     public EditToolBar(Context context, int touchZoneNum, @Nullable int[] rectPercents) {
         super(context, touchZoneNum, rectPercents);
@@ -57,10 +63,32 @@ public class EditToolBar extends TouchListenView{
         this.invalidate();
     }
 
+    public WeatherModel getWeatherModel() {
+        return weatherModel;
+    }
+
+    public void setWeatherModel(WeatherModel weatherModel) {
+        this.weatherModel = weatherModel;
+        this.updateWeatherBitmap();
+    }
+
+    private void updateWeatherBitmap(){
+        this.weatherBitmap = BitmapFactory.decodeResource(getResources(),
+                getResources().getIdentifier(
+                        WeatherAdapter.WEATHER_RESOURCE_PREFIX_NAME
+                                + weatherModel.getResults().get(0).getNow().getCode(),
+                        "mipmap",
+                        getContext().getPackageName()
+                )
+        );
+
+    }
+
     private void init(){
         this.initThemePaint();
         this.initBackgroundPaint();
         this.initReflectPaint();
+        this.initBitmap();
     }
 
     private void initThemePaint(){
@@ -87,6 +115,10 @@ public class EditToolBar extends TouchListenView{
         this.reflectPaint.setColor(ContextCompat.getColor(getContext(), R.color.dark_gray));
     }
 
+    private void initBitmap(){
+        this.updateWeatherBitmap();
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -106,8 +138,8 @@ public class EditToolBar extends TouchListenView{
         this.drawTools_1(getRects()[0], themePaint, canvas);
         this.drawTools_2(getRects()[1], themePaint, canvas);
         this.drawTools_3(getRects()[2], themePaint, canvas);
-        this.drawTools_4(getRects()[3], themePaint, canvas);
-        this.drawTools_5(getRects()[4], themePaint, canvas);
+//        this.drawTools_4(getRects()[3], themePaint, canvas);
+        this.drawTools_5(getRects()[3], themePaint, canvas);
         this.drawTools_6(getRects()[5], themePaint, canvas);
     }
 
@@ -146,12 +178,17 @@ public class EditToolBar extends TouchListenView{
         int x = rect.centerX();
         int y = rect.centerY();
         int r = rect.height()/2;
-        canvas.drawCircle(x, y, r/4, paint);
-        for(int i=0; i<8; i++){
-            float theta = (float) (i*Math.PI/4);
-            canvas.drawLine((int)((x*3+Math.cos(theta)*r)/3), (int)((y*3-Math.sin(theta)*r)/3),
-                    (int)((x*2+Math.cos(theta)*r)/2), (int)((y*2-Math.sin(theta)*r)/2), paint);
+//        canvas.drawCircle(x, y, r/4, paint);
+//        for(int i=0; i<8; i++){
+//            float theta = (float) (i*Math.PI/4);
+//            canvas.drawLine((int)((x*3+Math.cos(theta)*r)/3), (int)((y*3-Math.sin(theta)*r)/3),
+//                    (int)((x*2+Math.cos(theta)*r)/2), (int)((y*2-Math.sin(theta)*r)/2), paint);
+//        }
+        if(weatherBitmap == null){
+            this.updateWeatherBitmap();
         }
+        canvas.drawBitmap(weatherBitmap, rect.centerX()-weatherBitmap.getWidth()/2
+                , rect.centerY()-weatherBitmap.getHeight()/2, paint);
     }
 
     private void drawTools_5(Rect rect, Paint paint, Canvas canvas) {

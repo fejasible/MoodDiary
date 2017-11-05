@@ -2,8 +2,8 @@ package com.app.feja.mooddiary.model.entity;
 
 
 import com.app.feja.mooddiary.R;
+import com.app.feja.mooddiary.adapter.WeatherAdapter;
 import com.app.feja.mooddiary.application.ApplicationContext;
-import com.app.feja.mooddiary.constant.WEATHER;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -29,7 +29,7 @@ public class DiaryEntity extends BaseEntity implements Serializable{
         this.createTime = new Date();
         this.mood = DiaryEntity.CALM;
         this.content = "";
-        this.weather = WEATHER.UNKNOWN.getIndex();
+        this.weather = WeatherAdapter.Unknown;
         this.isDelete = IS_NOT_DELETE;
         this.background = "";
         this.textSize = 16;
@@ -39,7 +39,7 @@ public class DiaryEntity extends BaseEntity implements Serializable{
         this.createTime = new Date();
         this.mood = DiaryEntity.CALM;
         this.content = content;
-        this.weather = WEATHER.UNKNOWN.getIndex();
+        this.weather = WeatherAdapter.Unknown;
         this.type = type;
         this.isDelete = IS_NOT_DELETE;
         this.background = "";

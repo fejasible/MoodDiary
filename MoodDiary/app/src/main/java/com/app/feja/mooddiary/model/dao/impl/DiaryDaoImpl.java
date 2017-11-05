@@ -6,7 +6,6 @@ import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.application.ApplicationContext;
-import com.app.feja.mooddiary.constant.WEATHER;
 import com.app.feja.mooddiary.model.DatabaseHelper;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.model.dao.DiaryDao;
@@ -113,7 +112,7 @@ public class DiaryDaoImpl implements DiaryDao {
     }
 
     @Override
-    public List<DiaryEntity> getDiaryByWeather(WEATHER weather) {
+    public List<DiaryEntity> getDiaryByWeather(int weather) {
         return null;
     }
 

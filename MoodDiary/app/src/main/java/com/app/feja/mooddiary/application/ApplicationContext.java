@@ -6,14 +6,18 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
+import com.app.feja.mooddiary.adapter.WeatherAdapter;
+import com.app.feja.mooddiary.http.model.WeatherModel;
 import com.app.feja.mooddiary.util.PicassoImageLoader;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.view.CropImageView;
 
 public class ApplicationContext extends Application{
+
     private static Context context;
     private static int screenWidth;
     private static int screenHeight;
+    private static WeatherModel weatherModel = new WeatherModel();
 
     @Override
     public void onCreate()
@@ -55,5 +59,13 @@ public class ApplicationContext extends Application{
 
     public static int getScreenHeight(){
         return screenHeight;
+    }
+
+    public static WeatherModel getWeatherModel() {
+        return weatherModel;
+    }
+
+    public static void setWeatherModel(WeatherModel weatherModel) {
+        ApplicationContext.weatherModel = weatherModel;
     }
 }
