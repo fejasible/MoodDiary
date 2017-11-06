@@ -18,6 +18,7 @@
         android:background="@color/white"
         android:hint="@string/input_limit"
         android:maxLines="1"
+        android:inputType="textImeMultiLine"
         android:maxLength="8"
         android:gravity="start"/>
 

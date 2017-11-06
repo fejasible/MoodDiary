@@ -10,6 +10,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
@@ -23,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.app.feja.mooddiary.R;
+import com.app.feja.mooddiary.adapter.PopupWindowAdapter;
 import com.app.feja.mooddiary.application.ApplicationContext;
 import com.app.feja.mooddiary.constant.CONSTANT;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
@@ -56,7 +59,7 @@ import cn.qqtheme.framework.picker.DateTimePicker;
 
 public class ArticleEditFragment extends Fragment implements ArticleEditView,
         ArticleEditTitleBar.OnTitleBarClickListener, ArticleListView, View.OnClickListener,
-        TouchListenView.OnItemTouchListener, View.OnTouchListener, RangeSeekBar.OnRangeChangedListener, DialogInterface.OnDismissListener {
+        TouchListenView.OnItemTouchListener, View.OnTouchListener, RangeSeekBar.OnRangeChangedListener, DialogInterface.OnDismissListener, PopupWindowAdapter.OnPopupWindowItemClickListener {
 
     public static final int IMAGE_PICKER = 0;
 
@@ -75,6 +78,7 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
     private DateTimePicker dateTimePicker;
     private FaceChooseView faceChooseView;
     private WeatherView weatherView;
+    private PopupWindowAdapter popupWindowAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -157,6 +161,7 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
             @Override
             public void onItemTouch(int item, Rect touchRect, MotionEvent event) {
                 editToolBar.setFace(item);
+                faceChooseView.setCurrentFace(item);
             }
         });
 
@@ -250,45 +255,77 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
         // 获取分类信息
         List<TypeEntity> typeEntities = articleListPresenter.getAllTypes();
 
+//        if(popupLayout == null){
+//            // 获取弹窗布局
+//            popupLayout = (LinearLayout) LayoutInflater.from(getActivity())
+//                    .inflate(R.layout.layout_category_popup_window, null);
+//
+//
+//            // 获取弹窗内容组件布局
+//            ViewGroup.LayoutParams params = popupLayout.findViewById(R.id.category_view).getLayoutParams();
+//
+//            // 初始化弹窗布局内容
+//            popupLayout.removeAllViews();
+//
+//            CategoryView categoryView;
+//
+//            // 分类选项
+//            for(TypeEntity typeEntity: typeEntities){
+//                categoryView = new CategoryView(getActivity());
+//                categoryView.setOnClickListener(this);
+//                categoryView.setLayoutParams(params);
+//                categoryView.setCategoryString(typeEntity.getType());
+//                popupLayout.addView(categoryView);
+//            }
+//
+//            // “编辑我的分类”选项
+//            categoryView = new CategoryView(getActivity());
+//            categoryView.setLayoutParams(params);
+//            categoryView.setCategoryString(getResources().getString(R.string.edit_my_category));
+//            categoryView.setOnClickListener(this);
+//            popupLayout.addView(categoryView);
+//
+//        }
+
         if(popupLayout == null){
-            // 获取弹窗布局
             popupLayout = (LinearLayout) LayoutInflater.from(getActivity())
                     .inflate(R.layout.layout_category_popup_window, null);
+            View view = popupLayout.findViewById(R.id.id_popup_all_category_view);
+            popupLayout.removeView(view);
 
+            //编辑我的分类
+            CategoryView editView = (CategoryView) popupLayout.findViewById(R.id.id_popup_edit_category_view);
+            editView.setCategoryString(getResources().getString(R.string.edit_my_category));
+            editView.setOnClickListener(this);
 
-            // 获取弹窗内容组件布局
-            ViewGroup.LayoutParams params = popupLayout.findViewById(R.id.category_view).getLayoutParams();
+            RecyclerView recyclerView = (RecyclerView) popupLayout.findViewById(R.id.id_popup_recycler_view);
 
-            // 初始化弹窗布局内容
-            popupLayout.removeAllViews();
-
-            CategoryView categoryView;
-
-            // 分类选项
-            for(TypeEntity typeEntity: typeEntities){
-                categoryView = new CategoryView(getActivity());
-                categoryView.setOnClickListener(this);
-                categoryView.setLayoutParams(params);
-                categoryView.setCategoryString(typeEntity.getType());
-                popupLayout.addView(categoryView);
-            }
-
-            // “编辑我的分类”选项
-            categoryView = new CategoryView(getActivity());
-            categoryView.setLayoutParams(params);
-            categoryView.setCategoryString(getResources().getString(R.string.edit_my_category));
-            categoryView.setOnClickListener(this);
-            popupLayout.addView(categoryView);
-
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            recyclerView.setLayoutManager(linearLayoutManager);
+            popupWindowAdapter = new PopupWindowAdapter();
+            popupWindowAdapter.setOnPopupWindowItemClickListener(this);
+            recyclerView.setAdapter(popupWindowAdapter);
         }
+
+        popupWindowAdapter.setData(typeEntities);
+        popupWindowAdapter.notifyDataSetChanged();
 
         if(customPopWindow == null){
             customPopWindow = new CustomPopWindow.PopupWindowBuilder(getActivity())
                     .setView(popupLayout)
-                    .size(ApplicationContext.getScreenWidth() * 3 / 5, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    .size(ApplicationContext.getScreenWidth() * 3 / 5, ApplicationContext.getScreenHeight() / 3)
                     .create();
         }
-        customPopWindow.showAsDropDown(titleBar, ApplicationContext.getScreenWidth() / 5, 3);
+        customPopWindow.showAsDropDown(titleBar, ApplicationContext.getScreenWidth() / 5, 5);
+
+//        if(customPopWindow == null){
+//            customPopWindow = new CustomPopWindow.PopupWindowBuilder(getActivity())
+//                    .setView(popupLayout)
+//                    .size(ApplicationContext.getScreenWidth() * 3 / 5, ViewGroup.LayoutParams.WRAP_CONTENT)
+//                    .create();
+//        }
+//        customPopWindow.showAsDropDown(titleBar, ApplicationContext.getScreenWidth() / 5, 3);
     }
 
     /**
@@ -481,5 +518,13 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
     @Override
     public void onDismiss(DialogInterface dialog) {
         editToolBar.setStatus(EditToolBar.DOWN);
+    }
+
+    @Override
+    public void onPopupWindowClick(View view) {
+        String category = ((CategoryView)view).getCategoryString();
+        diaryEntity.setType(articleListPresenter.getType(category));
+        titleBar.setDiaryEntity(diaryEntity);
+        customPopWindow.dissmiss();
     }
 }

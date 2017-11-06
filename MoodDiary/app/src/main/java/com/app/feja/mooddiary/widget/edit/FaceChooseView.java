@@ -19,6 +19,7 @@ public class FaceChooseView extends TouchListenView{
     private Paint themePaint;
     private Paint backgroundPaint;
     private int themeColor;
+    private int currentFace = DiaryEntity.CALM;
 
     public FaceChooseView(Context context, int touchZoneNum, @Nullable int[] rectPercents) {
         super(context, touchZoneNum, rectPercents);
@@ -35,6 +36,15 @@ public class FaceChooseView extends TouchListenView{
         this.init();
     }
 
+    public int getCurrentFace() {
+        return currentFace;
+    }
+
+    public void setCurrentFace(int currentFace) {
+        this.currentFace = currentFace;
+        this.invalidate();
+    }
+
     public void init(){
         this.themeColor = ContextCompat.getColor(getContext(), R.color.lightSkyBlue);
 
@@ -46,7 +56,7 @@ public class FaceChooseView extends TouchListenView{
 
         backgroundPaint = new Paint();
         backgroundPaint.setAntiAlias(true);
-        backgroundPaint.setColor(Color.LTGRAY);
+        backgroundPaint.setColor(ContextCompat.getColor(getContext(), R.color.whiteSmoke));
     }
 
     @Override
@@ -57,10 +67,8 @@ public class FaceChooseView extends TouchListenView{
 
     @Override
     protected void onDraw(Canvas canvas) {
+        canvas.drawRect(getRects()[currentFace], backgroundPaint);
         for(int i=0; i<5; i++){
-            if(getPressRects()[i]){
-                canvas.drawRect(getRects()[i], backgroundPaint);
-            }
             this.drawFace(
                     getRects()[i].centerX(),
                     getRects()[i].centerY(),

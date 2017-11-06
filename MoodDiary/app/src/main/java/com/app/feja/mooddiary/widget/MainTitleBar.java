@@ -120,6 +120,7 @@ public class MainTitleBar extends BaseView {
 
     public void setTitleString(String titleString) {
         this.titleString = titleString;
+        this.invalidate();
     }
 
     @Override

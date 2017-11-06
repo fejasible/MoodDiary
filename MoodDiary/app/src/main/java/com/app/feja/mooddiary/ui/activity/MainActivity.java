@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -13,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.adapter.WeatherAdapter;
+import com.app.feja.mooddiary.adapter.PopupWindowAdapter;
 import com.app.feja.mooddiary.application.ApplicationContext;
 import com.app.feja.mooddiary.http.model.WeatherModel;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
@@ -44,7 +46,7 @@ import java.util.TimeZone;
 
 public class MainActivity extends FragmentActivity implements TabView.OnTabClickListener,
         MainTitleBar.OnTitleBarClickListener, ArticleListView, View.OnClickListener, TextWatcher,
-        SearchView.OnAnimationListener, WeatherView {
+        SearchView.OnAnimationListener, WeatherView, PopupWindowAdapter.OnPopupWindowItemClickListener {
 
     private ArticleListFragment articleListFragment;
     private SettingsFragment settingsFragment;
@@ -52,6 +54,7 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
     private TabView tabView;
     private ArticleListPresenter presenter;
     private WeatherPresenter weatherPresenter;
+    private PopupWindowAdapter popupWindowAdapter;
     private CustomPopWindow customPopWindow;
     private LinearLayout mainLayout;
     private LinearLayout popupLayout;
@@ -188,72 +191,44 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
         List<TypeEntity> typeEntities = presenter.getAllTypes();
 
         if(popupLayout == null){
-            // 获取弹窗布局
             popupLayout = (LinearLayout) LayoutInflater.from(this)
                     .inflate(R.layout.layout_category_popup_window, null);
 
+            //所有分类
+            CategoryView totalView = (CategoryView) popupLayout.findViewById(R.id.id_popup_all_category_view);
+            totalView.setCategoryString(getResources().getString(R.string.all_sort));
+            totalView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String category = ((CategoryView) v).getCategoryString();
+                    presenter.loadArticles(category);
+                    customPopWindow.dissmiss();
+                    mainTitleBar.setTitleString(category);
+                }
+            });
 
-            // 获取弹窗内容组件布局
-            params = popupLayout.findViewById(R.id.category_view).getLayoutParams();
+            //编辑我的分类
+            CategoryView editView = (CategoryView) popupLayout.findViewById(R.id.id_popup_edit_category_view);
+            editView.setCategoryString(getResources().getString(R.string.edit_my_category));
+            editView.setOnClickListener(this);
 
-            // 初始化弹窗布局内容
-            popupLayout.removeAllViews();
+            RecyclerView recyclerView = (RecyclerView) popupLayout.findViewById(R.id.id_popup_recycler_view);
 
-            // “所有分类”选项
-            CategoryView categoryView = new CategoryView(getApplicationContext());
-            categoryView.setLayoutParams(params);
-            categoryView.setCategoryString(getResources().getString(R.string.all_sort));
-            categoryView.setOnClickListener(this);
-            popupLayout.addView(categoryView);
-
-            // 分类选项
-            for(TypeEntity typeEntity: typeEntities){
-                categoryView = new CategoryView(getApplicationContext());
-                categoryView.setOnClickListener(this);
-                categoryView.setLayoutParams(params);
-                categoryView.setCategoryString(typeEntity.getType());
-                popupLayout.addView(categoryView);
-            }
-
-            // “编辑我的分类”选项
-            categoryView = new CategoryView(getApplicationContext());
-            categoryView.setLayoutParams(params);
-            categoryView.setCategoryString(getResources().getString(R.string.edit_my_category));
-            categoryView.setOnClickListener(this);
-            popupLayout.addView(categoryView);
-
-        }else{
-            // 初始化弹窗布局内容
-            popupLayout.removeAllViews();
-
-            // “所有分类”选项
-            CategoryView categoryView = new CategoryView(getApplicationContext());
-            categoryView.setLayoutParams(params);
-            categoryView.setCategoryString(getResources().getString(R.string.all_sort));
-            categoryView.setOnClickListener(this);
-            popupLayout.addView(categoryView);
-
-            // 分类选项
-            for(TypeEntity typeEntity: typeEntities){
-                categoryView = new CategoryView(getApplicationContext());
-                categoryView.setOnClickListener(this);
-                categoryView.setLayoutParams(params);
-                categoryView.setCategoryString(typeEntity.getType());
-                popupLayout.addView(categoryView);
-            }
-
-            // “编辑我的分类”选项
-            categoryView = new CategoryView(getApplicationContext());
-            categoryView.setLayoutParams(params);
-            categoryView.setCategoryString(getResources().getString(R.string.edit_my_category));
-            categoryView.setOnClickListener(this);
-            popupLayout.addView(categoryView);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            recyclerView.setLayoutManager(linearLayoutManager);
+            popupWindowAdapter = new PopupWindowAdapter();
+            popupWindowAdapter.setOnPopupWindowItemClickListener(this);
+            recyclerView.setAdapter(popupWindowAdapter);
         }
+
+        popupWindowAdapter.setData(typeEntities);
+        popupWindowAdapter.notifyDataSetChanged();
 
         if(customPopWindow == null){
             customPopWindow = new CustomPopWindow.PopupWindowBuilder(this)
                     .setView(popupLayout)
-                    .size(ApplicationContext.getScreenWidth() * 3 / 5, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    .size(ApplicationContext.getScreenWidth() * 3 / 5, ApplicationContext.getScreenHeight() / 3)
                     .create();
         }
         customPopWindow.showAsDropDown(mainTitleBar, ApplicationContext.getScreenWidth() / 5, 5);
@@ -361,22 +336,9 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
      */
     @Override
     public void onClick(View v) {
-        CategoryView categoryView;
-        try {
-            categoryView = (CategoryView) v;
-        }catch (ClassCastException e){
-            e.printStackTrace();
-            return ;
-        }
-        if(categoryView.getCategoryString().equals(getString(R.string.edit_my_category))){
-            Intent intent = new Intent();
-            intent.setClass(this, CategoryActivity.class);
-            startActivity(intent);
-        }else{
-            mainTitleBar.setTitleString(categoryView.getCategoryString());
-            mainTitleBar.invalidate();
-            presenter.loadArticles(categoryView.getCategoryString());
-        }
+        Intent intent = new Intent();
+        intent.setClass(this, CategoryActivity.class);
+        startActivity(intent);
         customPopWindow.dissmiss();
     }
 
@@ -424,5 +386,13 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
         if(weatherModel != null){
             ApplicationContext.setWeatherModel(weatherModel);
         }
+    }
+
+    @Override
+    public void onPopupWindowClick(View view) {
+        String category = ((CategoryView)view).getCategoryString();
+        presenter.loadArticles(category);
+        mainTitleBar.setTitleString(category);
+        customPopWindow.dissmiss();
     }
 }
