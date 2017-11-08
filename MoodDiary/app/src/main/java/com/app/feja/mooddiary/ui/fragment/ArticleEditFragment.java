@@ -234,7 +234,7 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
             i++;
         }
 
-        editText.setSelection(diaryEntity.getContent().length());
+        editText.setSelection(editText.getEditableText().length());
         titleBar.setDiaryEntity(diaryEntity);
     }
 

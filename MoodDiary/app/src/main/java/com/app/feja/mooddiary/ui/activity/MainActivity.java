@@ -9,10 +9,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.adapter.PopupWindowAdapter;
@@ -23,6 +25,7 @@ import com.app.feja.mooddiary.model.entity.TypeEntity;
 import com.app.feja.mooddiary.presenter.ArticleListPresenter;
 import com.app.feja.mooddiary.presenter.WeatherPresenter;
 import com.app.feja.mooddiary.ui.fragment.ArticleListFragment;
+import com.app.feja.mooddiary.ui.fragment.ArticleNoListFragment;
 import com.app.feja.mooddiary.ui.fragment.SettingsFragment;
 import com.app.feja.mooddiary.ui.view.ArticleListView;
 import com.app.feja.mooddiary.ui.view.WeatherView;
@@ -49,6 +52,7 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
         SearchView.OnAnimationListener, WeatherView, PopupWindowAdapter.OnPopupWindowItemClickListener {
 
     private ArticleListFragment articleListFragment;
+    private ArticleNoListFragment articleNoListFragment;
     private SettingsFragment settingsFragment;
     private MainTitleBar mainTitleBar;
     private TabView tabView;
@@ -104,7 +108,7 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         switch (item){
             case 0:
-                fragmentTransaction.replace(R.id.fragment_container, articleListFragment);
+//                fragmentTransaction.replace(R.id.fragment_container, articleListFragment);
                 break;
             case 1:
                 Intent intent = new Intent();
@@ -138,8 +142,8 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
             compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
                 @Override
                 public void onDayClick(Date dateClicked) {
-                    presenter.loadArticles(dateClicked);
                     selectDate = dateClicked;
+                    presenter.loadArticles(dateClicked);
                 }
 
                 @Override
@@ -326,7 +330,20 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
 
     @Override
     public void onLoadArticles(List<DiaryEntity> diaryEntities) {
-        articleListFragment.onLoadArticles(diaryEntities);
+        if(diaryEntities == null || diaryEntities.size() == 0){
+            if(articleNoListFragment == null){
+                articleNoListFragment = new ArticleNoListFragment();
+            }
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, articleNoListFragment).commit();
+        }else{
+            if(articleListFragment == null){
+                articleListFragment = new ArticleListFragment();
+            }
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, articleListFragment).commit();
+            articleListFragment.onLoadArticles(diaryEntities);
+        }
     }
 
 

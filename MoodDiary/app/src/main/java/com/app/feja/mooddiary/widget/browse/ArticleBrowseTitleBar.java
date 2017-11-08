@@ -1,4 +1,4 @@
-package com.app.feja.mooddiary.widget;
+package com.app.feja.mooddiary.widget.browse;
 
 
 import android.content.Context;

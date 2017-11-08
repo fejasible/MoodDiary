@@ -4,11 +4,17 @@
     android:layout_height="match_parent">
 
 
-    <com.app.feja.mooddiary.widget.ArticleBrowseTitleBar
+    <com.app.feja.mooddiary.widget.browse.ArticleBrowseTitleBar
         android:id="@+id/article_browse_title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/x100"
         android:background="@color/lightSkyBlue"/>
+
+    <com.app.feja.mooddiary.widget.browse.ArticleInformationView
+        android:id="@+id/article_browse_info_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x70"
+        android:background="@color/white"/>
 
     <ScrollView
         android:layout_width="match_parent"

@@ -4,7 +4,9 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.LayoutAnimationController;
 import android.view.animation.ScaleAnimation;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
@@ -27,13 +30,16 @@ import com.app.feja.mooddiary.widget.ArticleView;
 import java.util.List;
 
 
-public class ArticleListFragment extends Fragment implements ArticleListView{
+public class ArticleListFragment extends Fragment implements ArticleListView, ArticleView.OnArticleViewClickListener {
 
     private View view;
     private LinearLayout linearLayout;
     private ArticleListPresenter articleListPresenter;
     private ViewGroup.LayoutParams layoutParams;
     private LayoutAnimationController layoutAnimationController;
+    private TextView noDiaryTextView;
+    private ArticleView.OnArticleViewClickListener listener;
+    private List<DiaryEntity> diaryEntities;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,32 +71,17 @@ public class ArticleListFragment extends Fragment implements ArticleListView{
 
 
     @Override
-    public void onLoadArticles(final List<DiaryEntity> diaryEntities) {
+    public void onLoadArticles(List<DiaryEntity> diaryEntities) {
         if(diaryEntities == null){
             return ;
         }
+
+        this.diaryEntities = diaryEntities;
         linearLayout.removeAllViews();
-        ArticleView.OnArticleViewClickListener listener = new ArticleView.OnArticleViewClickListener() {
-            @Override
-            public void onFaceClick(ArticleView articleView) {
 
-            }
-
-            @Override
-            public void onDateClick(ArticleView articleView) {
-
-            }
-
-            @Override
-            public void onAbstractClick(ArticleView articleView) {
-                Intent intent = new Intent();
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(DiaryEntity.BUNDLE_NAME, articleView.getDiaryEntity());
-                intent.putExtras(bundle);
-                intent.setClass(getActivity().getApplicationContext(), ArticleBrowseActivity.class);
-                startActivity(intent);
-            }
-        };
+        if(listener == null){
+            listener = this;
+        }
         for(DiaryEntity diaryEntity: diaryEntities){
             ArticleView articleView = DiaryAdapter.getArticleView(diaryEntity, layoutParams, listener);
             linearLayout.addView(articleView);
@@ -101,6 +92,28 @@ public class ArticleListFragment extends Fragment implements ArticleListView{
     @Override
     public void onStart() {
         super.onStart();
-        articleListPresenter.loadArticles();
+        if(diaryEntities != null){
+            onLoadArticles(diaryEntities);
+        }
+    }
+
+    @Override
+    public void onFaceClick(ArticleView articleView) {
+
+    }
+
+    @Override
+    public void onDateClick(ArticleView articleView) {
+
+    }
+
+    @Override
+    public void onAbstractClick(ArticleView articleView) {
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(DiaryEntity.BUNDLE_NAME, articleView.getDiaryEntity());
+        intent.putExtras(bundle);
+        intent.setClass(getActivity().getApplicationContext(), ArticleBrowseActivity.class);
+        startActivity(intent);
     }
 }

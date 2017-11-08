@@ -4,8 +4,9 @@
     android:weightSum="1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_gray"
-    android:alpha="0.9">
+    android:background="@color/white"
+    android:alpha="0.95">
+
 
     <com.app.feja.mooddiary.widget.CategoryView
         android:id="@+id/id_popup_all_category_view"
@@ -14,15 +15,15 @@
         android:layout_height="@dimen/x60"/>
 
     <android.support.v7.widget.RecyclerView
-        android:layout_weight="1"
         android:id="@+id/id_popup_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0px"
+        android:layout_weight="1"
+        android:alpha="0.95"
         android:background="@color/lightSkyBlue"
-        android:scrollbarThumbVertical="@color/dark_gray"
-        android:scrollbarSize="@dimen/x3"
-        android:scrollbars="vertical"
-        android:alpha="0.9">
+        android:scrollbarSize="@dimen/x5"
+        android:scrollbarThumbVertical="@color/whiteSmoke"
+        android:scrollbars="vertical">
 
     </android.support.v7.widget.RecyclerView>
 
