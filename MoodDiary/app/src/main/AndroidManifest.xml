@@ -2,11 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.app.feja.mooddiary">
 
-    <!--<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />-->
-    <!--<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />-->
-    <!--<uses-permission android:name="android.permission.WAKE_LOCK" />-->
-    <!--<uses-permission android:name="android.permission.INTERNET"/>-->
-
+    <!-- <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> -->
+    <!-- <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> -->
+    <!-- <uses-permission android:name="android.permission.WAKE_LOCK" /> -->
+    <!-- <uses-permission android:name="android.permission.INTERNET"/> -->
     <application
         android:name=".application.ApplicationContext"
         android:allowBackup="true"
@@ -48,6 +47,17 @@
             android:name=".ui.activity.CategoryActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity
+            android:name=".ui.activity.SettingsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar"/>
+        <activity
+            android:name=".ui.activity.ExportDiaryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar"/>
+        <activity android:name=".ui.activity.ThemeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar"/>
     </application>
 
 </manifest>

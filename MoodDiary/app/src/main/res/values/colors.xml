@@ -12,4 +12,11 @@
     <color name="lightGrey">#D3D3D3</color>
     <color name="darkGray">#A9A9A9</color>
     <color name="dimGray">#696969</color>
+
+    <color name="theme_color_main">#87CEFA</color>
+    <color name="theme_color_1">#87CEFA</color>
+    <color name="theme_color_2">#F1D011</color>
+    <color name="theme_color_3">#FFD0D1</color>
+    <color name="theme_color_4">#F3F481</color>
+    <color name="theme_color_5">#1F4F81</color>
 </resources>

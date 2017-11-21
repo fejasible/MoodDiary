@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/whiteSmoke"
+    tools:context="com.app.feja.mooddiary.ui.activity.SettingsActivity">
+
+    <com.app.feja.mooddiary.widget.setting.SettingTitleBar
+        android:id="@+id/id_settings_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x100"
+        android:background="@color/lightSkyBlue"/>
+
+    <com.app.feja.mooddiary.widget.setting.LinkRightBar
+        android:id="@+id/id_settings_export_diary"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x90"
+        android:layout_marginTop="@dimen/x30"/>
+
+    <com.app.feja.mooddiary.widget.setting.LinkRightBar
+        android:id="@+id/id_settings_export_theme"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x90"/>
+
+
+    <com.app.feja.mooddiary.widget.setting.LinkRightBar
+        android:id="@+id/id_settings_export_private_password"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x90"/>
+
+
+    <com.app.feja.mooddiary.widget.setting.LinkRightBar
+        android:id="@+id/id_settings_export_about"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x90"
+        android:layout_marginTop="@dimen/x30"/>
+</LinearLayout>

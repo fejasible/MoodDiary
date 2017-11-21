@@ -12,6 +12,8 @@ import com.app.feja.mooddiary.widget.PasswordView;
 
 public class PasswordActivity extends Activity{
 
+    public static final String PASSWORD_KEY = "password";
+
     private PasswordView passwordView;
 
     private String passwordErrorString;
@@ -62,7 +64,7 @@ public class PasswordActivity extends Activity{
             return false;
         }
         SharedPreferences sharedPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
-        sharedPreferences.edit().putString("password", password).apply();
+        sharedPreferences.edit().putString(PASSWORD_KEY, password).apply();
         return true;
     }
 
@@ -71,7 +73,7 @@ public class PasswordActivity extends Activity{
         if(sharedPreferences == null){
             return "";
         }else{
-            return sharedPreferences.getString("password", "");
+            return sharedPreferences.getString(PASSWORD_KEY, "");
         }
     }
 

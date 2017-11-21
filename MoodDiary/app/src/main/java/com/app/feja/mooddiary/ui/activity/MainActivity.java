@@ -1,6 +1,5 @@
 package com.app.feja.mooddiary.ui.activity;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -9,12 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.adapter.PopupWindowAdapter;
@@ -23,10 +19,8 @@ import com.app.feja.mooddiary.http.model.WeatherModel;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.model.entity.TypeEntity;
 import com.app.feja.mooddiary.presenter.ArticleListPresenter;
-import com.app.feja.mooddiary.presenter.WeatherPresenter;
 import com.app.feja.mooddiary.ui.fragment.ArticleListFragment;
 import com.app.feja.mooddiary.ui.fragment.ArticleNoListFragment;
-import com.app.feja.mooddiary.ui.fragment.SettingsFragment;
 import com.app.feja.mooddiary.ui.view.ArticleListView;
 import com.app.feja.mooddiary.ui.view.WeatherView;
 import com.app.feja.mooddiary.util.DateTime;
@@ -34,7 +28,6 @@ import com.app.feja.mooddiary.widget.CategoryView;
 import com.app.feja.mooddiary.widget.MainTitleBar;
 import com.app.feja.mooddiary.widget.SearchView;
 import com.app.feja.mooddiary.widget.TabView;
-import com.arlib.floatingsearchview.FloatingSearchView;
 import com.example.zhouwei.library.CustomPopWindow;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
@@ -53,21 +46,15 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
 
     private ArticleListFragment articleListFragment;
     private ArticleNoListFragment articleNoListFragment;
-    private SettingsFragment settingsFragment;
     private MainTitleBar mainTitleBar;
-    private TabView tabView;
     private ArticleListPresenter presenter;
-    private WeatherPresenter weatherPresenter;
     private PopupWindowAdapter popupWindowAdapter;
     private CustomPopWindow customPopWindow;
     private LinearLayout mainLayout;
     private LinearLayout popupLayout;
-    private ViewGroup.LayoutParams params;
     private CompactCalendarView compactCalendarView;
     private Date selectDate;
-    private FloatingSearchView floatingSearchView;
     private SearchView searchView;
-    public static final long FIND_SUGGESTION_SIMULATED_DELAY = 250;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,16 +66,14 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
         }
         getFragmentManager().beginTransaction().replace(R.id.fragment_container, articleListFragment).commit();
 
-        tabView = (TabView) this.findViewById(R.id.tab_view);
+        TabView tabView = (TabView) this.findViewById(R.id.tab_view);
         mainTitleBar = (MainTitleBar) this.findViewById(R.id.main_title_bar);
         mainLayout = (LinearLayout) this.findViewById(R.id.id_container_main);
         presenter = new ArticleListPresenter(this);
-        weatherPresenter = new WeatherPresenter(this);
 
         tabView.setOnTabClickListener(this);
         mainTitleBar.setOnTitleBarClickListener(this);
 
-//        weatherPresenter.getWeather();
     }
 
 
@@ -101,25 +86,20 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
         if(articleListFragment == null){
             articleListFragment = new ArticleListFragment();
         }
-        if(settingsFragment == null){
-            settingsFragment = new SettingsFragment();
-        }
 
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        Intent intent;
         switch (item){
             case 0:
-//                fragmentTransaction.replace(R.id.fragment_container, articleListFragment);
                 break;
             case 1:
-                Intent intent = new Intent();
-                intent.setClass(getApplicationContext(), ArticleEditActivity.class);
+                intent = new Intent(getApplicationContext(), ArticleEditActivity.class);
                 startActivity(intent);
                 break;
             case 2:
-//                fragmentTransaction.replace(R.id.fragment_container, settingsFragment);
+                intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(intent);
                 break;
         }
-        fragmentTransaction.commit();
     }
 
 
@@ -134,7 +114,6 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
                     .inflate(R.layout.activity_calendar, null, false);
             compactCalendarView = (CompactCalendarView) linearLayout.findViewById(R.id.compactcalendar_view);
             linearLayout.removeView(compactCalendarView);
-            linearLayout = null;
             mainLayout.addView(compactCalendarView, 1);
             compactCalendarView.setFirstDayOfWeek(Calendar.SUNDAY);
             compactCalendarView.setLocale(TimeZone.getDefault(), Locale.CHINESE);
@@ -310,7 +289,6 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
                     .inflate(R.layout.layout_search_bar, null, false);
             searchView = (SearchView) linearLayout.findViewById(R.id.search_view);
             linearLayout.removeView(searchView);
-            linearLayout = null;
             mainLayout.addView(searchView, 1);
             isSearchBarShowing = true;
             mainTitleBar.changeSearch();

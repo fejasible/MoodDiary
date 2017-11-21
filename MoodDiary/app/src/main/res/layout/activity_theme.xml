@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.app.feja.mooddiary.ui.activity.ThemeActivity">
+
+
+    <com.app.feja.mooddiary.widget.setting.SettingTitleBar
+        android:id="@+id/id_settings_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x100"
+        android:background="@color/lightSkyBlue" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/id_theme_select_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

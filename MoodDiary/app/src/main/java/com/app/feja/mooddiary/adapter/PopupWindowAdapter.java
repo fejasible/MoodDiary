@@ -51,7 +51,6 @@ public class PopupWindowAdapter extends RecyclerView.Adapter{
     }
 
     public void setData(List<TypeEntity> data){
-        Log.i("-----", data.size()+"");
         this.data = data;
     }
 

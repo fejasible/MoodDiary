@@ -36,6 +36,18 @@
     <string name="temperature">温度：</string>
     <string name="last_update">最后更新时间：</string>
     <string name="no_diary">没有日记哟~</string>
+    <string name="setting">设置</string>
+    <string name="export_diary">导出日记</string>
+    <string name="theme">主题</string>
+    <string name="private_password">隐私密码</string>
+    <string name="about_mood_diary">关于心情日记</string>
+
+    <string name="theme_color_name_main">经典蓝</string>
+    <string name="theme_color_name_1">自定义</string>
+    <string name="theme_color_name_2">2</string>
+    <string name="theme_color_name_3">3</string>
+    <string name="theme_color_name_4">4</string>
+    <string name="theme_color_name_5">5</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

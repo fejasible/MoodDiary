@@ -3,21 +3,13 @@ package com.app.feja.mooddiary.ui.fragment;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.LayoutAnimationController;
-import android.view.animation.ScaleAnimation;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.model.adapter.DiaryAdapter;
@@ -37,7 +29,6 @@ public class ArticleListFragment extends Fragment implements ArticleListView, Ar
     private ArticleListPresenter articleListPresenter;
     private ViewGroup.LayoutParams layoutParams;
     private LayoutAnimationController layoutAnimationController;
-    private TextView noDiaryTextView;
     private ArticleView.OnArticleViewClickListener listener;
     private List<DiaryEntity> diaryEntities;
 

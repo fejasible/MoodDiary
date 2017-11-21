@@ -4,6 +4,7 @@ package com.app.feja.mooddiary.widget.base;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -72,4 +73,21 @@ public class BaseView extends View{
         Paint.FontMetricsInt fontMetricsInt = paint.getFontMetricsInt();
         canvas.drawText(text, x, y-(fontMetricsInt.top+fontMetricsInt.bottom)/2, paint);
     }
+
+    public final void drawLeftArrow(Rect rect, Paint paint, Canvas canvas){
+        int x = rect.centerX();
+        int y = rect.centerY();
+        int r = rect.height() / 4;
+        canvas.drawLine(x-r/2, y, x+r/2, y-r/2, paint);
+        canvas.drawLine(x-r/2, y, x+r/2, y+r/2, paint);
+    }
+
+    public final void drawRightArrow(Rect rect, Paint paint, Canvas canvas){
+        int x = rect.centerX();
+        int y = rect.centerY();
+        int r = rect.height() / 4;
+        canvas.drawLine(x+r/2, y, x-r/2, y-r/2, paint);
+        canvas.drawLine(x+r/2, y, x-r/2, y+r/2, paint);
+    }
+
 }
