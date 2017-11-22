@@ -23,6 +23,6 @@
         app:compactCalendarTextColor="#fff"
         app:compactCalendarCurrentSelectedDayBackgroundColor="@color/lightSkyBlue"
         app:compactCalendarCurrentDayBackgroundColor="@color/lightSkyBlue_deeper"
-        app:compactCalendarMultiEventIndicatorColor="#fff"
+        app:compactCalendarMultiEventIndicatorColor="@color/white"
         />
 </LinearLayout>

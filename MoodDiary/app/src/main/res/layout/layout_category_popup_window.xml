@@ -20,7 +20,6 @@
         android:layout_height="0px"
         android:layout_weight="1"
         android:alpha="0.95"
-        android:background="@color/lightSkyBlue"
         android:scrollbarSize="@dimen/x5"
         android:scrollbarThumbVertical="@color/whiteSmoke"
         android:scrollbars="vertical">

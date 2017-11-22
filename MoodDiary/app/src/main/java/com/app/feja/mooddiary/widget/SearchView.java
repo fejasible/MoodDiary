@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.app.feja.mooddiary.R;
+import com.app.feja.mooddiary.application.ApplicationContext;
 
 public class SearchView extends RelativeLayout{
 
@@ -62,6 +63,7 @@ public class SearchView extends RelativeLayout{
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         editText.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.shape_search_view));
         editText.setHint(getResources().getString(R.string.enter_keyword));
+        editText.setSingleLine();
         this.addView(editText);
     }
 

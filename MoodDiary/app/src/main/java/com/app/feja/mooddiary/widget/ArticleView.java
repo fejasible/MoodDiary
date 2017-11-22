@@ -37,7 +37,8 @@ public class ArticleView extends BaseView {
     private Paint paint;
     private TextPaint textPaint;
 
-    private int themeColor, backgroundColor;
+    private int themeColor;
+    private int backgroundColor;
 
     private float touchX, touchY;
 
@@ -84,6 +85,14 @@ public class ArticleView extends BaseView {
     public void setDiaryEntity(DiaryEntity diaryEntity) {
         this.diaryEntity = diaryEntity;
         this.today = new DateTime(diaryEntity.getCreateTime());
+    }
+
+    public int getThemeColor() {
+        return themeColor;
+    }
+
+    public void setThemeColor(int themeColor) {
+        this.themeColor = themeColor;
     }
 
     @Override

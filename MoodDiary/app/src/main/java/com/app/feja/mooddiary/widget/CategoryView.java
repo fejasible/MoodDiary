@@ -38,7 +38,7 @@ public class CategoryView extends BaseView{
     public void init(){
         this.paint = new Paint();
         this.categoryString = getResources().getString(R.string.no_sort);
-        this.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightSkyBlue));
+        this.setBackgroundColor(ApplicationContext.getThemeData().getColor());
         this.setAlpha(0.9f);
     }
 

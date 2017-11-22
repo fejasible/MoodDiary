@@ -15,8 +15,9 @@
 
     <color name="theme_color_main">#87CEFA</color>
     <color name="theme_color_1">#87CEFA</color>
-    <color name="theme_color_2">#F1D011</color>
-    <color name="theme_color_3">#FFD0D1</color>
-    <color name="theme_color_4">#F3F481</color>
-    <color name="theme_color_5">#1F4F81</color>
+    <color name="theme_color_2">#87CEFA</color>
+    <color name="theme_color_3">#FFCC33</color>
+    <color name="theme_color_4">#9900FF</color>
+    <color name="theme_color_5">#FF99CC</color>
+    <color name="theme_color_6">#000033</color>
 </resources>

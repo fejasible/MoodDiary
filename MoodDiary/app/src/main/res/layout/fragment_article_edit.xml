@@ -17,7 +17,7 @@
         android:layout_height="0px"
         android:layout_weight="1"
         android:background="@color/white"
-        android:scrollbarThumbVertical="@color/lightSkyBlue"
+        android:scrollbarThumbVertical="@color/darkGray"
         android:scrollbarSize="@dimen/x5">
 
         <EditText

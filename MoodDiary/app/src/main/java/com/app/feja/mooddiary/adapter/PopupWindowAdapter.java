@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.app.feja.mooddiary.R;
+import com.app.feja.mooddiary.application.ApplicationContext;
 import com.app.feja.mooddiary.model.entity.TypeEntity;
 import com.app.feja.mooddiary.widget.CategoryView;
 
@@ -43,6 +44,7 @@ public class PopupWindowAdapter extends RecyclerView.Adapter{
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.categoryView.setCategoryString(data.get(position).getType());
+        viewHolder.categoryView.setBackgroundColor(ApplicationContext.getThemeData().getColor());
     }
 
     @Override

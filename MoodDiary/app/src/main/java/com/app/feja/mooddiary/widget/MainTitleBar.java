@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -13,6 +14,7 @@ import android.view.animation.AnimationSet;
 import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
+import com.app.feja.mooddiary.application.ApplicationContext;
 import com.app.feja.mooddiary.util.DateTime;
 import com.app.feja.mooddiary.widget.base.BaseView;
 
@@ -71,6 +73,7 @@ public class MainTitleBar extends BaseView {
         this.paint = new Paint();
         this.titleString = getResources().getString(R.string.all_sort);
         this.searchString = getResources().getString(R.string.search);
+        this.setBackgroundColor(ApplicationContext.getThemeData().getColor());
         listener = new OnTitleBarClickListener() {
             @Override
             public void onCalendarClick() {
@@ -205,6 +208,12 @@ public class MainTitleBar extends BaseView {
         }
         paint.setTextSize(textSize);
         drawCenterText(titleString, rect.centerX(), rect.centerY(), paint, canvas);
+        paint.setStrokeWidth(2.0f);
+        int h = rect.centerY()-textSize/2;
+        canvas.drawLine(rect.centerX()-h/3, rect.centerY()+textSize/2+h/3,
+                rect.centerX(), rect.bottom-h/3, paint);
+        canvas.drawLine(rect.centerX()+h/3, rect.centerY()+textSize/2+h/3,
+                rect.centerX(), rect.bottom-h/3, paint);
     }
 
     private void drawCalendarImage(Rect rect, Paint paint, Canvas canvas){
@@ -329,4 +338,6 @@ public class MainTitleBar extends BaseView {
         void onCategoryClick();
         void onSearchClick();
     }
+
+
 }

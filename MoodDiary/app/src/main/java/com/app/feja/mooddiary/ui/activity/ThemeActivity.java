@@ -16,6 +16,7 @@ import com.app.feja.mooddiary.adapter.ThemeAdapter;
 import com.app.feja.mooddiary.application.ApplicationContext;
 import com.app.feja.mooddiary.widget.base.TouchListenView;
 import com.app.feja.mooddiary.widget.setting.SettingTitleBar;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +77,9 @@ public class ThemeActivity extends BaseActivity implements TouchListenView.OnIte
                 data.setSelect(true);
                 custom = false;
             }
+        }
+        if(getCustomTheme() != null && datas.size() > 0) {
+            datas.get(0).setColor(getCustomTheme().getColor());
         }
         if(custom){
             if(datas.size() > 0) {
@@ -150,12 +154,35 @@ public class ThemeActivity extends BaseActivity implements TouchListenView.OnIte
         return true;
     }
 
+    private boolean saveCustomTheme(ThemeAdapter.Data themeData){
+        SharedPreferences sharedPreferences = getSharedPreferences(
+                ApplicationContext.getSharedPreferencesName(), Context.MODE_PRIVATE);
+        sharedPreferences.edit().putString(ApplicationContext.CUSTOM_THEME_KEY, themeData.toString()).apply();
+        return true;
+    }
+
+    private ThemeAdapter.Data getCustomTheme(){
+        SharedPreferences sharedPreferences = getSharedPreferences(ApplicationContext.getSharedPreferencesName(), Context.MODE_PRIVATE);
+        if(sharedPreferences == null){
+            return null;
+        }else{
+            String themeString = sharedPreferences.getString(ApplicationContext.CUSTOM_THEME_KEY, "");
+            try {
+                return new Gson().fromJson(themeString, ThemeAdapter.Data.class);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
     @Override
     public void onColorPicked(@ColorInt int pickedColor) {
         themeAdapter.getData().get(0).setColor(pickedColor);
         themeAdapter.getData().get(0).setSelect(true);
         ApplicationContext.setThemeData(themeAdapter.getData().get(0));
         saveTheme(themeAdapter.getData().get(0));
+        saveCustomTheme(themeAdapter.getData().get(0));
         themeAdapter.notifyDataSetChanged();
         settingTitleBar.setBackgroundColor(ApplicationContext.getThemeData().getColor());
     }

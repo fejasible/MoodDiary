@@ -243,6 +243,14 @@ public class PasswordView extends BaseView {
         void enterFinish(String password);
     }
 
+    public String getEnterString() {
+        return enterString;
+    }
+
+    public void setEnterString(String enterString) {
+        this.enterString = enterString;
+    }
+
     /**
      * 当帮助按钮被点击时的监听操作
      */

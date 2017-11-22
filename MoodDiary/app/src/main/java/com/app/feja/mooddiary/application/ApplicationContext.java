@@ -21,6 +21,7 @@ import com.lzy.imagepicker.view.CropImageView;
 public class ApplicationContext extends Application{
 
     public static final String THEME_KEY = "theme";
+    public static final String CUSTOM_THEME_KEY = "custom_theme";
 
     private static Context context;
     private static int screenWidth;

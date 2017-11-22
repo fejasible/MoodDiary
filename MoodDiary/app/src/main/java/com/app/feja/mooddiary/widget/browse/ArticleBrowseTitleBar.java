@@ -7,11 +7,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 import com.app.feja.mooddiary.R;
+import com.app.feja.mooddiary.application.ApplicationContext;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.widget.base.TouchListenView;
 
@@ -19,7 +19,6 @@ public class ArticleBrowseTitleBar extends TouchListenView{
 
     private Paint paint;
     private DiaryEntity diaryEntity;
-    private int themeColor;
     private String noCategoryString;
     private OnTitleBarClickListener onTitleBarClickListener = new OnTitleBarClickListener() {
         @Override
@@ -77,7 +76,7 @@ public class ArticleBrowseTitleBar extends TouchListenView{
 
     public void init(){
         this.paint = new Paint();
-        this.themeColor = ContextCompat.getColor(getContext(), R.color.lightSkyBlue);
+        this.setBackgroundColor(ApplicationContext.getThemeData().getColor());
         this.noCategoryString = getResources().getString(R.string.no_sort);
         this.setOnItemTouchListener(new OnItemTouchListener() {
             @Override

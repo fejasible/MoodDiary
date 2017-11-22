@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 
 import com.app.feja.mooddiary.R;
+import com.app.feja.mooddiary.application.ApplicationContext;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.widget.base.TouchListenView;
 
@@ -46,7 +47,7 @@ public class FaceChooseView extends TouchListenView{
     }
 
     public void init(){
-        this.themeColor = ContextCompat.getColor(getContext(), R.color.lightSkyBlue);
+        this.themeColor = ApplicationContext.getThemeData().getColor();
 
         themePaint = new Paint();
         themePaint.setAntiAlias(true);

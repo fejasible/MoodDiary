@@ -138,7 +138,7 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
         this.rangeSeekBar.setSeekBarMode(1);
         this.rangeSeekBar.setRange(8, 60);
         this.rangeSeekBar.setLineColor(ContextCompat.getColor(getActivity(), R.color.lightGrey),
-                ContextCompat.getColor(getActivity(), R.color.lightSkyBlue));
+                ApplicationContext.getThemeData().getColor());
         this.rangeSeekBar.setValue(diaryEntity.getTextSize());
 
 
@@ -255,38 +255,6 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
         // 获取分类信息
         List<TypeEntity> typeEntities = articleListPresenter.getAllTypes();
 
-//        if(popupLayout == null){
-//            // 获取弹窗布局
-//            popupLayout = (LinearLayout) LayoutInflater.from(getActivity())
-//                    .inflate(R.layout.layout_category_popup_window, null);
-//
-//
-//            // 获取弹窗内容组件布局
-//            ViewGroup.LayoutParams params = popupLayout.findViewById(R.id.category_view).getLayoutParams();
-//
-//            // 初始化弹窗布局内容
-//            popupLayout.removeAllViews();
-//
-//            CategoryView categoryView;
-//
-//            // 分类选项
-//            for(TypeEntity typeEntity: typeEntities){
-//                categoryView = new CategoryView(getActivity());
-//                categoryView.setOnClickListener(this);
-//                categoryView.setLayoutParams(params);
-//                categoryView.setCategoryString(typeEntity.getType());
-//                popupLayout.addView(categoryView);
-//            }
-//
-//            // “编辑我的分类”选项
-//            categoryView = new CategoryView(getActivity());
-//            categoryView.setLayoutParams(params);
-//            categoryView.setCategoryString(getResources().getString(R.string.edit_my_category));
-//            categoryView.setOnClickListener(this);
-//            popupLayout.addView(categoryView);
-//
-//        }
-
         if(popupLayout == null){
             popupLayout = (LinearLayout) LayoutInflater.from(getActivity())
                     .inflate(R.layout.layout_category_popup_window, null);
@@ -318,14 +286,6 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
                     .create();
         }
         customPopWindow.showAsDropDown(titleBar, ApplicationContext.getScreenWidth() / 5, 5);
-
-//        if(customPopWindow == null){
-//            customPopWindow = new CustomPopWindow.PopupWindowBuilder(getActivity())
-//                    .setView(popupLayout)
-//                    .size(ApplicationContext.getScreenWidth() * 3 / 5, ViewGroup.LayoutParams.WRAP_CONTENT)
-//                    .create();
-//        }
-//        customPopWindow.showAsDropDown(titleBar, ApplicationContext.getScreenWidth() / 5, 3);
     }
 
     /**
@@ -405,11 +365,6 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
             case 2:
                 dateTimePicker.show();
                 break;
-//            case 3:
-//                view.addView(this.weatherView);
-//                currentView = this.weatherView;
-//                editToolBar.setStatus(EditToolBar.UP);
-//                break;
             case 3:
                 view.addView(this.faceChooseView);
                 currentView = this.faceChooseView;

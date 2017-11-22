@@ -12,7 +12,7 @@
 
     <stroke
         android:width="@dimen/x1"
-        android:color="@color/lightSkyBlue" />
+        android:color="@color/darkGray" />
 
     <solid android:color="@color/white" />
 

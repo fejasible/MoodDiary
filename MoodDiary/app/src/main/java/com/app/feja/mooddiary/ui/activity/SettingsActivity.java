@@ -57,6 +57,16 @@ public class SettingsActivity extends Activity implements TouchListenView.OnItem
 
         this.privatePasswordBar = (LinkRightBar) findViewById(R.id.id_settings_export_private_password);
         this.privatePasswordBar.setString(getString(R.string.private_password));
+        this.privatePasswordBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingsActivity.this, PasswordActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(PasswordActivity.ACTION_BUNDLE_NAME, PasswordActivity.ACTION.EDIT_ENTER);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
 
         this.aboutBar = (LinkRightBar) findViewById(R.id.id_settings_export_about);
         this.aboutBar.setString(getString(R.string.about_mood_diary));

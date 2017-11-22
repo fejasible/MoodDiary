@@ -1,7 +1,9 @@
 package com.app.feja.mooddiary.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +13,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.adapter.PopupWindowAdapter;
@@ -39,6 +42,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class MainActivity extends FragmentActivity implements TabView.OnTabClickListener,
         MainTitleBar.OnTitleBarClickListener, ArticleListView, View.OnClickListener, TextWatcher,
@@ -46,29 +52,33 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
 
     private ArticleListFragment articleListFragment;
     private ArticleNoListFragment articleNoListFragment;
-    private MainTitleBar mainTitleBar;
     private ArticleListPresenter presenter;
     private PopupWindowAdapter popupWindowAdapter;
     private CustomPopWindow customPopWindow;
-    private LinearLayout mainLayout;
     private LinearLayout popupLayout;
     private CompactCalendarView compactCalendarView;
     private Date selectDate;
     private SearchView searchView;
+
+    @BindView(R.id.tab_view)
+    TabView tabView;
+    @BindView(R.id.main_title_bar)
+    MainTitleBar mainTitleBar;
+    @BindView(R.id.id_container_main)
+    LinearLayout mainLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(articleListFragment == null){
+        ButterKnife.bind(this);
+
+        if (articleListFragment == null) {
             articleListFragment = new ArticleListFragment();
         }
         getFragmentManager().beginTransaction().replace(R.id.fragment_container, articleListFragment).commit();
 
-        TabView tabView = (TabView) this.findViewById(R.id.tab_view);
-        mainTitleBar = (MainTitleBar) this.findViewById(R.id.main_title_bar);
-        mainLayout = (LinearLayout) this.findViewById(R.id.id_container_main);
         presenter = new ArticleListPresenter(this);
 
         tabView.setOnTabClickListener(this);
@@ -79,16 +89,17 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
 
     /**
      * Tab被点击
+     *
      * @param item item
      */
     @Override
     public void onClick(int item) {
-        if(articleListFragment == null){
+        if (articleListFragment == null) {
             articleListFragment = new ArticleListFragment();
         }
 
         Intent intent;
-        switch (item){
+        switch (item) {
             case 0:
                 break;
             case 1:
@@ -104,12 +115,13 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
 
 
     private boolean isCalendarShowing = false;
+
     /**
      * 日历被点击
      */
     @Override
     public void onCalendarClick() {
-        if(compactCalendarView == null){
+        if (compactCalendarView == null) {
             LinearLayout linearLayout = (LinearLayout) LayoutInflater.from(this)
                     .inflate(R.layout.activity_calendar, null, false);
             compactCalendarView = (CompactCalendarView) linearLayout.findViewById(R.id.compactcalendar_view);
@@ -138,32 +150,38 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
             presenter.loadArticles(selectDate);
             isCalendarShowing = true;
             this.refreshCalendarEvent();
-        }else if(!compactCalendarView.isAnimating()){
-            if(!isCalendarShowing){
+        } else if (!compactCalendarView.isAnimating()) {
+            if (!isCalendarShowing) {
                 isCalendarShowing = true;
                 this.refreshCalendarEvent();
+                DateTime dateTime = new DateTime();
+                mainTitleBar.changeDate(dateTime.getTime());
+                compactCalendarView.setCurrentDate(dateTime.toDate());
                 presenter.loadArticles(selectDate);
                 mainTitleBar.changeDate();
                 compactCalendarView.showCalendarWithAnimation();
-            }else{
+            } else {
                 isCalendarShowing = false;
                 presenter.loadArticles(mainTitleBar.getTitleString());
                 mainTitleBar.changeTitle();
                 compactCalendarView.hideCalendarWithAnimation();
             }
         }
+        setThemeColor(ApplicationContext.getThemeData().getColor());
     }
 
-    private void refreshCalendarEvent(){
+    private void refreshCalendarEvent() {
         compactCalendarView.removeAllEvents();
         List<DiaryEntity> diaryEntities = presenter.getAllArticles();
         List<Event> events = new ArrayList<>();
-        for(DiaryEntity diaryEntity: diaryEntities){
-            events.add(new Event(ContextCompat.getColor(this, R.color.lightSkyBlue_deeper),
-                    diaryEntity.getCreateTime().getTime()));
+        for (DiaryEntity diaryEntity : diaryEntities) {
+            events.add(new Event(Color.WHITE, diaryEntity.getCreateTime().getTime()));
         }
         compactCalendarView.addEvents(events);
     }
+
+    private CategoryView totalView;
+    private CategoryView editView;
 
     /**
      * 分类被点击
@@ -173,12 +191,12 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
         // 获取分类信息
         List<TypeEntity> typeEntities = presenter.getAllTypes();
 
-        if(popupLayout == null){
+        if (popupLayout == null) {
             popupLayout = (LinearLayout) LayoutInflater.from(this)
                     .inflate(R.layout.layout_category_popup_window, null);
 
             //所有分类
-            CategoryView totalView = (CategoryView) popupLayout.findViewById(R.id.id_popup_all_category_view);
+            totalView = (CategoryView) popupLayout.findViewById(R.id.id_popup_all_category_view);
             totalView.setCategoryString(getResources().getString(R.string.all_sort));
             totalView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -191,7 +209,7 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
             });
 
             //编辑我的分类
-            CategoryView editView = (CategoryView) popupLayout.findViewById(R.id.id_popup_edit_category_view);
+            editView = (CategoryView) popupLayout.findViewById(R.id.id_popup_edit_category_view);
             editView.setCategoryString(getResources().getString(R.string.edit_my_category));
             editView.setOnClickListener(this);
 
@@ -205,10 +223,13 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
             recyclerView.setAdapter(popupWindowAdapter);
         }
 
+        editView.setBackgroundColor(ApplicationContext.getThemeData().getColor());
+        totalView.setBackgroundColor(ApplicationContext.getThemeData().getColor());
+
         popupWindowAdapter.setData(typeEntities);
         popupWindowAdapter.notifyDataSetChanged();
 
-        if(customPopWindow == null){
+        if (customPopWindow == null) {
             customPopWindow = new CustomPopWindow.PopupWindowBuilder(this)
                     .setView(popupLayout)
                     .size(ApplicationContext.getScreenWidth() * 3 / 5, ApplicationContext.getScreenHeight() / 3)
@@ -217,73 +238,14 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
         customPopWindow.showAsDropDown(mainTitleBar, ApplicationContext.getScreenWidth() / 5, 5);
     }
 
-//    private boolean isSearchBarShowing = false;
-//    /**
-//     * 搜索被点击
-//     */
-//    @Override
-//    public void onSearchClick() {
-//        if(floatingSearchView == null){
-//            LinearLayout linearLayout = (LinearLayout) LayoutInflater
-//                    .from(this)
-//                    .inflate(R.layout.layout_search_bar, null, false);
-//
-//
-//
-//            floatingSearchView = (FloatingSearchView) linearLayout.findViewById(R.id.floating_search_view);
-//            linearLayout.removeView(floatingSearchView);
-//            mainLayout.addView(floatingSearchView, 1);
-//            isSearchBarShowing = true;
-//            mainTitleBar.changeSearch();
-//            floatingSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
-//                @Override
-//                public void onSearchTextChanged(String oldQuery, String newQuery) {
-//                    if (!oldQuery.equals("") && newQuery.equals("")) {
-//                        floatingSearchView.clearSuggestions();
-//                    } else {
-//                        floatingSearchView.showProgress();
-//                        DataHelper.findSuggestions(MainActivity.this, newQuery, 5,
-//                                FIND_SUGGESTION_SIMULATED_DELAY, new DataHelper.OnFindSuggestionsListener() {
-//                                    @Override
-//                                    public void onResults(List<DiarySuggestion> results) {
-//                                        floatingSearchView.swapSuggestions(results);
-//                                        floatingSearchView.hideProgress();
-//                                    }
-//                                });
-//                    }
-//                }
-//            });
-//
-//            floatingSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
-//                @Override
-//                public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
-//                    Toast.makeText(MainActivity.this, searchSuggestion.getBody(), Toast.LENGTH_SHORT).show();
-//                }
-//
-//                @Override
-//                public void onSearchAction(String currentQuery) {
-//
-//                }
-//            });
-//
-//        }else if(isSearchBarShowing){
-//            isSearchBarShowing = false;
-//            mainTitleBar.changeTitle();
-//            mainLayout.removeView(floatingSearchView);
-//        }else{
-//            isSearchBarShowing = true;
-//            mainTitleBar.changeSearch();
-//            mainLayout.addView(floatingSearchView, 1);
-//        }
-//    }
-
     private boolean isSearchBarShowing = false;
+
     /**
      * 搜索被点击
      */
     @Override
     public void onSearchClick() {
-        if(searchView == null){
+        if (searchView == null) {
             LinearLayout linearLayout = (LinearLayout) LayoutInflater
                     .from(this)
                     .inflate(R.layout.layout_search_bar, null, false);
@@ -295,11 +257,11 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
             searchView.addTextChangedListener(this);
             searchView.setOnAnimationListener(this);
             searchView.showWithAnimation();
-        }else if(isSearchBarShowing){
+        } else if (isSearchBarShowing) {
             isSearchBarShowing = false;
             searchView.hideWithAnimation();
             mainTitleBar.changeTitle();
-        }else{
+        } else {
             isSearchBarShowing = true;
             searchView.showWithAnimation();
             mainTitleBar.changeSearch();
@@ -308,14 +270,14 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
 
     @Override
     public void onLoadArticles(List<DiaryEntity> diaryEntities) {
-        if(diaryEntities == null || diaryEntities.size() == 0){
-            if(articleNoListFragment == null){
+        if (diaryEntities == null || diaryEntities.size() == 0) {
+            if (articleNoListFragment == null) {
                 articleNoListFragment = new ArticleNoListFragment();
             }
             getFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, articleNoListFragment).commit();
-        }else{
-            if(articleListFragment == null){
+        } else {
+            if (articleListFragment == null) {
                 articleListFragment = new ArticleListFragment();
             }
             getFragmentManager().beginTransaction()
@@ -327,6 +289,7 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
 
     /**
      * 分类被点击
+     *
      * @param v View
      */
     @Override
@@ -340,11 +303,41 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
     @Override
     protected void onResume() {
         super.onResume();
-        if(isCalendarShowing){
+        if (isCalendarShowing) {
             presenter.loadArticles(selectDate);
-        }else{
+        } else {
             presenter.loadArticles(mainTitleBar.getTitleString());
         }
+        this.setThemeColor(ApplicationContext.getThemeData().getColor());
+    }
+
+    private void setThemeColor(int color) {
+        if (mainTitleBar != null) mainTitleBar.setBackgroundColor(color);
+        if (tabView != null) tabView.setThemeColor(color);
+        if (compactCalendarView != null) {
+            int themeColor = ApplicationContext.getThemeData().getColor();
+
+            float[] hsv = new float[3];
+            Color.colorToHSV(themeColor, hsv);
+            float[] hsv1 = hsv.clone();
+            float[] hsv2 = hsv.clone();
+
+            if(hsv[1]*3<1){
+                hsv1[1] = hsv[1] + 1.0f/6.0f;
+                hsv2[1] = hsv[1] + 1.0f/3.0f;
+            }else if(hsv[1]*3<2){
+                hsv1[1] = hsv[1] - 1.0f/6.0f;
+                hsv2[1] = hsv[1] + 1.0f/6.0f;
+            }else{
+                hsv1[1] = hsv[1] - 1.0f/6.0f;
+                hsv2[1] = hsv[1] - 1.0f/3.0f;
+            }
+
+            compactCalendarView.setCalendarBackgroundColor(themeColor);
+            compactCalendarView.setCurrentSelectedDayBackgroundColor(Color.HSVToColor(hsv1));
+            compactCalendarView.setCurrentDayBackgroundColor(Color.HSVToColor(hsv2));
+        }
+
     }
 
     @Override
@@ -364,30 +357,33 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
 
     @Override
     public void onHideAnimationEnd() {
-        if(searchView.getSearchString() != null && !searchView.getSearchString().equals("")){
+        if (searchView.getSearchString() != null && !searchView.getSearchString().equals("")) {
             presenter.loadArticles(mainTitleBar.getTitleString());
         }
     }
 
     @Override
     public void onShowAnimationEnd() {
-        if(searchView.getSearchString() != null && !searchView.getSearchString().equals("")) {
+        if (searchView.getSearchString() != null && !searchView.getSearchString().equals("")) {
             presenter.loadArticlesByKeyWord(searchView.getSearchString());
         }
     }
 
     @Override
     public void onLoadWeather(WeatherModel weatherModel) {
-        if(weatherModel != null){
+        if (weatherModel != null) {
             ApplicationContext.setWeatherModel(weatherModel);
         }
     }
 
     @Override
     public void onPopupWindowClick(View view) {
-        String category = ((CategoryView)view).getCategoryString();
+        String category = ((CategoryView) view).getCategoryString();
         presenter.loadArticles(category);
         mainTitleBar.setTitleString(category);
         customPopWindow.dissmiss();
     }
+
+
+
 }

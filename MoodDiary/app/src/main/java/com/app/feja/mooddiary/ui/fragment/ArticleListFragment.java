@@ -10,8 +10,10 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.AnimationSet;
 import android.view.animation.LayoutAnimationController;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.app.feja.mooddiary.R;
+import com.app.feja.mooddiary.application.ApplicationContext;
 import com.app.feja.mooddiary.model.adapter.DiaryAdapter;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.presenter.ArticleListPresenter;
@@ -24,7 +26,7 @@ import java.util.List;
 
 public class ArticleListFragment extends Fragment implements ArticleListView, ArticleView.OnArticleViewClickListener {
 
-    private View view;
+    private ScrollView view;
     private LinearLayout linearLayout;
     private ArticleListPresenter articleListPresenter;
     private ViewGroup.LayoutParams layoutParams;
@@ -48,11 +50,11 @@ public class ArticleListFragment extends Fragment implements ArticleListView, Ar
         AnimationSet animationSet = new AnimationSet(true);
         animationSet.addAnimation(alphaAnimation);
 
-        layoutAnimationController = new LayoutAnimationController(alphaAnimation, 0.3f);
+        layoutAnimationController = new LayoutAnimationController(alphaAnimation, 0);
     }
 
     private void initLayout(LayoutInflater inflater, ViewGroup container){
-        view = inflater.inflate(R.layout.fragment_article_list, container, false);
+        view = (ScrollView) inflater.inflate(R.layout.fragment_article_list, container, false);
         linearLayout = (LinearLayout) view.findViewById(R.id.layout_article_list);
         linearLayout.setLayoutAnimation(layoutAnimationController);
         View articleViewLayout = inflater.inflate(R.layout.layout_article_view, container, false);
@@ -75,6 +77,7 @@ public class ArticleListFragment extends Fragment implements ArticleListView, Ar
         }
         for(DiaryEntity diaryEntity: diaryEntities){
             ArticleView articleView = DiaryAdapter.getArticleView(diaryEntity, layoutParams, listener);
+            articleView.setThemeColor(ApplicationContext.getThemeData().getColor());
             linearLayout.addView(articleView);
         }
         linearLayout.startLayoutAnimation();

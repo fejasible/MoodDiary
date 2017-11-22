@@ -5,10 +5,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 
-import com.app.feja.mooddiary.R;
+import com.app.feja.mooddiary.application.ApplicationContext;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.util.DateTime;
 import com.app.feja.mooddiary.widget.base.BaseView;
@@ -48,13 +47,13 @@ public class ArticleInformationView extends BaseView{
         themePaint = new Paint();
         themePaint.setAntiAlias(true);
         themePaint.setStyle(Paint.Style.STROKE);
-        themePaint.setColor(ContextCompat.getColor(getContext(), R.color.lightSkyBlue));
+        themePaint.setColor(ApplicationContext.getThemeData().getColor());
 
         strokePaint = new Paint();
         strokePaint.setAntiAlias(true);
         strokePaint.setStyle(Paint.Style.STROKE);
         strokePaint.setStrokeWidth(2.0f);
-        strokePaint.setColor(ContextCompat.getColor(getContext(), R.color.lightSkyBlue));
+        strokePaint.setColor(ApplicationContext.getThemeData().getColor());
 
         this.setDiaryEntity(new DiaryEntity());
     }
@@ -68,6 +67,7 @@ public class ArticleInformationView extends BaseView{
         this.drawFace(this.height / 2, this.height / 2, this.height / 4,
                 diaryEntity.getMood(), strokePaint, canvas);
 
+        //noinspection SuspiciousNameCombination
         this.drawCenterText(dateString, this.height, this.height / 2,
                 themePaint, canvas, Paint.Align.LEFT);
 

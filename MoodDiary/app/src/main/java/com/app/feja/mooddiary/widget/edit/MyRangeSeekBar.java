@@ -3,16 +3,15 @@ package com.app.feja.mooddiary.widget.edit;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 
 import com.app.feja.mooddiary.R;
+import com.app.feja.mooddiary.application.ApplicationContext;
 import com.jaygoo.widget.RangeSeekBar;
 
 public class MyRangeSeekBar extends RangeSeekBar{
 
     private Paint paint;
-    private Paint.FontMetricsInt fontMetricsInt;
 
     public MyRangeSeekBar(Context context) {
         super(context);
@@ -29,7 +28,7 @@ public class MyRangeSeekBar extends RangeSeekBar{
         paint.setTextSize(30);
         paint.setTextAlign(Paint.Align.RIGHT);
         paint.setAntiAlias(true);
-        paint.setColor(ContextCompat.getColor(getContext(), R.color.lightSkyBlue));
+        paint.setColor(ApplicationContext.getThemeData().getColor());
     }
 
     @Override
