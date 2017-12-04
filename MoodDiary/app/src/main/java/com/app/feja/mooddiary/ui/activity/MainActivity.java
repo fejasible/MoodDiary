@@ -3,9 +3,6 @@ package com.app.feja.mooddiary.ui.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -13,11 +10,10 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.adapter.PopupWindowAdapter;
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 import com.app.feja.mooddiary.http.model.WeatherModel;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.model.entity.TypeEntity;
@@ -46,7 +42,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends FragmentActivity implements TabView.OnTabClickListener,
+public class MainActivity extends BaseActivity implements TabView.OnTabClickListener,
         MainTitleBar.OnTitleBarClickListener, ArticleListView, View.OnClickListener, TextWatcher,
         SearchView.OnAnimationListener, WeatherView, PopupWindowAdapter.OnPopupWindowItemClickListener {
 
@@ -167,7 +163,7 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
                 compactCalendarView.hideCalendarWithAnimation();
             }
         }
-        setThemeColor(ApplicationContext.getThemeData().getColor());
+        setThemeColor(TheApplication.getThemeData().getColor());
     }
 
     private void refreshCalendarEvent() {
@@ -193,7 +189,7 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
 
         if (popupLayout == null) {
             popupLayout = (LinearLayout) LayoutInflater.from(this)
-                    .inflate(R.layout.layout_category_popup_window, null);
+                    .inflate(R.layout.item_category_popup_window, null);
 
             //所有分类
             totalView = (CategoryView) popupLayout.findViewById(R.id.id_popup_all_category_view);
@@ -223,8 +219,8 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
             recyclerView.setAdapter(popupWindowAdapter);
         }
 
-        editView.setBackgroundColor(ApplicationContext.getThemeData().getColor());
-        totalView.setBackgroundColor(ApplicationContext.getThemeData().getColor());
+        editView.setBackgroundColor(TheApplication.getThemeData().getColor());
+        totalView.setBackgroundColor(TheApplication.getThemeData().getColor());
 
         popupWindowAdapter.setData(typeEntities);
         popupWindowAdapter.notifyDataSetChanged();
@@ -232,10 +228,10 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
         if (customPopWindow == null) {
             customPopWindow = new CustomPopWindow.PopupWindowBuilder(this)
                     .setView(popupLayout)
-                    .size(ApplicationContext.getScreenWidth() * 3 / 5, ApplicationContext.getScreenHeight() / 3)
+                    .size(TheApplication.getScreenWidth() * 3 / 5, TheApplication.getScreenHeight() / 3)
                     .create();
         }
-        customPopWindow.showAsDropDown(mainTitleBar, ApplicationContext.getScreenWidth() / 5, 5);
+        customPopWindow.showAsDropDown(mainTitleBar, TheApplication.getScreenWidth() / 5, 5);
     }
 
     private boolean isSearchBarShowing = false;
@@ -248,7 +244,7 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
         if (searchView == null) {
             LinearLayout linearLayout = (LinearLayout) LayoutInflater
                     .from(this)
-                    .inflate(R.layout.layout_search_bar, null, false);
+                    .inflate(R.layout.item_search_bar, null, false);
             searchView = (SearchView) linearLayout.findViewById(R.id.search_view);
             linearLayout.removeView(searchView);
             mainLayout.addView(searchView, 1);
@@ -308,14 +304,14 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
         } else {
             presenter.loadArticles(mainTitleBar.getTitleString());
         }
-        this.setThemeColor(ApplicationContext.getThemeData().getColor());
+        this.setThemeColor(TheApplication.getThemeData().getColor());
     }
 
     private void setThemeColor(int color) {
         if (mainTitleBar != null) mainTitleBar.setBackgroundColor(color);
         if (tabView != null) tabView.setThemeColor(color);
         if (compactCalendarView != null) {
-            int themeColor = ApplicationContext.getThemeData().getColor();
+            int themeColor = TheApplication.getThemeData().getColor();
 
             float[] hsv = new float[3];
             Color.colorToHSV(themeColor, hsv);
@@ -372,7 +368,7 @@ public class MainActivity extends FragmentActivity implements TabView.OnTabClick
     @Override
     public void onLoadWeather(WeatherModel weatherModel) {
         if (weatherModel != null) {
-            ApplicationContext.setWeatherModel(weatherModel);
+            TheApplication.setWeatherModel(weatherModel);
         }
     }
 

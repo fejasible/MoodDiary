@@ -4,7 +4,7 @@ package com.app.feja.mooddiary.presenter;
 import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 import com.app.feja.mooddiary.model.dao.DiaryDao;
 import com.app.feja.mooddiary.model.dao.TypeDao;
 import com.app.feja.mooddiary.model.dao.impl.DiaryDaoImpl;
@@ -20,8 +20,8 @@ import java.util.List;
 
 public class ArticleListPresenter {
 
-    public static final String ALL_CATEGORY = ApplicationContext.getContext().getString(R.string.all_sort);
-    public static final String NO_CATEGORY = ApplicationContext.getContext().getString(R.string.no_sort);
+    public static final String ALL_CATEGORY = TheApplication.getContext().getString(R.string.all_sort);
+    public static final String NO_CATEGORY = TheApplication.getContext().getString(R.string.no_sort);
 
     private ArticleListView articleListView;
     private CategoryView categoryView;
@@ -83,7 +83,7 @@ public class ArticleListPresenter {
     }
 
     public void deleteTypeOnly(String type){
-        Toast.makeText(ApplicationContext.getContext(), type, Toast.LENGTH_SHORT).show();
+        Toast.makeText(TheApplication.getContext(), type, Toast.LENGTH_SHORT).show();
         TypeEntity typeEntity = typeDao.selectType(type);
         List<DiaryEntity> diaryEntities = diaryDao.getDiary(typeEntity);
         if(diaryEntities == null || diaryEntities.size() == 0){

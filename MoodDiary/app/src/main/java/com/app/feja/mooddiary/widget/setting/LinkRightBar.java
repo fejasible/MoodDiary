@@ -12,7 +12,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 import com.app.feja.mooddiary.widget.base.BaseView;
 
 public class LinkRightBar extends BaseView{
@@ -43,7 +43,7 @@ public class LinkRightBar extends BaseView{
     private void init(){
         themePaint = new Paint();
         themePaint.setAntiAlias(true);
-        themePaint.setColor(ApplicationContext.getThemeData().getColor());
+        themePaint.setColor(TheApplication.getThemeData().getColor());
 
         backgroundPaint = new Paint(themePaint);
         backgroundPaint.setColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
@@ -63,8 +63,8 @@ public class LinkRightBar extends BaseView{
         if(themePaint.getTextSize() != getHeight() / 3){
             themePaint.setTextSize(getHeight() / 3);
         }
-        if(themePaint.getColor() != ApplicationContext.getThemeData().getColor()){
-            themePaint.setColor(ApplicationContext.getThemeData().getColor());
+        if(themePaint.getColor() != TheApplication.getThemeData().getColor()){
+            themePaint.setColor(TheApplication.getThemeData().getColor());
         }
         if(pressed){
             canvas.drawRect(0, 0, getWidth(), getHeight(), backgroundPaint);

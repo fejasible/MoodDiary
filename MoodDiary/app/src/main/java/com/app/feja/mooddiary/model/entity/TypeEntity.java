@@ -1,7 +1,7 @@
 package com.app.feja.mooddiary.model.entity;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -17,7 +17,7 @@ public class TypeEntity extends BaseEntity implements Serializable{
 
 
     public TypeEntity() {
-        this.type = ApplicationContext.getContext().getResources().getString(R.string.no_sort);
+        this.type = TheApplication.getContext().getResources().getString(R.string.no_sort);
         this.typeColor = 0;
     }
 

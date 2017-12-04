@@ -5,11 +5,10 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 import com.app.feja.mooddiary.widget.base.BaseView;
 
 public class CategoryView extends BaseView{
@@ -38,7 +37,7 @@ public class CategoryView extends BaseView{
     public void init(){
         this.paint = new Paint();
         this.categoryString = getResources().getString(R.string.no_sort);
-        this.setBackgroundColor(ApplicationContext.getThemeData().getColor());
+        this.setBackgroundColor(TheApplication.getThemeData().getColor());
         this.setAlpha(0.9f);
     }
 

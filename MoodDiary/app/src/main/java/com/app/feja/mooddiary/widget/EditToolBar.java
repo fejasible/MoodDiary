@@ -13,7 +13,7 @@ import android.util.AttributeSet;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.adapter.WeatherAdapter;
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 import com.app.feja.mooddiary.http.model.WeatherModel;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.widget.base.TouchListenView;
@@ -97,7 +97,7 @@ public class EditToolBar extends TouchListenView{
         this.themePaint.setStyle(Paint.Style.STROKE);
         this.themePaint.setAntiAlias(true);
         this.themePaint.setStrokeWidth(2.0f);
-        this.themePaint.setColor(ApplicationContext.getThemeData().getColor());
+        this.themePaint.setColor(TheApplication.getThemeData().getColor());
     }
 
     private void initBackgroundPaint(){
@@ -105,7 +105,7 @@ public class EditToolBar extends TouchListenView{
         this.backgroundPaint.setStyle(Paint.Style.STROKE);
         this.backgroundPaint.setAntiAlias(true);
         this.backgroundPaint.setStrokeWidth(1.0f);
-        this.backgroundPaint.setColor(ApplicationContext.getThemeData().getColor());
+        this.backgroundPaint.setColor(TheApplication.getThemeData().getColor());
     }
 
     private void initReflectPaint(){

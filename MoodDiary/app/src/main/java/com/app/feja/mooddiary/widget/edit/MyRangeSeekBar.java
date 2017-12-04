@@ -6,7 +6,7 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 import com.jaygoo.widget.RangeSeekBar;
 
 public class MyRangeSeekBar extends RangeSeekBar{
@@ -28,7 +28,7 @@ public class MyRangeSeekBar extends RangeSeekBar{
         paint.setTextSize(30);
         paint.setTextAlign(Paint.Align.RIGHT);
         paint.setAntiAlias(true);
-        paint.setColor(ApplicationContext.getThemeData().getColor());
+        paint.setColor(TheApplication.getThemeData().getColor());
     }
 
     @Override

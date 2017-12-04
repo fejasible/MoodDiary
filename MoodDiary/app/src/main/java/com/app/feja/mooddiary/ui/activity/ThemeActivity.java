@@ -13,7 +13,7 @@ import android.view.View;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.adapter.ThemeAdapter;
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 import com.app.feja.mooddiary.widget.base.TouchListenView;
 import com.app.feja.mooddiary.widget.setting.SettingTitleBar;
 import com.google.gson.Gson;
@@ -73,7 +73,7 @@ public class ThemeActivity extends BaseActivity implements TouchListenView.OnIte
             ThemeAdapter.Data data = new ThemeAdapter.Data(
                     ContextCompat.getColor(getApplicationContext(), colorId), getString(stringId));
             datas.add(data);
-            if(ApplicationContext.getThemeData().equals(data)) {// 已存储的内置主题
+            if(TheApplication.getThemeData().equals(data)) {// 已存储的内置主题
                 data.setSelect(true);
                 custom = false;
             }
@@ -83,7 +83,7 @@ public class ThemeActivity extends BaseActivity implements TouchListenView.OnIte
         }
         if(custom){
             if(datas.size() > 0) {
-                datas.get(0).setColor(ApplicationContext.getThemeData().getColor());
+                datas.get(0).setColor(TheApplication.getThemeData().getColor());
                 datas.get(0).setSelect(true);
             }
         }
@@ -121,7 +121,7 @@ public class ThemeActivity extends BaseActivity implements TouchListenView.OnIte
     @Override
     public void onItemClick(View view, int position) {
         final ThemeAdapter.Data data = themeAdapter.getData().get(position);
-        ApplicationContext.setThemeData(data);
+        TheApplication.setThemeData(data);
         saveTheme(data);
 
         for(int i=0; i<themeAdapter.getData().size(); i++){
@@ -138,35 +138,35 @@ public class ThemeActivity extends BaseActivity implements TouchListenView.OnIte
             colorPicker.show();
         }
         themeAdapter.notifyDataSetChanged();
-        settingTitleBar.setBackgroundColor(ApplicationContext.getThemeData().getColor());
+        settingTitleBar.setBackgroundColor(TheApplication.getThemeData().getColor());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        settingTitleBar.setBackgroundColor(ApplicationContext.getThemeData().getColor());
+        settingTitleBar.setBackgroundColor(TheApplication.getThemeData().getColor());
     }
 
     private boolean saveTheme(ThemeAdapter.Data themeData){
         SharedPreferences sharedPreferences = getSharedPreferences(
-                ApplicationContext.getSharedPreferencesName(), Context.MODE_PRIVATE);
-        sharedPreferences.edit().putString(ApplicationContext.THEME_KEY, themeData.toString()).apply();
+                TheApplication.getSharedPreferencesName(), Context.MODE_PRIVATE);
+        sharedPreferences.edit().putString(TheApplication.THEME_KEY, themeData.toString()).apply();
         return true;
     }
 
     private boolean saveCustomTheme(ThemeAdapter.Data themeData){
         SharedPreferences sharedPreferences = getSharedPreferences(
-                ApplicationContext.getSharedPreferencesName(), Context.MODE_PRIVATE);
-        sharedPreferences.edit().putString(ApplicationContext.CUSTOM_THEME_KEY, themeData.toString()).apply();
+                TheApplication.getSharedPreferencesName(), Context.MODE_PRIVATE);
+        sharedPreferences.edit().putString(TheApplication.CUSTOM_THEME_KEY, themeData.toString()).apply();
         return true;
     }
 
     private ThemeAdapter.Data getCustomTheme(){
-        SharedPreferences sharedPreferences = getSharedPreferences(ApplicationContext.getSharedPreferencesName(), Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(TheApplication.getSharedPreferencesName(), Context.MODE_PRIVATE);
         if(sharedPreferences == null){
             return null;
         }else{
-            String themeString = sharedPreferences.getString(ApplicationContext.CUSTOM_THEME_KEY, "");
+            String themeString = sharedPreferences.getString(TheApplication.CUSTOM_THEME_KEY, "");
             try {
                 return new Gson().fromJson(themeString, ThemeAdapter.Data.class);
             }catch (Exception e){
@@ -180,10 +180,10 @@ public class ThemeActivity extends BaseActivity implements TouchListenView.OnIte
     public void onColorPicked(@ColorInt int pickedColor) {
         themeAdapter.getData().get(0).setColor(pickedColor);
         themeAdapter.getData().get(0).setSelect(true);
-        ApplicationContext.setThemeData(themeAdapter.getData().get(0));
+        TheApplication.setThemeData(themeAdapter.getData().get(0));
         saveTheme(themeAdapter.getData().get(0));
         saveCustomTheme(themeAdapter.getData().get(0));
         themeAdapter.notifyDataSetChanged();
-        settingTitleBar.setBackgroundColor(ApplicationContext.getThemeData().getColor());
+        settingTitleBar.setBackgroundColor(TheApplication.getThemeData().getColor());
     }
 }

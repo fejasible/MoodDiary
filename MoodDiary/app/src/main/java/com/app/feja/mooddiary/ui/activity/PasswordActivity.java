@@ -1,6 +1,5 @@
 package com.app.feja.mooddiary.ui.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,7 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 import com.app.feja.mooddiary.widget.PasswordView;
 
 import java.io.Serializable;
@@ -18,7 +17,7 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PasswordActivity extends Activity implements PasswordView.OnHelpClickListener {
+public class PasswordActivity extends BaseActivity implements PasswordView.OnHelpClickListener {
 
     public static final String PASSWORD_KEY = "password";
     public static final String ACTION_BUNDLE_NAME = "action";
@@ -29,7 +28,7 @@ public class PasswordActivity extends Activity implements PasswordView.OnHelpCli
         Toast.makeText(getApplicationContext(), "help", Toast.LENGTH_SHORT).show();
     }
 
-    enum ACTION implements Serializable{
+    public enum ACTION implements Serializable{
         FIRST_ENTER("first_enter"), AGAIN_ENTER("again_enter"), EDIT_ENTER("edit_enter"),
         EDIT_ENTER_2("edit_enter_2"), EDIT_ENTER_3("edit_enter_3");
 
@@ -181,8 +180,8 @@ public class PasswordActivity extends Activity implements PasswordView.OnHelpCli
     }
 
     private void initTheme(){
-        passwordTitle.setBackgroundColor(ApplicationContext.getThemeData().getColor());
-        passwordView.setThemeColor(ApplicationContext.getThemeData().getColor());
+        passwordTitle.setBackgroundColor(TheApplication.getThemeData().getColor());
+        passwordView.setThemeColor(TheApplication.getThemeData().getColor());
     }
 
     private boolean savePassword(String password){

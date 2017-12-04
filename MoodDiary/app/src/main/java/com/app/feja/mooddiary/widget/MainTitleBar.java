@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -14,7 +13,7 @@ import android.view.animation.AnimationSet;
 import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 import com.app.feja.mooddiary.util.DateTime;
 import com.app.feja.mooddiary.widget.base.BaseView;
 
@@ -73,7 +72,7 @@ public class MainTitleBar extends BaseView {
         this.paint = new Paint();
         this.titleString = getResources().getString(R.string.all_sort);
         this.searchString = getResources().getString(R.string.search);
-        this.setBackgroundColor(ApplicationContext.getThemeData().getColor());
+        this.setBackgroundColor(TheApplication.getThemeData().getColor());
         listener = new OnTitleBarClickListener() {
             @Override
             public void onCalendarClick() {

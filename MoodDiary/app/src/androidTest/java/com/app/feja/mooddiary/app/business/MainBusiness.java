@@ -3,7 +3,7 @@ package com.app.feja.mooddiary.app.business;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.app.util.CommonParams;
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 import com.robotium.solo.Solo;
 
 public class MainBusiness extends BaseBusiness{
@@ -18,7 +18,7 @@ public class MainBusiness extends BaseBusiness{
 
     public void clickTab(TAB tab){
         int dx = this.screen_width/3;
-        int tabHeight = (int)ApplicationContext.getContext().getResources().getDimension(R.dimen.x100);
+        int tabHeight = (int) TheApplication.getContext().getResources().getDimension(R.dimen.x100);
         switch (tab){
             case DIARY_LIST:
                 clickLongOnScreen(dx/2, this.screen_height - tabHeight/2, CommonParams.sleep);

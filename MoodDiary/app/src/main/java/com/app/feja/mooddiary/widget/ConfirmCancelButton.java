@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 import com.app.feja.mooddiary.widget.base.TouchListenView;
 
 
@@ -25,12 +25,12 @@ public class ConfirmCancelButton extends TouchListenView{
     private OnButtonClickListener onButtonClickListener = new OnButtonClickListener() {
         @Override
         public void onCancelClick() {
-            Toast.makeText(ApplicationContext.getContext(), "cancel", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TheApplication.getContext(), "cancel", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onConfirmClick() {
-            Toast.makeText(ApplicationContext.getContext(), "confirm", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TheApplication.getContext(), "confirm", Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -128,7 +128,7 @@ public class ConfirmCancelButton extends TouchListenView{
 
     private void drawCancel(int x, int y, Paint paint, Canvas canvas){
         paint.reset();
-        paint.setTextSize(ApplicationContext.getScreenHeight() > ApplicationContext.getScreenWidth()
+        paint.setTextSize(TheApplication.getScreenHeight() > TheApplication.getScreenWidth()
                 ? this.height/2 : this.width/2);
         paint.setColor(Color.WHITE);
         paint.setAntiAlias(true);
@@ -137,7 +137,7 @@ public class ConfirmCancelButton extends TouchListenView{
 
     private void drawConfirm(int x, int y, Paint paint, Canvas canvas){
         paint.reset();
-        paint.setTextSize(ApplicationContext.getScreenHeight() > ApplicationContext.getScreenWidth()
+        paint.setTextSize(TheApplication.getScreenHeight() > TheApplication.getScreenWidth()
                 ? this.height/2 : this.width/2);
         paint.setColor(Color.WHITE);
         paint.setAntiAlias(true);

@@ -11,7 +11,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 import com.app.feja.mooddiary.widget.base.TouchListenView;
 
 public class CategoryTitleBar extends TouchListenView{
@@ -56,7 +56,7 @@ public class CategoryTitleBar extends TouchListenView{
 
     private void init(){
         paint = new Paint();
-        this.setBackgroundColor(ApplicationContext.getThemeData().getColor());
+        this.setBackgroundColor(TheApplication.getThemeData().getColor());
         this.editCategoryString = getContext().getString(R.string.edit_category);
         this.setOnItemTouchListener(new OnItemTouchListener() {
             @Override

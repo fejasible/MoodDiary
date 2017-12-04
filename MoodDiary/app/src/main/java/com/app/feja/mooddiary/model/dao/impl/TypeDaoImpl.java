@@ -1,9 +1,7 @@
 package com.app.feja.mooddiary.model.dao.impl;
 
 
-import android.widget.Toast;
-
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 import com.app.feja.mooddiary.model.DatabaseHelper;
 import com.app.feja.mooddiary.model.entity.TypeEntity;
 import com.app.feja.mooddiary.model.dao.TypeDao;
@@ -18,7 +16,7 @@ public class TypeDaoImpl implements TypeDao {
 
     public TypeDaoImpl(){
         try {
-            dao = DatabaseHelper.getHelper(ApplicationContext.getContext()).getDao(TypeEntity.class);
+            dao = DatabaseHelper.getHelper(TheApplication.getContext()).getDao(TypeEntity.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -1,11 +1,10 @@
 package com.app.feja.mooddiary.ui.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import com.app.feja.mooddiary.R;
 
-public class ExportDiaryActivity extends Activity {
+public class ExportDiaryActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

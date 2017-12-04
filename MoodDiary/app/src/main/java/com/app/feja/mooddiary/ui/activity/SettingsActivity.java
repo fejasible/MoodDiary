@@ -1,20 +1,18 @@
 package com.app.feja.mooddiary.ui.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 import com.app.feja.mooddiary.widget.base.TouchListenView;
 import com.app.feja.mooddiary.widget.setting.LinkRightBar;
 import com.app.feja.mooddiary.widget.setting.SettingTitleBar;
 
-public class SettingsActivity extends Activity implements TouchListenView.OnItemTouchListener {
+public class SettingsActivity extends BaseActivity implements TouchListenView.OnItemTouchListener {
 
     private SettingTitleBar settingTitleBar;
     private LinkRightBar exportDiaryBar;
@@ -90,6 +88,6 @@ public class SettingsActivity extends Activity implements TouchListenView.OnItem
     @Override
     protected void onResume() {
         super.onResume();
-        this.settingTitleBar.setBackgroundColor(ApplicationContext.getThemeData().getColor());
+        this.settingTitleBar.setBackgroundColor(TheApplication.getThemeData().getColor());
     }
 }

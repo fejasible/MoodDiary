@@ -9,12 +9,10 @@ import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
-import com.app.feja.mooddiary.model.entity.TypeEntity;
 import com.app.feja.mooddiary.widget.base.TouchListenView;
 
 public class ArticleEditTitleBar extends TouchListenView {
@@ -65,7 +63,7 @@ public class ArticleEditTitleBar extends TouchListenView {
 
     private void init(){
         this.paint = new Paint();
-        this.setBackgroundColor(ApplicationContext.getThemeData().getColor());
+        this.setBackgroundColor(TheApplication.getThemeData().getColor());
         this.cancelString = getResources().getString(R.string.cancel);
         this.saveString = getResources().getString(R.string.save);
         this.noCategoryString = getResources().getString(R.string.no_sort);

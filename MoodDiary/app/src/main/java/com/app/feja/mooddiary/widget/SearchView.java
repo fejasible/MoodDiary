@@ -4,7 +4,6 @@ package com.app.feja.mooddiary.widget;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
-import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.application.ApplicationContext;
 
 public class SearchView extends RelativeLayout{
 

@@ -2,7 +2,7 @@ package com.app.feja.mooddiary.presenter;
 
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 import com.app.feja.mooddiary.model.dao.DiaryDao;
 import com.app.feja.mooddiary.model.dao.TypeDao;
 import com.app.feja.mooddiary.model.dao.impl.DiaryDaoImpl;
@@ -10,8 +10,6 @@ import com.app.feja.mooddiary.model.dao.impl.TypeDaoImpl;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.model.entity.TypeEntity;
 import com.app.feja.mooddiary.ui.view.ArticleEditView;
-
-import java.util.Date;
 
 public class ArticleEditPresenter {
 
@@ -29,9 +27,9 @@ public class ArticleEditPresenter {
         if(diaryEntity.getId() == null) {
             TypeEntity typeEntity = this.typeDao.selectType(diaryEntity.getType().getType());
             if(typeEntity == null){
-                typeEntity = this.typeDao.selectType(ApplicationContext.getContext().getString(R.string.no_sort));
+                typeEntity = this.typeDao.selectType(TheApplication.getContext().getString(R.string.no_sort));
                 if(typeEntity == null){
-                    typeEntity = new TypeEntity(ApplicationContext.getContext().getString(R.string.no_sort));
+                    typeEntity = new TypeEntity(TheApplication.getContext().getString(R.string.no_sort));
                     this.typeDao.addType(typeEntity);
                 }
             }

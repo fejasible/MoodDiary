@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.application.ApplicationContext;
 import com.app.feja.mooddiary.widget.base.TouchListenView;
 
 public class SettingTitleBar extends TouchListenView{

@@ -3,7 +3,7 @@ package com.app.feja.mooddiary.model.entity;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.adapter.WeatherAdapter;
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -25,7 +25,7 @@ public class DiaryEntity extends BaseEntity implements Serializable{
     public static final String COLUMN_NAME_TEXT_SIZE = "text_size";
 
     public DiaryEntity() {
-        this.type = new TypeEntity(ApplicationContext.getContext().getResources().getString(R.string.no_sort));
+        this.type = new TypeEntity(TheApplication.getContext().getResources().getString(R.string.no_sort));
         this.createTime = new Date();
         this.mood = DiaryEntity.CALM;
         this.content = "";

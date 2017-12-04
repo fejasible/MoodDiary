@@ -26,7 +26,7 @@ import android.widget.ScrollView;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.adapter.PopupWindowAdapter;
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 import com.app.feja.mooddiary.constant.CONSTANT;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.model.entity.TypeEntity;
@@ -126,7 +126,7 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
         }
         articleEditPresenter.loadArticle(diaryEntity);
         editToolBar.setFace(this.diaryEntity.getMood());
-        editToolBar.setWeatherModel(ApplicationContext.getWeatherModel());
+        editToolBar.setWeatherModel(TheApplication.getWeatherModel());
     }
 
     /**
@@ -138,7 +138,7 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
         this.rangeSeekBar.setSeekBarMode(1);
         this.rangeSeekBar.setRange(8, 60);
         this.rangeSeekBar.setLineColor(ContextCompat.getColor(getActivity(), R.color.lightGrey),
-                ApplicationContext.getThemeData().getColor());
+                TheApplication.getThemeData().getColor());
         this.rangeSeekBar.setValue(diaryEntity.getTextSize());
 
 
@@ -155,7 +155,7 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
         this.faceChooseView = new FaceChooseView(getActivity(), 5, null);
         this.faceChooseView.setLayoutParams(new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                ApplicationContext.getScreenHeight() / 6
+                TheApplication.getScreenHeight() / 6
         ));
         this.faceChooseView.setOnItemTouchListener(new TouchListenView.OnItemTouchListener() {
             @Override
@@ -169,7 +169,7 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
         this.weatherView = new WeatherView(getActivity());
         this.weatherView.setLayoutParams(new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                ApplicationContext.getScreenHeight() / 12
+                TheApplication.getScreenHeight() / 12
         ));
         this.weatherView.setWeatherModel(editToolBar.getWeatherModel());
     }
@@ -212,12 +212,12 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
             if(bitmap != null){
                 path = CONSTANT.EDITABLE_IMAGE_TAG_START + path + CONSTANT.EDITABLE_IMAGE_TAG_END;
                 SpannableString spannableString = new SpannableString(path);
-                if(bitmap.getWidth() > ApplicationContext.getScreenWidth()){
+                if(bitmap.getWidth() > TheApplication.getScreenWidth()){
                     try {
                         bitmap = Bitmap.createScaledBitmap(
                                 bitmap,
-                                ApplicationContext.getScreenWidth()-20,
-                                bitmap.getHeight()*(ApplicationContext.getScreenWidth()-20)/bitmap.getWidth(),
+                                TheApplication.getScreenWidth()-20,
+                                bitmap.getHeight()*(TheApplication.getScreenWidth()-20)/bitmap.getWidth(),
                                 false
                         );
                     }catch (IllegalArgumentException e){
@@ -257,7 +257,7 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
 
         if(popupLayout == null){
             popupLayout = (LinearLayout) LayoutInflater.from(getActivity())
-                    .inflate(R.layout.layout_category_popup_window, null);
+                    .inflate(R.layout.item_category_popup_window, null);
             View view = popupLayout.findViewById(R.id.id_popup_all_category_view);
             popupLayout.removeView(view);
 
@@ -282,10 +282,10 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
         if(customPopWindow == null){
             customPopWindow = new CustomPopWindow.PopupWindowBuilder(getActivity())
                     .setView(popupLayout)
-                    .size(ApplicationContext.getScreenWidth() * 3 / 5, ApplicationContext.getScreenHeight() / 3)
+                    .size(TheApplication.getScreenWidth() * 3 / 5, TheApplication.getScreenHeight() / 3)
                     .create();
         }
-        customPopWindow.showAsDropDown(titleBar, ApplicationContext.getScreenWidth() / 5, 5);
+        customPopWindow.showAsDropDown(titleBar, TheApplication.getScreenWidth() / 5, 5);
     }
 
     /**
@@ -451,7 +451,7 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
         String path = CONSTANT.EDITABLE_IMAGE_TAG_START + imageItem.path + CONSTANT.EDITABLE_IMAGE_TAG_END;
         SpannableString spannableString = new SpannableString(path);
         Bitmap bitmap = BitmapFactory.decodeFile(imageItem.path);
-        if(bitmap.getWidth() > ApplicationContext.getScreenWidth()){
+        if(bitmap.getWidth() > TheApplication.getScreenWidth()){
             bitmap = Bitmap.createScaledBitmap(bitmap, editText.getWidth(),
                     bitmap.getHeight()*(editText.getWidth())/bitmap.getWidth(), false);
         }

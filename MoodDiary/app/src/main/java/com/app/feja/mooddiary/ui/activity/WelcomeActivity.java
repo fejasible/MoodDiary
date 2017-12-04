@@ -7,12 +7,14 @@ import android.os.Handler;
 import android.widget.TextView;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WelcomeActivity extends Activity {
+public class WelcomeActivity extends BaseActivity {
+
+    public static final String TAG = "WelcomeActivity";
 
     @BindView(R.id.id_welcome_text_view)
     TextView textView;
@@ -24,7 +26,9 @@ public class WelcomeActivity extends Activity {
 
         ButterKnife.bind(this);
 
-        textView.setTextColor(ApplicationContext.getThemeData().getColor());
+        this.setTag(TAG);
+
+        textView.setTextColor(TheApplication.getThemeData().getColor());
 
         new Handler().postDelayed(new Runnable() {
             public void run() {

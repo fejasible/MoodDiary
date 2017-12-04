@@ -15,25 +15,32 @@
 
     </com.app.feja.mooddiary.widget.CategoryTitleBar>
 
-    <ScrollView
+    <!--<ScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0px"-->
+        <!--android:layout_weight="1"-->
+        <!--android:scrollbarThumbVertical="@color/lightSkyBlue"-->
+        <!--android:scrollbarSize="@dimen/x5">-->
+
+        <!--<LinearLayout-->
+            <!--android:id="@+id/id_container_category"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<com.app.feja.mooddiary.widget.CategoryView-->
+                <!--android:id="@+id/id_category_view_sample"-->
+                <!--android:layout_marginTop="@dimen/x5"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/x80"/>-->
+        <!--</LinearLayout>-->
+    <!--</ScrollView>-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/id_category_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="1"
-        android:scrollbarThumbVertical="@color/lightSkyBlue"
-        android:scrollbarSize="@dimen/x5">
+        android:layout_height="match_parent"
+        android:layoutDirection="ltr">
 
-        <LinearLayout
-            android:id="@+id/id_container_category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.app.feja.mooddiary.widget.CategoryView
-                android:id="@+id/id_category_view_sample"
-                android:layout_marginTop="@dimen/x5"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/x80"/>
-        </LinearLayout>
-    </ScrollView>
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

@@ -3,7 +3,6 @@ package com.app.feja.mooddiary.widget.edit;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
@@ -11,7 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.widget.base.TouchListenView;
 
@@ -47,7 +46,7 @@ public class FaceChooseView extends TouchListenView{
     }
 
     public void init(){
-        this.themeColor = ApplicationContext.getThemeData().getColor();
+        this.themeColor = TheApplication.getThemeData().getColor();
 
         themePaint = new Paint();
         themePaint.setAntiAlias(true);

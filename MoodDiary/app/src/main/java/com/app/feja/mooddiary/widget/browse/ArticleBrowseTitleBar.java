@@ -11,7 +11,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.widget.base.TouchListenView;
 
@@ -76,7 +76,7 @@ public class ArticleBrowseTitleBar extends TouchListenView{
 
     public void init(){
         this.paint = new Paint();
-        this.setBackgroundColor(ApplicationContext.getThemeData().getColor());
+        this.setBackgroundColor(TheApplication.getThemeData().getColor());
         this.noCategoryString = getResources().getString(R.string.no_sort);
         this.setOnItemTouchListener(new OnItemTouchListener() {
             @Override

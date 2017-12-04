@@ -1,12 +1,10 @@
 package com.app.feja.mooddiary.presenter;
 
 
-import com.app.feja.mooddiary.application.ApplicationContext;
 import com.app.feja.mooddiary.constant.CONSTANT;
 import com.app.feja.mooddiary.http.model.WeatherModel;
 import com.app.feja.mooddiary.http.request.WeatherRequest;
 import com.app.feja.mooddiary.ui.view.WeatherView;
-import com.app.feja.mooddiary.util.NetWork;
 
 import retrofit2.Call;
 import retrofit2.Callback;

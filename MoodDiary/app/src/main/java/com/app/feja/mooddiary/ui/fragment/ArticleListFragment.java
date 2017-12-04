@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 import com.app.feja.mooddiary.model.adapter.DiaryAdapter;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.presenter.ArticleListPresenter;
@@ -57,7 +57,7 @@ public class ArticleListFragment extends Fragment implements ArticleListView, Ar
         view = (ScrollView) inflater.inflate(R.layout.fragment_article_list, container, false);
         linearLayout = (LinearLayout) view.findViewById(R.id.layout_article_list);
         linearLayout.setLayoutAnimation(layoutAnimationController);
-        View articleViewLayout = inflater.inflate(R.layout.layout_article_view, container, false);
+        View articleViewLayout = inflater.inflate(R.layout.list_item_article_view, container, false);
         ArticleView articleView = (ArticleView) articleViewLayout.findViewById(R.id.article_view);
         layoutParams = articleView.getLayoutParams();
     }
@@ -77,7 +77,7 @@ public class ArticleListFragment extends Fragment implements ArticleListView, Ar
         }
         for(DiaryEntity diaryEntity: diaryEntities){
             ArticleView articleView = DiaryAdapter.getArticleView(diaryEntity, layoutParams, listener);
-            articleView.setThemeColor(ApplicationContext.getThemeData().getColor());
+            articleView.setThemeColor(TheApplication.getThemeData().getColor());
             linearLayout.addView(articleView);
         }
         linearLayout.startLayoutAnimation();

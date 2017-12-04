@@ -7,7 +7,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.util.DateTime;
 import com.app.feja.mooddiary.widget.base.BaseView;
@@ -47,13 +47,13 @@ public class ArticleInformationView extends BaseView{
         themePaint = new Paint();
         themePaint.setAntiAlias(true);
         themePaint.setStyle(Paint.Style.STROKE);
-        themePaint.setColor(ApplicationContext.getThemeData().getColor());
+        themePaint.setColor(TheApplication.getThemeData().getColor());
 
         strokePaint = new Paint();
         strokePaint.setAntiAlias(true);
         strokePaint.setStyle(Paint.Style.STROKE);
         strokePaint.setStrokeWidth(2.0f);
-        strokePaint.setColor(ApplicationContext.getThemeData().getColor());
+        strokePaint.setColor(TheApplication.getThemeData().getColor());
 
         this.setDiaryEntity(new DiaryEntity());
     }

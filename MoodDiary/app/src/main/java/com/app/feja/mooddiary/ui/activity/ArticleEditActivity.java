@@ -9,7 +9,7 @@ import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.ui.fragment.ArticleEditFragment;
 
 
-public class ArticleEditActivity extends Activity{
+public class ArticleEditActivity extends BaseActivity{
 
 
     ArticleEditFragment articleEditFragment;

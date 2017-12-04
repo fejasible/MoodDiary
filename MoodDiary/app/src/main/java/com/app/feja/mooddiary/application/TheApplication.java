@@ -1,27 +1,35 @@
 package com.app.feja.mooddiary.application;
 
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.adapter.ThemeAdapter;
-import com.app.feja.mooddiary.adapter.WeatherAdapter;
 import com.app.feja.mooddiary.http.model.WeatherModel;
-import com.app.feja.mooddiary.ui.activity.ThemeActivity;
+import com.app.feja.mooddiary.ui.activity.BaseActivity;
+import com.app.feja.mooddiary.ui.activity.PasswordActivity;
+import com.app.feja.mooddiary.ui.activity.WelcomeActivity;
 import com.app.feja.mooddiary.util.PicassoImageLoader;
 import com.google.gson.Gson;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.view.CropImageView;
 
-public class ApplicationContext extends Application{
+public class TheApplication extends Application implements Application.ActivityLifecycleCallbacks {
 
     public static final String THEME_KEY = "theme";
     public static final String CUSTOM_THEME_KEY = "custom_theme";
+
+    private int finalCount;
+    private boolean appStart = false;
 
     private static Context context;
     private static int screenWidth;
@@ -38,6 +46,7 @@ public class ApplicationContext extends Application{
     public void onCreate()
     {
         super.onCreate();
+        registerActivityLifecycleCallbacks(this);
         context = getApplicationContext();
 
         WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
@@ -88,7 +97,7 @@ public class ApplicationContext extends Application{
     }
 
     public static void setWeatherModel(WeatherModel weatherModel) {
-        ApplicationContext.weatherModel = weatherModel;
+        TheApplication.weatherModel = weatherModel;
     }
 
     public static ThemeAdapter.Data getThemeData() {
@@ -96,12 +105,12 @@ public class ApplicationContext extends Application{
     }
 
     public static void setThemeData(ThemeAdapter.Data themeData) {
-        ApplicationContext.themeData = themeData;
+        TheApplication.themeData = themeData;
 
     }
 
     private ThemeAdapter.Data getMDTheme(){
-        SharedPreferences sharedPreferences = getSharedPreferences(ApplicationContext.getSharedPreferencesName(), Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(TheApplication.getSharedPreferencesName(), Context.MODE_PRIVATE);
         if(sharedPreferences == null){
             return null;
         }else{
@@ -112,6 +121,72 @@ public class ApplicationContext extends Application{
                 e.printStackTrace();
             }
             return null;
+        }
+    }
+
+    @Override
+    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    public void onActivityStarted(Activity activity) {
+        finalCount++;
+        if(finalCount == 1 && appStart){
+            // 从后台切换到了前台
+            if(activity != null && activity instanceof BaseActivity){
+                if(((BaseActivity) activity).getTag().equals(WelcomeActivity.TAG)){
+                    appStart = true;
+                    return;
+                }
+                if(getPassword().equals("")){
+                    return ;
+                }
+                Intent intent = new Intent(activity, PasswordActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(PasswordActivity.ACTION_BUNDLE_NAME, PasswordActivity.ACTION.AGAIN_ENTER);
+                intent.putExtras(bundle);
+                activity.startActivity(intent);
+            }
+        }
+        appStart = true;
+    }
+
+    @Override
+    public void onActivityResumed(Activity activity) {
+
+    }
+
+    @Override
+    public void onActivityPaused(Activity activity) {
+
+    }
+
+    @Override
+    public void onActivityStopped(Activity activity) {
+        finalCount--;
+        if(finalCount == 0){
+            // 从前台移至了后台
+        }
+    }
+
+    @Override
+    public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+    }
+
+    @Override
+    public void onActivityDestroyed(Activity activity) {
+
+    }
+
+
+    private String getPassword(){
+        SharedPreferences sharedPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
+        if(sharedPreferences == null){
+            return "";
+        }else{
+            return sharedPreferences.getString(PasswordActivity.PASSWORD_KEY, "");
         }
     }
 }

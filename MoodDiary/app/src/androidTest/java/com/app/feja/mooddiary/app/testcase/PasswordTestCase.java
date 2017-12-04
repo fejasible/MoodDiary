@@ -5,7 +5,6 @@ import android.support.test.rule.ActivityTestRule;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.app.business.PasswordBusiness;
-import com.app.feja.mooddiary.application.ApplicationContext;
 import com.app.feja.mooddiary.ui.activity.PasswordActivity;
 
 import org.junit.Test;

@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.app.feja.mooddiary.R;
-import com.app.feja.mooddiary.application.ApplicationContext;
+import com.app.feja.mooddiary.application.TheApplication;
 import com.app.feja.mooddiary.constant.CONSTANT;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.presenter.ArticleBrowsePresenter;
@@ -24,7 +24,6 @@ import com.app.feja.mooddiary.ui.activity.ArticleEditActivity;
 import com.app.feja.mooddiary.ui.view.ArticleView;
 import com.app.feja.mooddiary.widget.browse.ArticleBrowseTitleBar;
 import com.app.feja.mooddiary.widget.browse.ArticleInformationView;
-import com.lzy.imagepicker.bean.ImageItem;
 
 import java.io.Serializable;
 import java.util.regex.Matcher;
@@ -109,12 +108,12 @@ public class ArticleBrowseFragment extends Fragment implements ArticleView{
             if(bitmap != null){
                 path = CONSTANT.EDITABLE_IMAGE_TAG_START + path + CONSTANT.EDITABLE_IMAGE_TAG_END;
                 SpannableString spannableString = new SpannableString(path);
-                if(bitmap.getWidth() > ApplicationContext.getScreenWidth()){
+                if(bitmap.getWidth() > TheApplication.getScreenWidth()){
                     try {
                         bitmap = Bitmap.createScaledBitmap(
                                 bitmap,
-                                ApplicationContext.getScreenWidth()-20,
-                                bitmap.getHeight()*(ApplicationContext.getScreenWidth()-20)/bitmap.getWidth(),
+                                TheApplication.getScreenWidth()-20,
+                                bitmap.getHeight()*(TheApplication.getScreenWidth()-20)/bitmap.getWidth(),
                                 false
                         );
                     }catch (IllegalArgumentException e){
