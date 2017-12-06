@@ -1,6 +1,5 @@
 package com.app.feja.mooddiary.ui.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.inputmethod.InputMethodManager;

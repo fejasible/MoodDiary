@@ -13,22 +13,47 @@
         android:layout_height="@dimen/x100"
         android:background="@color/lightSkyBlue"/>
 
-    <com.app.feja.mooddiary.widget.setting.LinkRightBar
-        android:id="@+id/id_settings_export_diary"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x90"
-        android:layout_marginTop="@dimen/x30"/>
+    <!--<com.app.feja.mooddiary.widget.setting.LinkRightBar-->
+        <!--android:id="@+id/id_settings_export_diary"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/x90"-->
+        <!--android:layout_marginTop="@dimen/x30"/>-->
 
     <com.app.feja.mooddiary.widget.setting.LinkRightBar
         android:id="@+id/id_settings_export_theme"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x90"/>
+        android:layout_height="@dimen/x90"
+        android:layout_marginTop="@dimen/x30"/>
 
 
-    <com.app.feja.mooddiary.widget.setting.LinkRightBar
-        android:id="@+id/id_settings_export_private_password"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x90"/>
+        android:layout_height="@dimen/x90"
+        android:background="@color/white">
+        <TextView
+            android:id="@+id/id_text_view"
+            android:textColor="@color/dark_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/disable_password"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/x45"/>
+
+        <com.suke.widget.SwitchButton
+            android:id="@+id/id_switch_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            />
+
+    </RelativeLayout>
+
+
+    <!--<com.app.feja.mooddiary.widget.setting.LinkRightBar-->
+        <!--android:id="@+id/id_settings_export_private_password"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/x90"/>-->
 
 
     <com.app.feja.mooddiary.widget.setting.LinkRightBar

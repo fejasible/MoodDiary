@@ -9,6 +9,8 @@
     <string name="not_the_same_password">两次输入口令不一致！</string>
     <string name="edit_password_success">修改口令成功</string>
     <string name="private_password">设置口令</string>
+    <string name="enable_password">已启用口令</string>
+    <string name="disable_password">未启用口令</string>
 
     <string name="all">全部</string>
     <string name="Sunday">周日</string>

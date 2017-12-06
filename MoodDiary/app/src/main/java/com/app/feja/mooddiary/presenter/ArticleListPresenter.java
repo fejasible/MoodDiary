@@ -78,7 +78,7 @@ public class ArticleListPresenter {
         categoryView.onLoadCategories(this.typeDao.getAllType(), this.diaryDao.getAllDiary());
     }
 
-    public void editTypes(String string){
+    public void editType(String string){
         this.typeDao.updateType(string);
     }
 

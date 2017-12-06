@@ -10,13 +10,19 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.adapter.PopupWindowAdapter;
 import com.app.feja.mooddiary.application.TheApplication;
+import com.app.feja.mooddiary.factory.DiaryFactory;
+import com.app.feja.mooddiary.factory.TypeFactory;
 import com.app.feja.mooddiary.http.model.WeatherModel;
+import com.app.feja.mooddiary.model.dao.DiaryDao;
+import com.app.feja.mooddiary.model.dao.impl.DiaryDaoImpl;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.model.entity.TypeEntity;
+import com.app.feja.mooddiary.presenter.ArticleEditPresenter;
 import com.app.feja.mooddiary.presenter.ArticleListPresenter;
 import com.app.feja.mooddiary.ui.fragment.ArticleListFragment;
 import com.app.feja.mooddiary.ui.fragment.ArticleNoListFragment;
@@ -80,6 +86,19 @@ public class MainActivity extends BaseActivity implements TabView.OnTabClickList
         tabView.setOnTabClickListener(this);
         mainTitleBar.setOnTitleBarClickListener(this);
 
+        if(isFirstStart()){
+            TypeFactory typeFactory = new TypeFactory();
+            DiaryFactory diaryFactory = new DiaryFactory();
+            presenter.editType(typeFactory.nextStandard().getType());
+
+            ArticleEditPresenter articleEditPresenter = new ArticleEditPresenter(null);
+            // TODO delete these code
+            for(int i=0; i<150; i++){
+                TypeEntity typeEntity = typeFactory.next();
+                presenter.editType(typeEntity.getType());
+                articleEditPresenter.editArticle(diaryFactory.next(typeEntity));
+            }
+        }
     }
 
 

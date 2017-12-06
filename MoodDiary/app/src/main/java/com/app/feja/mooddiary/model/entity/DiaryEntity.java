@@ -43,7 +43,7 @@ public class DiaryEntity extends BaseEntity implements Serializable{
         this.type = type;
         this.isDelete = IS_NOT_DELETE;
         this.background = "";
-        this.textSize = 10;
+        this.textSize = 16;
     }
 
     public static final String BUNDLE_NAME = "DiaryEntity";

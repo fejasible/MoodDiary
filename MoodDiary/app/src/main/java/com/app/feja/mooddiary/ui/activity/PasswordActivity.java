@@ -184,21 +184,13 @@ public class PasswordActivity extends BaseActivity implements PasswordView.OnHel
         passwordView.setThemeColor(TheApplication.getThemeData().getColor());
     }
 
-    private boolean savePassword(String password){
+    @Override
+    public boolean savePassword(String password){
         if(password.length() != this.passwordView.getNumberCount()){
             return false;
         }
         SharedPreferences sharedPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
         sharedPreferences.edit().putString(PASSWORD_KEY, password).apply();
         return true;
-    }
-
-    private String getPassword(){
-        SharedPreferences sharedPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
-        if(sharedPreferences == null){
-            return "";
-        }else{
-            return sharedPreferences.getString(PASSWORD_KEY, "");
-        }
     }
 }

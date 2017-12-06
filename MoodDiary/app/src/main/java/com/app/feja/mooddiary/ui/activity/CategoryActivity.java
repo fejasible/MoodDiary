@@ -1,7 +1,6 @@
 package com.app.feja.mooddiary.ui.activity;
 
 import android.os.Bundle;
-import android.support.annotation.IntRange;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,7 +20,6 @@ import com.app.feja.mooddiary.widget.CategoryTitleBar;
 import com.app.feja.mooddiary.widget.ConfirmCancelButton;
 import com.beloo.widget.chipslayoutmanager.ChipsLayoutManager;
 import com.beloo.widget.chipslayoutmanager.gravity.IChildGravityResolver;
-import com.beloo.widget.chipslayoutmanager.layouter.breaker.IRowBreaker;
 import com.example.zhouwei.library.CustomPopWindow;
 
 import java.util.ArrayList;
@@ -103,7 +101,7 @@ public class CategoryActivity extends BaseActivity implements CategoryView,
                 .setOrientation(ChipsLayoutManager.HORIZONTAL)
                 // row strategy for views in completed row, could be STRATEGY_DEFAULT, STRATEGY_FILL_VIEW,
                 //STRATEGY_FILL_SPACE or STRATEGY_CENTER
-                .setRowStrategy(ChipsLayoutManager.STRATEGY_FILL_SPACE)
+                .setRowStrategy(ChipsLayoutManager.STRATEGY_DEFAULT)
                 // whether strategy is applied to last row. FALSE by default
                 .withLastRow(true)
                 .build();
@@ -194,7 +192,7 @@ public class CategoryActivity extends BaseActivity implements CategoryView,
             public void onConfirmClick() {
                 customPopWindow.onDismiss();
                 customPopWindow = null;
-                articleListPresenter.editTypes(editText.getText().toString().trim());
+                articleListPresenter.editType(editText.getText().toString().trim());
                 articleListPresenter.loadCategories();
             }
         });

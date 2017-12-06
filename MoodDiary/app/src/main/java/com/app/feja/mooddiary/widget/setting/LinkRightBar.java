@@ -92,7 +92,9 @@ public class LinkRightBar extends BaseView{
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 this.pressed = true;
-                this.onClickListener.onClick(this);
+                if(this.onClickListener != null){
+                    this.onClickListener.onClick(this);
+                }
                 break;
             default:
                 this.pressed = false;

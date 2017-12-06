@@ -5,45 +5,70 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.application.TheApplication;
 import com.app.feja.mooddiary.widget.base.TouchListenView;
 import com.app.feja.mooddiary.widget.setting.LinkRightBar;
 import com.app.feja.mooddiary.widget.setting.SettingTitleBar;
+import com.suke.widget.SwitchButton;
 
-public class SettingsActivity extends BaseActivity implements TouchListenView.OnItemTouchListener {
+import butterknife.BindString;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    private SettingTitleBar settingTitleBar;
-    private LinkRightBar exportDiaryBar;
-    private LinkRightBar themeBar;
-    private LinkRightBar privatePasswordBar;
-    private LinkRightBar aboutBar;
+public class SettingsActivity extends BaseActivity implements TouchListenView.OnItemTouchListener,
+        SwitchButton.OnCheckedChangeListener {
+
+    @BindView(R.id.id_settings_title)
+    SettingTitleBar settingTitleBar;
+
+//    @BindView(R.id.id_settings_export_diary)
+//    LinkRightBar exportDiaryBar;
+
+    @BindView(R.id.id_settings_export_theme)
+    LinkRightBar themeBar;
+
+//    @BindView(R.id.id_settings_export_private_password)
+//    LinkRightBar privatePasswordBar;
+
+    @BindView(R.id.id_settings_export_about)
+    LinkRightBar aboutBar;
+
+    @BindView(R.id.id_text_view)
+    TextView textView;
+    @BindView(R.id.id_switch_button)
+    SwitchButton switchButton;
+
+    @BindString(R.string.enable_password)
+    String enablePassword;
+
+    @BindString(R.string.disable_password)
+    String disablePassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        ButterKnife.bind(this);
+
         this.initViews();
 
         this.initListener();
     }
 
-    private void initViews(){
-        this.settingTitleBar = (SettingTitleBar) findViewById(R.id.id_settings_title);
+    private void initViews() {
+//        this.exportDiaryBar.setString(getString(R.string.export_diary));
+//        this.exportDiaryBar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(SettingsActivity.this, ExportDiaryActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
-        this.exportDiaryBar = (LinkRightBar) findViewById(R.id.id_settings_export_diary);
-        this.exportDiaryBar.setString(getString(R.string.export_diary));
-        this.exportDiaryBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SettingsActivity.this, ExportDiaryActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        this.themeBar = (LinkRightBar) findViewById(R.id.id_settings_export_theme);
         this.themeBar.setString(getString(R.string.theme));
         this.themeBar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,30 +78,30 @@ public class SettingsActivity extends BaseActivity implements TouchListenView.On
             }
         });
 
-        this.privatePasswordBar = (LinkRightBar) findViewById(R.id.id_settings_export_private_password);
-        this.privatePasswordBar.setString(getString(R.string.private_password));
-        this.privatePasswordBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SettingsActivity.this, PasswordActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(PasswordActivity.ACTION_BUNDLE_NAME, PasswordActivity.ACTION.EDIT_ENTER);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
+        this.switchButton.setOnCheckedChangeListener(this);
 
-        this.aboutBar = (LinkRightBar) findViewById(R.id.id_settings_export_about);
+//        this.privatePasswordBar.setString(getString(R.string.private_password));
+//        this.privatePasswordBar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(SettingsActivity.this, PasswordActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable(PasswordActivity.ACTION_BUNDLE_NAME, PasswordActivity.ACTION.EDIT_ENTER);
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+//            }
+//        });
+
         this.aboutBar.setString(getString(R.string.about_mood_diary));
     }
 
-    private void initListener(){
+    private void initListener() {
         this.settingTitleBar.setOnItemTouchListener(this);
     }
 
     @Override
     public void onItemTouch(int item, Rect touchRect, MotionEvent event) {
-        switch (item){
+        switch (item) {
             case 0:
                 onBackPressed();
                 break;
@@ -89,5 +114,27 @@ public class SettingsActivity extends BaseActivity implements TouchListenView.On
     protected void onResume() {
         super.onResume();
         this.settingTitleBar.setBackgroundColor(TheApplication.getThemeData().getColor());
+        this.textView.setTextColor(TheApplication.getThemeData().getColor());
+        if (getPassword().equals("")) {
+            this.switchButton.setChecked(false);
+            this.textView.setText(disablePassword);
+        } else {
+            this.switchButton.setChecked(true);
+            this.textView.setText(enablePassword);
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(SwitchButton view, boolean isChecked) {
+        if (isChecked) {
+            Intent intent = new Intent(SettingsActivity.this, PasswordActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(PasswordActivity.ACTION_BUNDLE_NAME, PasswordActivity.ACTION.EDIT_ENTER);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        } else {
+            clearPassword();
+            this.textView.setText(disablePassword);
+        }
     }
 }

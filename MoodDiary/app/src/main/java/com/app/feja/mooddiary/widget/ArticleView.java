@@ -84,6 +84,7 @@ public class ArticleView extends BaseView {
 
     public void setDiaryEntity(DiaryEntity diaryEntity) {
         this.diaryEntity = diaryEntity;
+        this.invalidate();
         this.today = new DateTime(diaryEntity.getCreateTime());
     }
 
