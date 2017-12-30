@@ -7,6 +7,9 @@ import com.app.feja.mooddiary.model.entity.DiaryEntity;
 
 import java.util.List;
 
+/**
+ * created by fejasible@163.com
+ */
 public interface ArticleListView extends BaseView{
 
     void onLoadArticles(List<DiaryEntity> diaryEntities);

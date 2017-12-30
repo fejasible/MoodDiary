@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.app.feja.mooddiary.ui.activity.AboutActivity">
+
+
+    <com.app.feja.mooddiary.widget.setting.SettingTitleBar
+        android:id="@+id/id_settings_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y31"
+        android:background="@color/lightSkyBlue"/>
+
+    <com.app.feja.mooddiary.widget.setting.BubbleView
+        android:id="@+id/id_bubble_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/id_sample_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/y1"
+            android:textSize="24sp" />
+
+    </com.app.feja.mooddiary.widget.setting.BubbleView>
+
+</LinearLayout>

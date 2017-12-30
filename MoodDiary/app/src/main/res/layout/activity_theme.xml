@@ -10,7 +10,7 @@
     <com.app.feja.mooddiary.widget.setting.SettingTitleBar
         android:id="@+id/id_settings_title"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x100"
+        android:layout_height="@dimen/y31"
         android:background="@color/lightSkyBlue" />
 
     <android.support.v7.widget.RecyclerView

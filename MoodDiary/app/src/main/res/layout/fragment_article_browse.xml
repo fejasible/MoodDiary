@@ -7,13 +7,13 @@
     <com.app.feja.mooddiary.widget.browse.ArticleBrowseTitleBar
         android:id="@+id/article_browse_title_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x100"
+        android:layout_height="@dimen/y31"
         android:background="@color/lightSkyBlue"/>
 
     <com.app.feja.mooddiary.widget.browse.ArticleInformationView
         android:id="@+id/article_browse_info_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x70"
+        android:layout_height="@dimen/y22"
         android:background="@color/white"/>
 
     <ScrollView
@@ -21,14 +21,14 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         android:scrollbarThumbVertical="@color/lightSkyBlue"
-        android:scrollbarSize="@dimen/x5">
+        android:scrollbarSize="@dimen/y2">
 
         <EditText
             android:id="@+id/id_browse_edit_text"
-            android:layout_marginLeft="@dimen/x10"
-            android:layout_marginRight="@dimen/x10"
-            android:layout_marginTop="@dimen/x10"
-            android:layout_marginBottom="@dimen/x10"
+            android:layout_marginLeft="@dimen/y3"
+            android:layout_marginRight="@dimen/y3"
+            android:layout_marginTop="@dimen/y3"
+            android:layout_marginBottom="@dimen/y3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"

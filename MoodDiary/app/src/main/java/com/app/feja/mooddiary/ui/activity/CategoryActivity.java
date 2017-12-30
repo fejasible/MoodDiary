@@ -29,6 +29,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qqtheme.framework.picker.OptionPicker;
 
+/**
+ * created by fejasible@163.com
+ */
 public class CategoryActivity extends BaseActivity implements CategoryView,
         CategoryTitleBar.OnTitleBarClickListener{
 

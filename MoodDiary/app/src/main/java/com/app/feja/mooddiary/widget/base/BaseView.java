@@ -7,8 +7,12 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 
 
+/**
+ * created by fejasible@163.com
+ */
 public class BaseView extends View{
 
     protected int width, height;
@@ -88,6 +92,18 @@ public class BaseView extends View{
         int r = rect.height() / 4;
         canvas.drawLine(x+r/2, y, x-r/2, y-r/2, paint);
         canvas.drawLine(x+r/2, y, x-r/2, y+r/2, paint);
+    }
+
+    public static void setMargins (View view, int l, int t, int r, int b) {
+        if (view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+            marginLayoutParams.setMargins(l, t, r, b);
+            view.requestLayout();
+        }
+    }
+
+    public static void setMargins(View view, int m){
+        setMargins(view, m, m, m, m);
     }
 
 }

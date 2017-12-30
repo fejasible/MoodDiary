@@ -11,6 +11,9 @@ import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.http.model.WeatherModel;
 import com.app.feja.mooddiary.widget.base.BaseView;
 
+/**
+ * created by fejasible@163.com
+ */
 public class WeatherView extends BaseView{
 
     private WeatherModel weatherModel = new WeatherModel();

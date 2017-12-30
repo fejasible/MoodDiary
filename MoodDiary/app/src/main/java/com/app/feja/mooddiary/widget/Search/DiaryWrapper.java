@@ -7,6 +7,9 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * created by fejasible@163.com
+ */
 public class DiaryWrapper implements Parcelable {
 
     @SerializedName("hex")

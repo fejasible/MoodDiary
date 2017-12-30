@@ -14,12 +14,21 @@ import com.robotium.solo.Solo;
 
 import org.junit.Assert;
 
+/**
+ * created by fejasible@163.com
+ */
 public class BaseBusiness {
 
     protected int screen_width = 0;
     protected int screen_height = 0;
 
     protected Solo solo;
+
+
+    public enum DIRECTION{
+        LEFT, RIGHT, UP, DOWN
+    }
+
 
     public BaseBusiness(Solo solo){
         Activity activity = solo.getCurrentActivity();
@@ -155,19 +164,24 @@ public class BaseBusiness {
             solo.sleep(sleep);
         }
     }
+
+    public void drag(DIRECTION direction){
+        drag(direction, 3);
+    }
+
     //拖拽，可向四个方向
-    public void drag(String direction) {
-        if (direction.equals("down")) {
-            solo.drag(screen_width / 2, screen_width / 2, screen_height / 8, screen_height * 7 / 8, 3);
+    public void drag(DIRECTION direction, int stepCount) {
+        if (direction.equals(DIRECTION.DOWN)) {
+            solo.drag(screen_width / 2, screen_width / 2, screen_height / 8, screen_height * 7 / 8, stepCount);
         }
-        if (direction.equals("up")) {
-            solo.drag(screen_width / 2, screen_width / 2, screen_height * 7 / 8, screen_height / 8, 3);
+        if (direction.equals(DIRECTION.UP)) {
+            solo.drag(screen_width / 2, screen_width / 2, screen_height * 7 / 8, screen_height / 8, stepCount);
         }
-        if (direction.equals("left")) {
-            solo.drag(screen_width * 7 / 8, screen_width / 8, screen_height / 2, screen_height / 2, 3);
+        if (direction.equals(DIRECTION.LEFT)) {
+            solo.drag(screen_width * 7 / 8, screen_width / 8, screen_height / 2, screen_height / 2, stepCount);
         }
-        if (direction.equals("right")) {
-            solo.drag(screen_width / 8, screen_width * 7 / 8, screen_height / 2, screen_height / 2, 3);
+        if (direction.equals(DIRECTION.RIGHT)) {
+            solo.drag(screen_width / 8, screen_width * 7 / 8, screen_height / 2, screen_height / 2, stepCount);
         }
         solo.sleep(CommonParams.sleep / 2);
     }

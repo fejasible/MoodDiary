@@ -25,6 +25,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qqtheme.framework.picker.ColorPicker;
 
+/**
+ * created by fejasible@163.com
+ */
 public class ThemeActivity extends BaseActivity implements TouchListenView.OnItemTouchListener,
         ThemeAdapter.OnItemClickListener, ColorPicker.OnColorPickListener {
 

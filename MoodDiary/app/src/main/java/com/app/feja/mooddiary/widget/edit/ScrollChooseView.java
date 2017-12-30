@@ -12,6 +12,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Scroller;
 
+/**
+ * created by fejasible@163.com
+ */
 public class ScrollChooseView extends View {
     private String[] titles = null;
     private Paint paint;

@@ -12,6 +12,9 @@ import android.view.MotionEvent;
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.widget.base.BaseView;
 
+/**
+ * created by fejasible@163.com
+ */
 public class PasswordView extends BaseView {
 
     /** 画笔 */
@@ -184,7 +187,7 @@ public class PasswordView extends BaseView {
                     if(rects[i].contains((int)this.touchX, (int)this.touchY)){
                         // 判断点击操作
                         if(i == 9){//点击了最左下
-                            this.helpClickListener.onClick();
+                            this.helpClickListener.onHelpClick();
                         }else if(i == 11){// 点击了箭头
                             if(password.length() > 0) {
                                 password = password.substring(0, password.length() - 1);
@@ -255,7 +258,7 @@ public class PasswordView extends BaseView {
      * 当帮助按钮被点击时的监听操作
      */
     public interface OnHelpClickListener{
-        void onClick();
+        void onHelpClick();
     }
 
     public void clearPassword(){

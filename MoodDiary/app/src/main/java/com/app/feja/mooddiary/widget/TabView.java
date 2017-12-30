@@ -13,6 +13,9 @@ import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.widget.base.BaseView;
 
 
+/**
+ * created by fejasible@163.com
+ */
 public class TabView extends BaseView {
 
     private float touchX, touchY;

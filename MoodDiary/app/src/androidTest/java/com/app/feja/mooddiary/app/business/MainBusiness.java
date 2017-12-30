@@ -6,6 +6,9 @@ import com.app.feja.mooddiary.app.util.CommonParams;
 import com.app.feja.mooddiary.application.TheApplication;
 import com.robotium.solo.Solo;
 
+/**
+ * created by fejasible@163.com
+ */
 public class MainBusiness extends BaseBusiness{
 
     public enum TAB{
@@ -32,9 +35,9 @@ public class MainBusiness extends BaseBusiness{
         }
     }
 
-    public void checkArticleListExist(){
-        checkIdExist(""+R.id.layout_article_list);
-    }
+//    public void checkArticleListExist(){
+//        checkIdExist(""+R.id.layout_article_list);
+//    }
 
     public void checkTitleBarExist(){
         checkIdExist(""+R.id.main_title_bar);

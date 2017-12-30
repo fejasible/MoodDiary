@@ -9,6 +9,9 @@ import com.app.feja.mooddiary.ui.activity.PasswordActivity;
 
 import org.junit.Test;
 
+/**
+ * created by fejasible@163.com
+ */
 public class PasswordTestCase extends BaseTestCase{
 
 
@@ -25,7 +28,7 @@ public class PasswordTestCase extends BaseTestCase{
                 PasswordBusiness.KEYBOARD.NUMBER_3,
                 PasswordBusiness.KEYBOARD.NUMBER_4
         );
-        passwordBusiness.checkIdExist(""+R.id.layout_article_list);
+//        passwordBusiness.checkIdExist(""+R.id.layout_article_list);
     }
 
 }

@@ -16,6 +16,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * created by fejasible@163.com
+ */
 public class DiaryDaoImpl implements DiaryDao {
 
     private Dao<DiaryEntity, Integer> dao;
@@ -169,6 +172,17 @@ public class DiaryDaoImpl implements DiaryDao {
         diaryEntity.setType(new TypeDaoImpl().selectType(TheApplication.getContext().getString(R.string.no_sort)));
         try {
             return dao.update(diaryEntity);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public int getAllDiaryCount() {
+        try {
+            return (int) dao.queryBuilder().where()
+                    .eq(DiaryEntity.COLUMN_NAME_IS_DELETE, DiaryEntity.IS_NOT_DELETE).countOf();
         } catch (SQLException e) {
             e.printStackTrace();
         }

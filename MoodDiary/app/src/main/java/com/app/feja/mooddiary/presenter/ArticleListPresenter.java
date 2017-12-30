@@ -15,9 +15,15 @@ import com.app.feja.mooddiary.ui.view.ArticleListView;
 import com.app.feja.mooddiary.ui.view.CategoryView;
 import com.app.feja.mooddiary.util.DateTime;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+/**
+ * created by fejasible@163.com
+ */
 public class ArticleListPresenter {
 
     public static final String ALL_CATEGORY = TheApplication.getContext().getString(R.string.all_sort);
@@ -62,6 +68,24 @@ public class ArticleListPresenter {
 
     public List<DiaryEntity> getAllArticles(){
         return this.diaryDao.getAllDiary();
+    }
+
+    public int getAllArticleCount(){
+        return this.diaryDao.getAllDiaryCount();
+    }
+
+    public int getAllArticleDateCount(){
+        Map<DateTime, Integer> map = new HashMap<>();
+        for(DiaryEntity diaryEntity: getAllArticles()){
+            DateTime dateTime = new DateTime(diaryEntity.getCreateTime());
+            dateTime.toZeroTime();
+            if(map.containsKey(dateTime)){
+                map.put(dateTime, map.get(dateTime)+1);
+            }else{
+                map.put(dateTime, 1);
+            }
+        }
+        return map.size();
     }
 
 

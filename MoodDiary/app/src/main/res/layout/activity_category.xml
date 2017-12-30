@@ -10,7 +10,7 @@
     <com.app.feja.mooddiary.widget.CategoryTitleBar
         android:id="@+id/id_category_title_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x100"
+        android:layout_height="@dimen/y31"
         android:background="@color/lightSkyBlue">
 
     </com.app.feja.mooddiary.widget.CategoryTitleBar>

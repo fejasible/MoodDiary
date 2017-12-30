@@ -8,7 +8,7 @@
     <com.app.feja.mooddiary.widget.ArticleEditTitleBar
         android:id="@+id/article_edit_title_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x100"
+        android:layout_height="@dimen/head_bar_height"
         android:background="@color/lightSkyBlue"/>
 
     <ScrollView
@@ -18,14 +18,14 @@
         android:layout_weight="1"
         android:background="@color/white"
         android:scrollbarThumbVertical="@color/darkGray"
-        android:scrollbarSize="@dimen/x5">
+        android:scrollbarSize="@dimen/y2">
 
         <EditText
             android:id="@+id/editText"
-            android:layout_marginLeft="@dimen/x10"
-            android:layout_marginRight="@dimen/x2"
-            android:layout_marginTop="@dimen/x10"
-            android:layout_marginBottom="@dimen/x10"
+            android:layout_marginLeft="@dimen/y3"
+            android:layout_marginRight="@dimen/y1"
+            android:layout_marginTop="@dimen/y3"
+            android:layout_marginBottom="@dimen/y3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -38,7 +38,7 @@
     <com.app.feja.mooddiary.widget.EditToolBar
         android:id="@+id/id_edit_tool_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x80"
+        android:layout_height="@dimen/y25"
         android:background="@color/white"/>
 
 </LinearLayout>

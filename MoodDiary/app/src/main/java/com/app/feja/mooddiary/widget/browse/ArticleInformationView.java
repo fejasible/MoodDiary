@@ -12,6 +12,9 @@ import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.util.DateTime;
 import com.app.feja.mooddiary.widget.base.BaseView;
 
+/**
+ * created by fejasible@163.com
+ */
 public class ArticleInformationView extends BaseView{
 
     private DiaryEntity diaryEntity;

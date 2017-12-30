@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/lightSkyBlue"
+    android:alpha="0.9">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:alpha="0.9">
+
+        <TextView
+            android:layout_margin="@dimen/y3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/statistics_in"
+            android:alpha="0.9"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/id_day_count_text_view"
+            android:layout_margin="@dimen/y3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:alpha="0.9"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:layout_margin="@dimen/y3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/statistics_day_unit"
+            android:alpha="0.9"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layoutDirection="rtl">
+
+
+        <TextView
+            android:layout_margin="@dimen/y3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/statistics_count_unit"
+            android:alpha="0.9"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/id_mood_count_text_view"
+            android:layout_margin="@dimen/y3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:alpha="0.9"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:layout_margin="@dimen/y3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/statistics_record"
+            android:alpha="0.9"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+</LinearLayout>

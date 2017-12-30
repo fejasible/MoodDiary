@@ -1,6 +1,9 @@
 package com.app.feja.mooddiary.adapter;
 
 
+/**
+ * created by fejasible@163.com
+ */
 public class WeatherAdapter {
     public static final String WEATHER_RESOURCE_PREFIX_NAME = "weather_";
     public static final int Unknown = 99;

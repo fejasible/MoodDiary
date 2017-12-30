@@ -18,20 +18,20 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * created by fejasible@163.com
+ */
 public class SettingsActivity extends BaseActivity implements TouchListenView.OnItemTouchListener,
         SwitchButton.OnCheckedChangeListener {
 
     @BindView(R.id.id_settings_title)
     SettingTitleBar settingTitleBar;
 
-//    @BindView(R.id.id_settings_export_diary)
-//    LinkRightBar exportDiaryBar;
+    @BindView(R.id.id_settings_export)
+    LinkRightBar exportDiaryBar;
 
     @BindView(R.id.id_settings_export_theme)
     LinkRightBar themeBar;
-
-//    @BindView(R.id.id_settings_export_private_password)
-//    LinkRightBar privatePasswordBar;
 
     @BindView(R.id.id_settings_export_about)
     LinkRightBar aboutBar;
@@ -60,15 +60,6 @@ public class SettingsActivity extends BaseActivity implements TouchListenView.On
     }
 
     private void initViews() {
-//        this.exportDiaryBar.setString(getString(R.string.export_diary));
-//        this.exportDiaryBar.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(SettingsActivity.this, ExportDiaryActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
         this.themeBar.setString(getString(R.string.theme));
         this.themeBar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,21 +69,25 @@ public class SettingsActivity extends BaseActivity implements TouchListenView.On
             }
         });
 
+        this.exportDiaryBar.setString(getString(R.string.export_diary));
+        this.exportDiaryBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingsActivity.this, ExportDiaryActivity.class);
+                startActivity(intent);
+            }
+        });
+
         this.switchButton.setOnCheckedChangeListener(this);
 
-//        this.privatePasswordBar.setString(getString(R.string.private_password));
-//        this.privatePasswordBar.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(SettingsActivity.this, PasswordActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable(PasswordActivity.ACTION_BUNDLE_NAME, PasswordActivity.ACTION.EDIT_ENTER);
-//                intent.putExtras(bundle);
-//                startActivity(intent);
-//            }
-//        });
-
         this.aboutBar.setString(getString(R.string.about_mood_diary));
+        this.aboutBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingsActivity.this, AboutActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initListener() {

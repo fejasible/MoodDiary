@@ -15,6 +15,9 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * created by fejasible@163.com
+ */
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper{
 
     private static final String DATABASE_NAME = "sqlite-mooddiary.db";

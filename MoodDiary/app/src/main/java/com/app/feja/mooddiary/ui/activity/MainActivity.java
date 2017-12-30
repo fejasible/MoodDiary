@@ -6,10 +6,14 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.Layout;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
@@ -48,6 +52,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
+/**
+ * created by fejasible@163.com
+ */
 public class MainActivity extends BaseActivity implements TabView.OnTabClickListener,
         MainTitleBar.OnTitleBarClickListener, ArticleListView, View.OnClickListener, TextWatcher,
         SearchView.OnAnimationListener, WeatherView, PopupWindowAdapter.OnPopupWindowItemClickListener {
@@ -57,10 +64,14 @@ public class MainActivity extends BaseActivity implements TabView.OnTabClickList
     private ArticleListPresenter presenter;
     private PopupWindowAdapter popupWindowAdapter;
     private CustomPopWindow customPopWindow;
+    private CustomPopWindow countWindow;
     private LinearLayout popupLayout;
     private CompactCalendarView compactCalendarView;
     private Date selectDate;
     private SearchView searchView;
+    private LinearLayout statisticsLayout;
+    private TextView statisticsDate;
+    private TextView statisticsDiary;
 
     @BindView(R.id.tab_view)
     TabView tabView;
@@ -86,18 +97,17 @@ public class MainActivity extends BaseActivity implements TabView.OnTabClickList
         tabView.setOnTabClickListener(this);
         mainTitleBar.setOnTitleBarClickListener(this);
 
-        if(isFirstStart()){
+        if (isFirstStart()) {
             TypeFactory typeFactory = new TypeFactory();
             DiaryFactory diaryFactory = new DiaryFactory();
             presenter.editType(typeFactory.nextStandard().getType());
 
             ArticleEditPresenter articleEditPresenter = new ArticleEditPresenter(null);
-            // TODO delete these code
-            for(int i=0; i<150; i++){
-                TypeEntity typeEntity = typeFactory.next();
-                presenter.editType(typeEntity.getType());
-                articleEditPresenter.editArticle(diaryFactory.next(typeEntity));
-            }
+//            for (int i = 0; i < 50; i++) {
+//                TypeEntity typeEntity = typeFactory.next();
+//                presenter.editType(typeEntity.getType());
+//                articleEditPresenter.editArticle(diaryFactory.next(typeEntity));
+//            }
         }
     }
 
@@ -116,6 +126,20 @@ public class MainActivity extends BaseActivity implements TabView.OnTabClickList
         Intent intent;
         switch (item) {
             case 0:
+                if (countWindow == null) {
+                    statisticsLayout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.item_statistics, null, false);
+                    statisticsDate = (TextView) statisticsLayout.findViewById(R.id.id_day_count_text_view);
+                    statisticsDiary = (TextView) statisticsLayout.findViewById(R.id.id_mood_count_text_view);
+                    statisticsLayout.measure(0, 0);
+                    countWindow = new CustomPopWindow.PopupWindowBuilder(this)
+                            .setView(statisticsLayout)
+                            .size(TheApplication.getScreenWidth() / 2, statisticsLayout.getMeasuredHeight())
+                            .create();
+                }
+                statisticsLayout.setBackgroundColor(TheApplication.getThemeData().getColor());
+                statisticsDiary.setText((presenter.getAllArticleCount() + ""));
+                statisticsDate.setText((presenter.getAllArticleDateCount() + ""));
+                countWindow.showAsDropDown(tabView, -tabView.getHeight() - countWindow.getHeight(), 0);
                 break;
             case 1:
                 intent = new Intent(getApplicationContext(), ArticleEditActivity.class);
@@ -337,15 +361,15 @@ public class MainActivity extends BaseActivity implements TabView.OnTabClickList
             float[] hsv1 = hsv.clone();
             float[] hsv2 = hsv.clone();
 
-            if(hsv[1]*3<1){
-                hsv1[1] = hsv[1] + 1.0f/6.0f;
-                hsv2[1] = hsv[1] + 1.0f/3.0f;
-            }else if(hsv[1]*3<2){
-                hsv1[1] = hsv[1] - 1.0f/6.0f;
-                hsv2[1] = hsv[1] + 1.0f/6.0f;
-            }else{
-                hsv1[1] = hsv[1] - 1.0f/6.0f;
-                hsv2[1] = hsv[1] - 1.0f/3.0f;
+            if (hsv[1] * 3 < 1) {
+                hsv1[1] = hsv[1] + 1.0f / 6.0f;
+                hsv2[1] = hsv[1] + 1.0f / 3.0f;
+            } else if (hsv[1] * 3 < 2) {
+                hsv1[1] = hsv[1] - 1.0f / 6.0f;
+                hsv2[1] = hsv[1] + 1.0f / 6.0f;
+            } else {
+                hsv1[1] = hsv[1] - 1.0f / 6.0f;
+                hsv2[1] = hsv[1] - 1.0f / 3.0f;
             }
 
             compactCalendarView.setCalendarBackgroundColor(themeColor);
@@ -398,7 +422,6 @@ public class MainActivity extends BaseActivity implements TabView.OnTabClickList
         mainTitleBar.setTitleString(category);
         customPopWindow.dissmiss();
     }
-
 
 
 }

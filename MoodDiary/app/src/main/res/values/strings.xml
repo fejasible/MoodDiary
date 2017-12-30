@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">MoodDiary</string>
+    <string name="app_name">心情日记</string>
     <string name="app_name_ch">心情日记</string>
+    <string name="app_name_en">Mood diary</string>
 
     <string name="enter_password">输入口令</string>
     <string name="enter_old_password">原口令</string>
@@ -49,7 +50,6 @@
     <string name="last_update">最后更新时间：</string>
     <string name="no_diary">没有日记哟~</string>
     <string name="setting">设置</string>
-    <string name="export_diary">导出日记</string>
     <string name="theme">主题</string>
     <string name="about_mood_diary">关于心情日记</string>
 
@@ -60,6 +60,46 @@
     <string name="theme_color_name_4">华丽紫</string>
     <string name="theme_color_name_5">朝气粉</string>
     <string name="theme_color_name_6">酷炫黑</string>
+
+    <string name="statistics_in">在过去的</string>
+    <string name="statistics_day_unit">天里</string>
+    <string name="statistics_record">共持有</string>
+    <string name="statistics_count_unit">份心情</string>
+
+    <string name="export_diary">导出日记</string>
+    <string name="export">导出</string>
+    <string name="settings_export_diary_date">导出日期</string>
+    <string name="settings_export_diary_next">下一步</string>
+    <string name="settings_export_start_date">选择开始日期</string>
+    <string name="settings_export_end_date">选择结束日期</string>
+    <string name="please_choose_date">请选择日期</string>
+    <string name="export_date_overflow">所选日期超出范围</string>
+    <string name="export_invalid">所选日期区间没有记录</string>
+    <string name="export_history">历史</string>
+    <string name="export_success">导出PDF成功</string>
+    <string name="export_fail">导出PDF失败</string>
+    <string name="not_pdf">所选文件非pdf格式</string>
+    <string name="lost_font">字体文件缺失</string>
+
+
+
+    <string name="context_f">f</string>
+    <string name="context_e">e</string>
+    <string name="context_j">j</string>
+    <string name="context_a">a</string>
+    <string name="context_s">s</string>
+    <string name="context_i">i</string>
+    <string name="context_b">b</string>
+    <string name="context_l">l</string>
+    <string name="context_at">\@</string>
+    <string name="context_1">1</string>
+    <string name="context_6">6</string>
+    <string name="context_3">3</string>
+    <string name="context_do">.</string>
+    <string name="context_c">c</string>
+    <string name="context_o">o</string>
+    <string name="context_m">m</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

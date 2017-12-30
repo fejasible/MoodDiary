@@ -11,6 +11,9 @@ import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.model.entity.TypeEntity;
 import com.app.feja.mooddiary.ui.view.ArticleEditView;
 
+/**
+ * created by fejasible@163.com
+ */
 public class ArticleEditPresenter {
 
     private ArticleEditView articleEditView;

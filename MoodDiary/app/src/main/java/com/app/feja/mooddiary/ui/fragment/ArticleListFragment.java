@@ -33,6 +33,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
+/**
+ * created by fejasible@163.com
+ */
 public class ArticleListFragment extends Fragment implements ArticleListView,
         ArticleView.OnArticleViewClickListener, SwipeRefreshLayout.OnRefreshListener, Runnable {
 

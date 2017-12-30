@@ -11,6 +11,9 @@ import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.application.TheApplication;
 import com.app.feja.mooddiary.widget.base.BaseView;
 
+/**
+ * created by fejasible@163.com
+ */
 public class CategoryView extends BaseView{
 
     private Paint paint;

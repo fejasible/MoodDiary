@@ -5,6 +5,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * created by fejasible@163.com
+ */
 public class DateTime {
     public static final int YEAR = Calendar.YEAR;
     public static final int MONTH = Calendar.MONTH;
@@ -462,5 +465,21 @@ public class DateTime {
 
     public DateTime clone() {
         return new DateTime(this.calendar);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DateTime dateTime = (DateTime) o;
+
+        return calendar != null ? calendar.equals(dateTime.calendar) : dateTime.calendar == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return calendar != null ? calendar.hashCode() : 0;
     }
 }

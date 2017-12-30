@@ -6,6 +6,6 @@
     <com.app.feja.mooddiary.widget.setting.ThemeSelectBar
         android:id="@+id/id_theme_select_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x120" />
+        android:layout_height="@dimen/y37" />
 
 </LinearLayout>

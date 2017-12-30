@@ -17,6 +17,9 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
+/**
+ * created by fejasible@163.com
+ */
 @RunWith(AndroidJUnit4.class)
 public class DiaryDaoTest{
 

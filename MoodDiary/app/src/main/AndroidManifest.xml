@@ -6,6 +6,10 @@
     <!-- <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> -->
     <!-- <uses-permission android:name="android.permission.WAKE_LOCK" /> -->
     <!-- <uses-permission android:name="android.permission.INTERNET"/> -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
     <application
         android:name=".application.TheApplication"
         android:allowBackup="true"
@@ -50,14 +54,22 @@
         <activity
             android:name=".ui.activity.SettingsActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar"/>
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
         <activity
             android:name=".ui.activity.ExportDiaryActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar"/>
-        <activity android:name=".ui.activity.ThemeActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity
+            android:name=".ui.activity.ThemeActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar"/>
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity
+            android:name=".ui.activity.AboutActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity android:name=".ui.activity.PDFActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
     </application>
 
 </manifest>

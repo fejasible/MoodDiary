@@ -5,6 +5,9 @@ import android.os.Parcel;
 
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 
+/**
+ * created by fejasible@163.com
+ */
 public class DiarySuggestion implements SearchSuggestion{
 
     private String diaryString;

@@ -57,6 +57,9 @@ import java.util.regex.Pattern;
 
 import cn.qqtheme.framework.picker.DateTimePicker;
 
+/**
+ * created by fejasible@163.com
+ */
 public class ArticleEditFragment extends Fragment implements ArticleEditView,
         ArticleEditTitleBar.OnTitleBarClickListener, ArticleListView, View.OnClickListener,
         TouchListenView.OnItemTouchListener, View.OnTouchListener, RangeSeekBar.OnRangeChangedListener, DialogInterface.OnDismissListener, PopupWindowAdapter.OnPopupWindowItemClickListener {

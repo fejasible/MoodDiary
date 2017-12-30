@@ -5,7 +5,7 @@
     <com.app.feja.mooddiary.widget.ArticleView
         android:id="@+id/article_view"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/x200"
+        android:layout_height="@dimen/y62"
         android:background="@color/whiteSmoke"
         android:gravity="center" />
 </LinearLayout>

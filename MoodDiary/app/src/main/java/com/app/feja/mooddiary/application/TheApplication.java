@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.adapter.ThemeAdapter;
@@ -18,11 +17,15 @@ import com.app.feja.mooddiary.http.model.WeatherModel;
 import com.app.feja.mooddiary.ui.activity.BaseActivity;
 import com.app.feja.mooddiary.ui.activity.PasswordActivity;
 import com.app.feja.mooddiary.ui.activity.WelcomeActivity;
+import com.app.feja.mooddiary.util.pdf.PDFManager;
 import com.app.feja.mooddiary.util.PicassoImageLoader;
 import com.google.gson.Gson;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.view.CropImageView;
 
+/**
+ * created by fejasible@163.com
+ */
 public class TheApplication extends Application implements Application.ActivityLifecycleCallbacks {
 
     public static final String THEME_KEY = "theme";
@@ -73,6 +76,9 @@ public class TheApplication extends Application implements Application.ActivityL
                     ContextCompat.getColor(getApplicationContext(), R.color.theme_color_main),
                     getString(R.string.theme_color_name_main));
         }
+
+        PDFManager pdfManager = new PDFManager(context);
+        boolean result = pdfManager.createDefaultFolder();
     }
 
     /**

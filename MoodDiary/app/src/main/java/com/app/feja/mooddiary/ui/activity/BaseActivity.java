@@ -7,6 +7,12 @@ import android.os.Bundle;
 
 import java.lang.reflect.Field;
 
+import cn.qqtheme.framework.picker.DatePicker;
+import cn.qqtheme.framework.picker.FilePicker;
+
+/**
+ * created by fejasible@163.com
+ */
 public class BaseActivity extends Activity {
 
     private String tag = "undefine";
@@ -17,9 +23,12 @@ public class BaseActivity extends Activity {
     public static int getResId(String variableName, Class<?> c) {
         try {
             Field idField = c.getDeclaredField(variableName);
+            if(idField == null){
+                return -1;
+            }
             return idField.getInt(idField);
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             return -1;
         }
     }
@@ -58,5 +67,22 @@ public class BaseActivity extends Activity {
             sharedPreferences.edit().putBoolean(FIRST_START, false).apply();
         }
         return firstStart;
+    }
+
+    public void setDatePickerColor(DatePicker datePicker, int color){
+        datePicker.setTextColor(color);
+        datePicker.setCancelTextColor(color);
+        datePicker.setDividerColor(color);
+        datePicker.setSubmitTextColor(color);
+        datePicker.setLabelTextColor(color);
+        datePicker.setTopLineColor(color);
+        datePicker.setTitleTextColor(color);
+    }
+
+    public void setFilePickerColor(FilePicker filePicker, int color){
+        filePicker.setTitleTextColor(color);
+        filePicker.setSubmitTextColor(color);
+        filePicker.setCancelTextColor(color);
+        filePicker.setTopLineColor(color);
     }
 }

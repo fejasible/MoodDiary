@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 
 import com.app.feja.mooddiary.R;
 
+/**
+ * created by fejasible@163.com
+ */
 public class EditTextSettingFragment extends Fragment{
 
     @Nullable

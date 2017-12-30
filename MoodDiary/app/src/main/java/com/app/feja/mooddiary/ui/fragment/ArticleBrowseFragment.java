@@ -29,6 +29,9 @@ import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * created by fejasible@163.com
+ */
 public class ArticleBrowseFragment extends Fragment implements ArticleView{
 
     private View view;

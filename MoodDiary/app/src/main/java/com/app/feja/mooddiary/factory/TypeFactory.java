@@ -7,6 +7,9 @@ import com.app.feja.mooddiary.model.entity.TypeEntity;
 
 import java.util.Random;
 
+/**
+ * created by fejasible@163.com
+ */
 public class TypeFactory implements Generator<TypeEntity> {
 
 

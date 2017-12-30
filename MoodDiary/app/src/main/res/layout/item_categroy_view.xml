@@ -5,8 +5,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:padding="@dimen/x10"
-    android:layout_margin="@dimen/x10"
+    android:padding="@dimen/y3"
+    android:layout_margin="@dimen/y3"
     android:clickable="true"
     >
 
@@ -14,8 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="@dimen/x10"
-        android:layout_margin="@dimen/x2"
+        android:padding="@dimen/y3"
+        android:layout_margin="@dimen/y1"
         android:background="@drawable/rounded">
 
         <TextView

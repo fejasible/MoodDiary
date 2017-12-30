@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 
 /**
+ * created by fejasible@163.com
  * 将View按垂直或水平方向分为指定份数，每份区域通过设定监听器以获得不同效果
  */
 public class TouchListenView extends BaseView{

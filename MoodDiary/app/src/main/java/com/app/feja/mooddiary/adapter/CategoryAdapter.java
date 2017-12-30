@@ -23,6 +23,9 @@ import java.util.Random;
 
 import cn.qqtheme.framework.picker.OptionPicker;
 
+/**
+ * created by fejasible@163.com
+ */
 public class CategoryAdapter extends RecyclerView.Adapter implements View.OnClickListener {
 
     private OptionPicker categoryPicker;

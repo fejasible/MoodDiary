@@ -10,9 +10,9 @@
 
     <com.app.feja.mooddiary.widget.CategoryView
         android:id="@+id/id_popup_all_category_view"
-        android:layout_marginBottom="@dimen/x1"
+        android:layout_marginBottom="1px"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x60"/>
+        android:layout_height="@dimen/y19"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/id_popup_recycler_view"
@@ -20,7 +20,7 @@
         android:layout_height="0px"
         android:layout_weight="1"
         android:alpha="0.95"
-        android:scrollbarSize="@dimen/x5"
+        android:scrollbarSize="@dimen/y2"
         android:scrollbarThumbVertical="@color/whiteSmoke"
         android:scrollbars="vertical">
 
@@ -28,8 +28,8 @@
 
     <com.app.feja.mooddiary.widget.CategoryView
         android:id="@+id/id_popup_edit_category_view"
-        android:layout_marginTop="@dimen/x1"
+        android:layout_marginTop="1px"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x60"/>
+        android:layout_height="@dimen/y19"/>
 
 </LinearLayout>

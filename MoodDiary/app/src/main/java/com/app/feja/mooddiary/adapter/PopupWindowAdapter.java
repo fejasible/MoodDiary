@@ -13,6 +13,9 @@ import com.app.feja.mooddiary.widget.CategoryView;
 
 import java.util.List;
 
+/**
+ * created by fejasible@163.com
+ */
 public class PopupWindowAdapter extends RecyclerView.Adapter{
 
     private List<TypeEntity> data;

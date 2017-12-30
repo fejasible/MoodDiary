@@ -8,6 +8,9 @@ import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.ui.fragment.ArticleEditFragment;
 
 
+/**
+ * created by fejasible@163.com
+ */
 public class ArticleEditActivity extends BaseActivity{
 
 

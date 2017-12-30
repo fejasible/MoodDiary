@@ -13,6 +13,9 @@ import android.widget.RelativeLayout;
 
 import com.app.feja.mooddiary.R;
 
+/**
+ * created by fejasible@163.com
+ */
 public class SearchView extends RelativeLayout{
 
     private ValueAnimator valueAnimator;
@@ -54,7 +57,7 @@ public class SearchView extends RelativeLayout{
 
     public void init(){
         this.setPadding(10, 10, 10, 0);
-        this.targetHeight = (int) getResources().getDimension(R.dimen.x70);
+        this.targetHeight = (int) getResources().getDimension(R.dimen.y22);
         editText = new EditText(getContext());
         editText.setTextSize(this.targetHeight/4);
         editText.setLayoutParams(new ViewGroup.LayoutParams(

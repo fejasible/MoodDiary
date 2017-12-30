@@ -5,6 +5,9 @@ import android.os.Bundle;
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.ui.fragment.ArticleBrowseFragment;
 
+/**
+ * created by fejasible@163.com
+ */
 public class ArticleBrowseActivity extends BaseActivity {
 
     private ArticleBrowseFragment articleBrowseFragment;

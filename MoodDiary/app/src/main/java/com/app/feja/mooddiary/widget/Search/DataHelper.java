@@ -18,6 +18,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * created by fejasible@163.com
+ */
 public class DataHelper {
 
     private static final String COLORS_FILE_NAME = "colors.json";

@@ -18,6 +18,9 @@ import com.app.feja.mooddiary.http.model.WeatherModel;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.widget.base.TouchListenView;
 
+/**
+ * created by fejasible@163.com
+ */
 public class EditToolBar extends TouchListenView{
 
     public static final int UP = 0;

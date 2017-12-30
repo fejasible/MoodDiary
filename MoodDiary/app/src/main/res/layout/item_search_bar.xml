@@ -8,7 +8,7 @@
     <com.app.feja.mooddiary.widget.SearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x100">
+        android:layout_height="@dimen/y31">
     </com.app.feja.mooddiary.widget.SearchView>
 
 </LinearLayout>

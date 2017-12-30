@@ -7,6 +7,9 @@ import com.app.feja.mooddiary.util.DateTime;
 
 import java.util.List;
 
+/**
+ * created by fejasible@163.com
+ */
 public interface DiaryDao {
 
     DiaryEntity getDiary(DiaryEntity diaryEntity);
@@ -30,4 +33,6 @@ public interface DiaryDao {
     int editDiary(DiaryEntity diaryEntity);
 
     int deleteDiary(DiaryEntity diaryEntity);
+
+    int getAllDiaryCount();
 }

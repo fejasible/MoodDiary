@@ -15,6 +15,9 @@ import com.app.feja.mooddiary.application.TheApplication;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.widget.base.TouchListenView;
 
+/**
+ * created by fejasible@163.com
+ */
 public class ArticleBrowseTitleBar extends TouchListenView{
 
     private Paint paint;

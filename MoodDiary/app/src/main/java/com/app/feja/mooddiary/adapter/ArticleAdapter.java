@@ -17,6 +17,9 @@ import com.app.feja.mooddiary.widget.ArticleView;
 
 import java.util.List;
 
+/**
+ * created by fejasible@163.com
+ */
 public class ArticleAdapter extends RecyclerView.Adapter implements ArticleView.OnArticleViewClickListener {
 
     private List<DiaryEntity> data;

@@ -10,7 +10,7 @@
     <com.app.feja.mooddiary.widget.setting.SettingTitleBar
         android:id="@+id/id_settings_title"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x100"
+        android:layout_height="@dimen/y31"
         android:background="@color/lightSkyBlue"/>
 
     <!--<com.app.feja.mooddiary.widget.setting.LinkRightBar-->
@@ -22,13 +22,17 @@
     <com.app.feja.mooddiary.widget.setting.LinkRightBar
         android:id="@+id/id_settings_export_theme"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x90"
-        android:layout_marginTop="@dimen/x30"/>
+        android:layout_height="@dimen/y28"
+        android:layout_marginTop="@dimen/y9"/>
 
+    <com.app.feja.mooddiary.widget.setting.LinkRightBar
+        android:id="@+id/id_settings_export"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y28"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x90"
+        android:layout_height="@dimen/y28"
         android:background="@color/white">
         <TextView
             android:id="@+id/id_text_view"
@@ -37,7 +41,7 @@
             android:layout_height="wrap_content"
             android:text="@string/disable_password"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/x45"/>
+            android:layout_marginStart="@dimen/y14"/>
 
         <com.suke.widget.SwitchButton
             android:id="@+id/id_switch_button"
@@ -59,6 +63,6 @@
     <com.app.feja.mooddiary.widget.setting.LinkRightBar
         android:id="@+id/id_settings_export_about"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x90"
-        android:layout_marginTop="@dimen/x30"/>
+        android:layout_height="@dimen/y28"
+        android:layout_marginTop="@dimen/y9"/>
 </LinearLayout>

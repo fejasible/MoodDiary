@@ -6,6 +6,9 @@ import com.app.feja.mooddiary.model.entity.TypeEntity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * created by fejasible@163.com
+ */
 public interface TypeDao {
 
     int addType(TypeEntity typeEntity);

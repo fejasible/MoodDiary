@@ -11,6 +11,9 @@ import android.util.AttributeSet;
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.widget.base.TouchListenView;
 
+/**
+ * created by fejasible@163.com
+ */
 public class SettingTitleBar extends TouchListenView{
 
     private Paint whitePaint;

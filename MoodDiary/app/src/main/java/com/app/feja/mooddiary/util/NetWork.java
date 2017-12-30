@@ -10,6 +10,9 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
 
+/**
+ * created by fejasible@163.com
+ */
 public class NetWork {
     /**
      * gps获取ip

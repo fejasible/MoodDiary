@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 
 import com.app.feja.mooddiary.R;
 
+/**
+ * created by fejasible@163.com
+ */
 public class ArticleNoListFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

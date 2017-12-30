@@ -9,6 +9,9 @@ import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.application.TheApplication;
 import com.jaygoo.widget.RangeSeekBar;
 
+/**
+ * created by fejasible@163.com
+ */
 public class MyRangeSeekBar extends RangeSeekBar{
 
     private Paint paint;

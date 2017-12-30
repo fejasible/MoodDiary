@@ -11,6 +11,9 @@ import com.app.feja.mooddiary.ui.view.ArticleView;
 
 import java.util.List;
 
+/**
+ * created by fejasible@163.com
+ */
 public class ArticleBrowsePresenter {
 
     private ArticleView articleView;

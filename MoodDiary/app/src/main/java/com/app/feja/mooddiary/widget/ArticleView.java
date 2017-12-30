@@ -32,6 +32,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
+/**
+ * created by fejasible@163.com
+ */
 public class ArticleView extends BaseView {
 
     private Paint paint;

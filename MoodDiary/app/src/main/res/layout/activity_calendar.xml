@@ -7,17 +7,17 @@
     <com.app.feja.mooddiary.widget.base.TouchListenView
         android:id="@+id/id_calendar_title_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x100"
+        android:layout_height="@dimen/y31"
         android:background="@color/lightSkyBlue"/>
 
     <com.github.sundeepk.compactcalendarview.CompactCalendarView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/compactcalendar_view"
         android:layout_width="fill_parent"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
-        android:layout_height="250dp"
-        app:compactCalendarTargetHeight="250dp"
+        android:paddingRight="@dimen/y6"
+        android:paddingLeft="@dimen/y6"
+        android:layout_height="@dimen/y156"
+        app:compactCalendarTargetHeight="@dimen/y156"
         app:compactCalendarTextSize="12sp"
         app:compactCalendarBackgroundColor="@color/lightSkyBlue_lighter"
         app:compactCalendarTextColor="#fff"

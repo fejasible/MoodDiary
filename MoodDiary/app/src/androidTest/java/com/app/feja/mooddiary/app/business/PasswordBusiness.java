@@ -7,6 +7,9 @@ import com.robotium.solo.Solo;
 
 import org.junit.Assert;
 
+/**
+ * created by fejasible@163.com
+ */
 public class PasswordBusiness extends BaseBusiness{
 
     public enum KEYBOARD{NUMBER_2, NUMBER_3,

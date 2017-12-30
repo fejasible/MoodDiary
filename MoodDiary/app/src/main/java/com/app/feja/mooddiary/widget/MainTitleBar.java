@@ -17,6 +17,9 @@ import com.app.feja.mooddiary.application.TheApplication;
 import com.app.feja.mooddiary.util.DateTime;
 import com.app.feja.mooddiary.widget.base.BaseView;
 
+/**
+ * created by fejasible@163.com
+ */
 public class MainTitleBar extends BaseView {
 
     private String titleString;

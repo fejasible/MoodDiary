@@ -13,6 +13,9 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
+/**
+ * created by fejasible@163.com
+ */
 public class ThemeAdapter extends RecyclerView.Adapter implements View.OnClickListener {
 
     private List<Data> data;

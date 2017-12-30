@@ -8,8 +8,11 @@ import android.support.test.runner.AndroidJUnit4;
 import android.util.DisplayMetrics;
 
 import com.app.feja.mooddiary.app.business.BaseBusiness;
+import com.app.feja.mooddiary.app.business.ExportDiaryBusiness;
 import com.app.feja.mooddiary.app.business.MainBusiness;
+import com.app.feja.mooddiary.app.business.PDFViewBusiness;
 import com.app.feja.mooddiary.app.business.PasswordBusiness;
+import com.app.feja.mooddiary.app.business.SettingBusiness;
 import com.app.feja.mooddiary.ui.activity.BaseActivity;
 import com.robotium.solo.Solo;
 
@@ -18,6 +21,9 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
+/**
+ * created by fejasible@163.com
+ */
 @RunWith(AndroidJUnit4.class)
 public class BaseTestCase {
 
@@ -31,6 +37,9 @@ public class BaseTestCase {
     protected BaseBusiness baseBusiness;
     protected PasswordBusiness passwordBusiness;
     protected MainBusiness mainBusiness;
+    protected SettingBusiness settingBusiness;
+    protected ExportDiaryBusiness exportDiaryBusiness;
+    protected PDFViewBusiness pdfViewBusiness;
 
     public BaseTestCase(){
         this.activityTestRule = new ActivityTestRule<>(BaseActivity.class);
@@ -43,7 +52,9 @@ public class BaseTestCase {
         baseBusiness = new BaseBusiness(solo);
         passwordBusiness = new PasswordBusiness(solo);
         mainBusiness = new MainBusiness(solo);
-
+        settingBusiness = new SettingBusiness(solo);
+        exportDiaryBusiness = new ExportDiaryBusiness(solo);
+        pdfViewBusiness = new PDFViewBusiness(solo);
 
         Activity activity = solo.getCurrentActivity();
         DisplayMetrics wdm = new DisplayMetrics();

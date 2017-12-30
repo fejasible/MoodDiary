@@ -12,6 +12,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * created by fejasible@163.com
+ */
 public class WeatherPresenter {
 
     private WeatherView weatherView;

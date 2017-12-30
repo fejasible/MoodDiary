@@ -6,6 +6,6 @@
     <com.app.feja.mooddiary.widget.CategoryView
         android:id="@+id/id_category_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x60"/>
+        android:layout_height="@dimen/y19"/>
 
 </LinearLayout>

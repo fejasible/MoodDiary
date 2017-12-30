@@ -7,6 +7,9 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
 
+/**
+ * created by fejasible@163.com
+ */
 @SuppressWarnings("serial")
 @DatabaseTable(tableName = "tb_type")
 public class TypeEntity extends BaseEntity implements Serializable{

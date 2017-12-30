@@ -7,6 +7,9 @@ import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.model.entity.TypeEntity;
 
 
+/**
+ * created by fejasible@163.com
+ */
 public class DiaryFactory implements Generator<DiaryEntity>{
 
     private int count;

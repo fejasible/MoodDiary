@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/x40"
-        android:textSize="@dimen/x60"
+        android:layout_margin="@dimen/y13"
+        android:textSize="36sp"
         android:textStyle="italic"
         android:textColor="@color/lightSkyBlue"
         android:text="@string/app_name_ch" />

@@ -17,6 +17,9 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * created by fejasible@163.com
+ */
 public class PasswordActivity extends BaseActivity implements PasswordView.OnHelpClickListener {
 
     public static final String PASSWORD_KEY = "password";
@@ -24,8 +27,8 @@ public class PasswordActivity extends BaseActivity implements PasswordView.OnHel
     public static final String CONFIRM_PASSWORD_BUNDLE_NAME = "confirm_password";
 
     @Override
-    public void onClick() {
-        Toast.makeText(getApplicationContext(), "help", Toast.LENGTH_SHORT).show();
+    public void onHelpClick() {
+        Toast.makeText(getApplicationContext(), "fejasible@163.com", Toast.LENGTH_SHORT).show();
     }
 
     public enum ACTION implements Serializable{

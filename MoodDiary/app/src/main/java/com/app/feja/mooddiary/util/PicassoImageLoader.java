@@ -11,6 +11,9 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
+/**
+ * created by fejasible@163.com
+ */
 public class PicassoImageLoader implements ImageLoader {
 
     @Override

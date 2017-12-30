@@ -8,9 +8,9 @@
 
 
     <EditText
-        android:layout_marginTop="@dimen/x30"
-        android:layout_marginLeft="@dimen/x30"
-        android:layout_marginRight="@dimen/x30"
+        android:layout_marginTop="@dimen/y21"
+        android:layout_marginLeft="@dimen/y21"
+        android:layout_marginRight="@dimen/y21"
         android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
 
     <com.app.feja.mooddiary.widget.ConfirmCancelButton
         android:id="@+id/id_confirm_cancel_button"
-        android:layout_margin="@dimen/x30"
+        android:layout_margin="@dimen/y21"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -11,6 +11,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * created by fejasible@163.com
+ */
 public class TypeDaoImpl implements TypeDao {
     private Dao<TypeEntity, Integer> dao;
 

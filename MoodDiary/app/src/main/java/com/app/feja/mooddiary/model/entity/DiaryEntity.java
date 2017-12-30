@@ -10,6 +10,9 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * created by fejasible@163.com
+ */
 @SuppressWarnings("serial")
 @DatabaseTable(tableName = "tb_diary")
 public class DiaryEntity extends BaseEntity implements Serializable{

@@ -10,6 +10,9 @@ import android.util.AttributeSet;
 
 import com.app.feja.mooddiary.widget.base.BaseView;
 
+/**
+ * created by fejasible@163.com
+ */
 public class ThemeSelectBar extends BaseView{
 
     private Paint textPaint;
