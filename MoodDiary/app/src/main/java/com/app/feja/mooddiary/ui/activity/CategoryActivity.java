@@ -61,51 +61,26 @@ public class CategoryActivity extends BaseActivity implements CategoryView,
         ButterKnife.bind(this);
         articleListPresenter = new ArticleListPresenter(this);
 
-//        category_list_container = (LinearLayout) findViewById(R.id.id_container_category);
         categoryEditLayout = (LinearLayout) LayoutInflater.from(this)
                 .inflate(R.layout.item_category_edit_input, null);
         confirmCancelButton = (ConfirmCancelButton) categoryEditLayout.findViewById(R.id.id_confirm_cancel_button);
         editText = (EditText) categoryEditLayout.findViewById(R.id.editText);
-//        categoryParams = category_list_container.findViewById(R.id.id_category_view_sample).getLayoutParams();
-//        category_list_container.removeAllViews();
 
         categoryAdapter = new CategoryAdapter(articleListPresenter, this);
         categoryAdapter.setDiaryEntities(new ArrayList<DiaryEntity>());
         categoryAdapter.setTypeEntities(new ArrayList<TypeEntity>());
 
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-//        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
-//        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-
         ChipsLayoutManager layoutManager = ChipsLayoutManager.newBuilder(getApplicationContext())
-                //set vertical gravity for all items in a row. Default = Gravity.CENTER_VERTICAL
                 .setChildGravity(Gravity.START)
-                //whether RecyclerView can scroll. TRUE by default
                 .setScrollingEnabled(true)
-                //set maximum views count in a particular row
-//                .setMaxViewsInRow(3)
-                //set gravity resolver where you can determine gravity for item in position.
-                //This method have priority over previous one
                 .setGravityResolver(new IChildGravityResolver() {
                     @Override
                     public int getItemGravity(int position) {
                         return Gravity.CENTER;
                     }
                 })
-                //you are able to break row due to your conditions. Row breaker should return true for that views
-//                .setRowBreaker(new IRowBreaker() {
-//                    @Override
-//                    public boolean isItemBreakRow(@IntRange(from = 0) int position) {
-//                        return position == 6 || position == 11 || position == 2;
-//                    }
-//                })
-                //a layoutOrientation of layout manager, could be VERTICAL OR HORIZONTAL. HORIZONTAL by default
                 .setOrientation(ChipsLayoutManager.HORIZONTAL)
-                // row strategy for views in completed row, could be STRATEGY_DEFAULT, STRATEGY_FILL_VIEW,
-                //STRATEGY_FILL_SPACE or STRATEGY_CENTER
                 .setRowStrategy(ChipsLayoutManager.STRATEGY_DEFAULT)
-                // whether strategy is applied to last row. FALSE by default
                 .withLastRow(true)
                 .build();
         recyclerView.setLayoutManager(layoutManager);
