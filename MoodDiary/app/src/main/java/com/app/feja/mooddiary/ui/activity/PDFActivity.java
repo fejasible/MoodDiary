@@ -1,10 +1,7 @@
 package com.app.feja.mooddiary.ui.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
 import com.github.barteksc.pdfviewer.PDFView;
@@ -28,11 +25,11 @@ public class PDFActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        if(intent != null){
+        if (intent != null) {
             Bundle bundle = intent.getExtras();
-            if(bundle != null){
+            if (bundle != null) {
                 String path = bundle.getString(ExportDiaryActivity.BUNDLE_NAME_FILE_PATH);
-                if(path != null){
+                if (path != null) {
                     File file = new File(path);
                     pdfView.fromFile(file).load();
                 }

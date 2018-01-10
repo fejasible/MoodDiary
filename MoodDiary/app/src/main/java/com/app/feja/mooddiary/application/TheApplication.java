@@ -76,9 +76,6 @@ public class TheApplication extends Application implements Application.ActivityL
                     ContextCompat.getColor(getApplicationContext(), R.color.theme_color_main),
                     getString(R.string.theme_color_name_main));
         }
-
-        PDFManager pdfManager = new PDFManager(context);
-        boolean result = pdfManager.createDefaultFolder();
     }
 
     /**

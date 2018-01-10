@@ -75,11 +75,12 @@
     <string name="please_choose_date">请选择日期</string>
     <string name="export_date_overflow">所选日期超出范围</string>
     <string name="export_invalid">所选日期区间没有记录</string>
-    <string name="export_history">历史</string>
+    <string name="export_history">查看</string>
     <string name="export_success">导出PDF成功</string>
     <string name="export_fail">导出PDF失败</string>
     <string name="not_pdf">所选文件非pdf格式</string>
     <string name="lost_font">字体文件缺失</string>
+    <string name="choose_export_path">选择导出目录</string>
 
 
 

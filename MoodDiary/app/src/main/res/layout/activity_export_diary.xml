@@ -49,6 +49,24 @@
         android:padding="@dimen/y5"/>
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_export_path"
+        android:textSize="16sp"
+        android:textColor="@color/darkGray"
+        android:layout_margin="@dimen/y4"/>
+
+    <TextView
+        android:id="@+id/id_text_view_export_path"
+        android:layout_margin="@dimen/y4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:background="@color/white"
+        android:padding="@dimen/y5"/>
+
+    <TextView
         android:id="@+id/id_export_execute"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

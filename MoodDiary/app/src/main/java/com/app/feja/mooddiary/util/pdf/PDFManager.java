@@ -1,40 +1,34 @@
 package com.app.feja.mooddiary.util.pdf;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.os.Environment;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.model.entity.DiaryParser;
 import com.app.feja.mooddiary.util.DateTime;
+import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
-import com.itextpdf.text.Header;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.ColumnText;
-import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfPageEventHelper;
-import com.itextpdf.text.pdf.PdfTemplate;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.ArrayDeque;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * created by fejasible@163.com
@@ -43,6 +37,7 @@ import java.util.List;
 public class PDFManager {
 
     private Context context;
+
     private File filePath;
 
     public PDFManager(Context context) {
@@ -54,17 +49,18 @@ public class PDFManager {
         return filePath;
     }
 
-    public boolean createDefaultFolder() {
+    public void setFilePath(File filePath) {
+        this.filePath = filePath;
+    }
+
+
+    public boolean createPDF(String fileName, List<DiaryEntity> diaryEntities) {
         if (!isSdCardExist()) {
             Toast.makeText(context, "未找到SD卡", Toast.LENGTH_SHORT).show();
             return false;
-        } else {
-            return filePath.mkdir();
         }
-    }
 
-    public boolean createPDF(String fileName, List<DiaryEntity> diaryEntities) {
-        if(diaryEntities.size() == 0){
+        if (diaryEntities.size() == 0) {
             return false;
         }
         Font font = getChineseFont();
@@ -95,7 +91,7 @@ public class PDFManager {
     }
 
     private Document createDocument() {
-        Document document = new Document(PageSize.A4, 20, 20, 20, 40);
+        Document document = new Document(PageSize.A4, 20, 20, 0, 30);
         String name = context.getString(R.string.app_name_ch);
         document.addTitle(name);
         document.addAuthor(name);
@@ -110,9 +106,6 @@ public class PDFManager {
 
         document.newPage();
 
-        LineSeparator lineSeparator = new LineSeparator(1, 100, null, Element.ALIGN_CENTER, 0);
-        document.add(lineSeparator);
-
         DateTime dateTime = new DateTime(diaryEntity.getCreateTime());
         Paragraph title = new Paragraph(dateTime.toString(DateTime.Format.DATETIME), font);
         title.setAlignment(Element.ALIGN_CENTER);
@@ -120,18 +113,22 @@ public class PDFManager {
 
         Paragraph subtitle = new Paragraph(diaryEntity.getType().getType(), font);
         subtitle.setAlignment(Element.ALIGN_CENTER);
+        LineSeparator lineSeparator = new LineSeparator(1, 100, null, Element.ALIGN_CENTER, -4);
+        subtitle.add(lineSeparator);
         document.add(subtitle);
 
-        DiaryParser.DiaryIterator diaryIterator = new DiaryParser(diaryEntity).getIterator();
-        while (diaryIterator.hasNext()){
-            DiaryParser.Element element = diaryIterator.next();
-            if(element.getClazz().equals(String.class)){
-                Chunk chunk = new Chunk((String)element.getObject(), font);
+        DiaryParser.ContentIterator contentIterator = new DiaryParser(diaryEntity).getIterator();
+        while (contentIterator.hasNext()) {
+            DiaryParser.Element element = contentIterator.next();
+            if (element.getClazz().equals(String.class)) {
+                String content = (String) element.getObject();
+                Chunk chunk = createChunk(content, font);
                 document.add(chunk);
-            }else if(element.getClazz().equals(File.class)){
-                Image image = Image.getInstance(((File)element.getObject()).getPath());
+            }
+            else if (element.getClazz().equals(File.class)) {
+                Image image = createImage((File) element.getObject());
                 float newWidth = document.getPageSize().getWidth() - document.leftMargin() - document.rightMargin();
-                if(image.getWidth() > newWidth){
+                if (image.getWidth() > newWidth) {
                     float newHeight = image.getHeight() * newWidth / image.getWidth();
                     image.scaleAbsolute(newWidth, newHeight);
                 }
@@ -139,6 +136,14 @@ public class PDFManager {
             }
         }
         return document;
+    }
+
+    private Chunk createChunk(String content, Font font){
+        return new Chunk(content, font);
+    }
+
+    private Image createImage(File imagePath) throws IOException, BadElementException {
+        return Image.getInstance(imagePath.getPath());
     }
 
     public static boolean isSdCardExist() {
@@ -155,10 +160,7 @@ public class PDFManager {
             fontChinese = new Font(bf, 24, Font.NORMAL);
         } catch (DocumentException | IOException e) {
             e.printStackTrace();
-            Log.e("PDFManager", e.toString());
         }
         return fontChinese;
     }
-
-
 }

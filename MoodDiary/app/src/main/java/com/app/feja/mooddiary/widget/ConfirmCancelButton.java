@@ -37,7 +37,6 @@ public class ConfirmCancelButton extends TouchListenView{
         }
     };
 
-
     public ConfirmCancelButton(Context context, int touchZoneNum, @Nullable int[] rectPercents) {
         super(context, touchZoneNum, rectPercents);
         this.init();

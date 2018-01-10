@@ -298,7 +298,7 @@ public class ArticleEditFragment extends Fragment implements ArticleEditView,
     @Override
     public void onSaveClick(DiaryEntity diaryEntity) {
         diaryEntity.setType(this.diaryEntity.getType());
-        diaryEntity.setContent(editText.getText().toString());
+        diaryEntity.setContent(editText.getText().toString() + "\n");
         diaryEntity.setTextSize((int)rangeSeekBar.getCurrentRange()[0]);
         DateTime selectDateTime = new DateTime(
                 Integer.valueOf(dateTimePicker.getSelectedYear()),

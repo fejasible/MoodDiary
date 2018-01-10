@@ -1,7 +1,5 @@
 package com.app.feja.mooddiary.model.entity;
 
-import android.util.Log;
-
 import com.app.feja.mooddiary.constant.CONSTANT;
 
 import java.io.File;
@@ -22,18 +20,21 @@ public class DiaryParser {
     }
 
 
-    public DiaryIterator getIterator(){
-        return new DiaryIterator();
+    public ContentIterator getIterator(){
+        return new ContentIterator();
     }
 
-    public class DiaryIterator implements Iterator<Element>{
+    /**
+     * 日记内容迭代器，迭代内容为文字或图片
+     */
+    public class ContentIterator implements Iterator<Element>{
 
         String s;
         String[] split;
         Matcher matcher;
         int i;
 
-        DiaryIterator() {
+        ContentIterator() {
             s = diaryEntity.getContent() + "";
             split = s.split(CONSTANT.EDITABLE_IMAGE_TAG_START + ".*?" + CONSTANT.EDITABLE_IMAGE_TAG_END);
             Pattern pattern = Pattern.compile(CONSTANT.EDITABLE_IMAGE_TAG_START + "(.*?)" +
@@ -48,7 +49,7 @@ public class DiaryParser {
 
         @Override
         public Element next() {
-            if(s.startsWith(split[i])){
+            if(split.length > 0 && s.startsWith(split[i])){
                 s = s.substring(split[i].length());
                 return new Element(split[i++], String.class);
             }else{
@@ -70,7 +71,7 @@ public class DiaryParser {
         private Object object;
         private Class clazz;
 
-        public Element(Object object, Class clazz) {
+        Element(Object object, Class clazz) {
             this.object = object;
             this.clazz = clazz;
         }

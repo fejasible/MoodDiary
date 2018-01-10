@@ -1,33 +1,26 @@
 package com.app.feja.mooddiary.ui.activity;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
-import android.text.Layout;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.adapter.PopupWindowAdapter;
 import com.app.feja.mooddiary.application.TheApplication;
-import com.app.feja.mooddiary.factory.DiaryFactory;
 import com.app.feja.mooddiary.factory.TypeFactory;
 import com.app.feja.mooddiary.http.model.WeatherModel;
-import com.app.feja.mooddiary.model.dao.DiaryDao;
-import com.app.feja.mooddiary.model.dao.impl.DiaryDaoImpl;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.model.entity.TypeEntity;
-import com.app.feja.mooddiary.presenter.ArticleEditPresenter;
 import com.app.feja.mooddiary.presenter.ArticleListPresenter;
+import com.app.feja.mooddiary.ui.fragment.ArticleList2Fragment;
 import com.app.feja.mooddiary.ui.fragment.ArticleListFragment;
 import com.app.feja.mooddiary.ui.fragment.ArticleNoListFragment;
 import com.app.feja.mooddiary.ui.view.ArticleListView;
@@ -60,18 +53,21 @@ public class MainActivity extends BaseActivity implements TabView.OnTabClickList
         SearchView.OnAnimationListener, WeatherView, PopupWindowAdapter.OnPopupWindowItemClickListener {
 
     private ArticleListFragment articleListFragment;
+    private ArticleList2Fragment articleList2Fragment;
+    private int articleListStyle;
     private ArticleNoListFragment articleNoListFragment;
     private ArticleListPresenter presenter;
     private PopupWindowAdapter popupWindowAdapter;
     private CustomPopWindow customPopWindow;
-    private CustomPopWindow countWindow;
+//    private CustomPopWindow countWindow;
     private LinearLayout popupLayout;
     private CompactCalendarView compactCalendarView;
     private Date selectDate;
     private SearchView searchView;
-    private LinearLayout statisticsLayout;
-    private TextView statisticsDate;
-    private TextView statisticsDiary;
+    private List<DiaryEntity> diaryEntities;
+//    private LinearLayout statisticsLayout;
+//    private TextView statisticsDate;
+//    private TextView statisticsDiary;
 
     @BindView(R.id.tab_view)
     TabView tabView;
@@ -90,7 +86,12 @@ public class MainActivity extends BaseActivity implements TabView.OnTabClickList
         if (articleListFragment == null) {
             articleListFragment = new ArticleListFragment();
         }
-        getFragmentManager().beginTransaction().replace(R.id.fragment_container, articleListFragment).commit();
+        if (articleList2Fragment == null){
+            articleList2Fragment = new ArticleList2Fragment();
+        }
+
+        articleListStyle = 1;
+        setArticleListStyle();
 
         presenter = new ArticleListPresenter(this);
 
@@ -99,10 +100,10 @@ public class MainActivity extends BaseActivity implements TabView.OnTabClickList
 
         if (isFirstStart()) {
             TypeFactory typeFactory = new TypeFactory();
-            DiaryFactory diaryFactory = new DiaryFactory();
+//            DiaryFactory diaryFactory = new DiaryFactory();
             presenter.editType(typeFactory.nextStandard().getType());
 
-            ArticleEditPresenter articleEditPresenter = new ArticleEditPresenter(null);
+//            ArticleEditPresenter articleEditPresenter = new ArticleEditPresenter(null);
 //            for (int i = 0; i < 50; i++) {
 //                TypeEntity typeEntity = typeFactory.next();
 //                presenter.editType(typeEntity.getType());
@@ -119,27 +120,24 @@ public class MainActivity extends BaseActivity implements TabView.OnTabClickList
      */
     @Override
     public void onClick(int item) {
-        if (articleListFragment == null) {
-            articleListFragment = new ArticleListFragment();
-        }
-
         Intent intent;
         switch (item) {
             case 0:
-                if (countWindow == null) {
-                    statisticsLayout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.item_statistics, null, false);
-                    statisticsDate = (TextView) statisticsLayout.findViewById(R.id.id_day_count_text_view);
-                    statisticsDiary = (TextView) statisticsLayout.findViewById(R.id.id_mood_count_text_view);
-                    statisticsLayout.measure(0, 0);
-                    countWindow = new CustomPopWindow.PopupWindowBuilder(this)
-                            .setView(statisticsLayout)
-                            .size(TheApplication.getScreenWidth() / 2, statisticsLayout.getMeasuredHeight())
-                            .create();
-                }
-                statisticsLayout.setBackgroundColor(TheApplication.getThemeData().getColor());
-                statisticsDiary.setText((presenter.getAllArticleCount() + ""));
-                statisticsDate.setText((presenter.getAllArticleDateCount() + ""));
-                countWindow.showAsDropDown(tabView, -tabView.getHeight() - countWindow.getHeight(), 0);
+                switchArticleListStyle();
+//                if (countWindow == null) {
+//                    statisticsLayout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.item_statistics, null, false);
+//                    statisticsDate = (TextView) statisticsLayout.findViewById(R.id.id_day_count_text_view);
+//                    statisticsDiary = (TextView) statisticsLayout.findViewById(R.id.id_mood_count_text_view);
+//                    statisticsLayout.measure(0, 0);
+//                    countWindow = new CustomPopWindow.PopupWindowBuilder(this)
+//                            .setView(statisticsLayout)
+//                            .size(TheApplication.getScreenWidth() / 2, statisticsLayout.getMeasuredHeight())
+//                            .create();
+//                }
+//                statisticsLayout.setBackgroundColor(TheApplication.getThemeData().getColor());
+//                statisticsDiary.setText((presenter.getAllArticleCount() + ""));
+//                statisticsDate.setText((presenter.getAllArticleDateCount() + ""));
+//                countWindow.showAsDropDown(tabView, -tabView.getHeight() - countWindow.getHeight(), 0);
                 break;
             case 1:
                 intent = new Intent(getApplicationContext(), ArticleEditActivity.class);
@@ -307,21 +305,24 @@ public class MainActivity extends BaseActivity implements TabView.OnTabClickList
         }
     }
 
+    /**
+     * 加载日记
+     * @param diaryEntities 加载的日记
+     */
     @Override
     public void onLoadArticles(List<DiaryEntity> diaryEntities) {
+        this.diaryEntities = diaryEntities;
+        articleListFragment.onLoadArticles(diaryEntities);
+        articleList2Fragment.onLoadArticles(diaryEntities);
+
         if (diaryEntities == null || diaryEntities.size() == 0) {
-            if (articleNoListFragment == null) {
+            if(articleNoListFragment == null){
                 articleNoListFragment = new ArticleNoListFragment();
             }
             getFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, articleNoListFragment).commit();
         } else {
-            if (articleListFragment == null) {
-                articleListFragment = new ArticleListFragment();
-            }
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, articleListFragment).commit();
-            articleListFragment.onLoadArticles(diaryEntities);
+            setArticleListStyle();
         }
     }
 
@@ -423,5 +424,32 @@ public class MainActivity extends BaseActivity implements TabView.OnTabClickList
         customPopWindow.dissmiss();
     }
 
+    private void switchArticleListStyle(){
+        switch (articleListStyle) {
+            case 1:
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, articleList2Fragment).commit();
+                articleListStyle = 2;
+                break;
+            case 2:
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, articleListFragment).commit();
+                articleListStyle = 1;
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void setArticleListStyle(){
+        switch (articleListStyle){
+            case 1:
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, articleListFragment).commit();
+                break;
+            case 2:
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, articleList2Fragment).commit();
+                break;
+            default:
+                break;
+        }
+    }
 
 }

@@ -100,7 +100,7 @@ public class ArticleListFragment extends Fragment implements ArticleListView,
     @Override
     public void onLoadArticles(List<DiaryEntity> diaryEntities) {
         if(diaryEntities == null){
-            return ;
+            diaryEntities = new ArrayList<>();
         }
         this.diaryEntities = diaryEntities;
         articleAdapter.setData(diaryEntities);

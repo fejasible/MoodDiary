@@ -15,6 +15,7 @@ import com.app.feja.mooddiary.util.DateTime;
 import com.app.feja.mooddiary.util.pdf.PDFManager;
 import com.app.feja.mooddiary.widget.setting.ExportTitleBar;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,9 +45,13 @@ public class ExportDiaryActivity extends BaseActivity implements ExportTitleBar.
     @BindView(R.id.id_export_execute)
     TextView executeTextView;
 
+    @BindView(R.id.id_text_view_export_path)
+    TextView exportPath;
+
     private DatePicker dateStartPicker;
     private DatePicker dateEndPicker;
     private FilePicker filePicker;
+    private FilePicker chooseFilePicker;
 
     private DiaryDao diaryDao;
     private PDFManager pdfManager;
@@ -67,6 +72,7 @@ public class ExportDiaryActivity extends BaseActivity implements ExportTitleBar.
         endDateTextView.setText(new DateTime().toString(DateTime.Format.DATE));
 
         exportTitleBar.setOnTitleBarClickListener(this);
+
         startDateTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,15 +85,44 @@ public class ExportDiaryActivity extends BaseActivity implements ExportTitleBar.
                 dateEndPicker.show();
             }
         });
+
+        exportPath.setText(pdfManager.getFilePath().getPath());
+        exportPath.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseFilePicker.show();
+            }
+        });
+
         this.refreshTheme();
     }
 
+    /**
+     * 初始化文件选择器
+     */
     private void initFilePicker() {
         filePicker = new FilePicker(this, FilePicker.FILE);
         filePicker.setRootPath(pdfManager.getFilePath().getPath());
         filePicker.setOnFilePickListener(this);
+
+        chooseFilePicker = new FilePicker(this, FilePicker.DIRECTORY);
+        chooseFilePicker.setRootPath(pdfManager.getFilePath().getPath());
+        chooseFilePicker.setOnFilePickListener(new FilePicker.OnFilePickListener() {
+            /**
+             * 选择目录响应
+             * @param currentPath 当前选择的目录
+             */
+            @Override
+            public void onFilePicked(String currentPath) {
+                exportPath.setText(currentPath);
+                pdfManager.setFilePath(new File(currentPath));
+            }
+        });
     }
 
+    /**
+     * 初始化日期选择器
+     */
     private void initDatePicker() {
         DateTime dateTime = new DateTime();
 
@@ -125,56 +160,55 @@ public class ExportDiaryActivity extends BaseActivity implements ExportTitleBar.
 
     }
 
+    /**
+     * 返回按钮响应
+     */
     @Override
     public void onBackClick() {
         onBackPressed();
     }
 
+    /**
+     * 查看历史记录响应
+     */
     @Override
     public void onHistoryClick() {
         filePicker.show();
     }
 
-    private List<DiaryEntity> getValidDiaries() {
+    /**
+     * 获取指定时间范围的有效日记，被删除过的不算在内
+     *
+     * @param startTime 开始时间
+     * @param endTime   结束时间
+     * @return 返回指定时间方位的有效日记
+     */
+    private List<DiaryEntity> getValidDiaries(DateTime startTime, DateTime endTime) {
         List<DiaryEntity> validDiaryEntities = new ArrayList<>();
-        DateTime startTime = new DateTime(startDateTextView.getText().toString());
-        DateTime endTime = new DateTime(endDateTextView.getText().toString());
         List<DiaryEntity> diaryEntities = diaryDao.getAllDiary();
         for (DiaryEntity diaryEntity : diaryEntities) {
-            if (diaryEntity.getCreateTime().after(startTime.addDay(-1).toDate())
-                    && diaryEntity.getCreateTime().before(endTime.addDay(1).toDate())) {
+            if (diaryEntity.getCreateTime().getTime() >= startTime.getTime()
+                    && diaryEntity.getCreateTime().getTime() < endTime.addDay(1).getTime()) {
                 validDiaryEntities.add(diaryEntity);
             }
         }
         return validDiaryEntities;
     }
 
+    /**
+     * 检查所选日期是否有效
+     *
+     * @return 返回检查结果
+     */
     private boolean checkDate() {
-
-        DateTime startTime = new DateTime(startDateTextView.getText().toString());
-        DateTime endTime = new DateTime(endDateTextView.getText().toString());
-
-        boolean isValid = endTime.addDay(1).after(startTime);
-
-        if (isValid) {
-            List<DiaryEntity> diaryEntities = diaryDao.getAllDiary();
-            if(diaryEntities.size() == 0){
-                return false;
-            }
-            for (DiaryEntity diaryEntity : diaryEntities) {
-                if (!diaryEntity.getCreateTime().after(startTime.addDay(-1).toDate())
-                        || !diaryEntity.getCreateTime().before(endTime.addDay(1).toDate())) {
-                    isValid = false;
-                    break;
-                }
-            }
-        }
-
-        return isValid;
+        DateTime startTime = new DateTime(startDateTextView.getText().toString()).toZeroTime();
+        DateTime endTime = new DateTime(endDateTextView.getText().toString()).toZeroTime();
+        return getValidDiaries(startTime, endTime).size() > 0;
     }
 
     /**
-     * 导入日记操作
+     * 导出日记操作
+     *
      * @param v 被点击的控件
      */
     @OnClick(R.id.id_export_execute)
@@ -184,7 +218,11 @@ public class ExportDiaryActivity extends BaseActivity implements ExportTitleBar.
             Toast.makeText(this, getString(R.string.export_invalid), Toast.LENGTH_SHORT).show();
         } else {
             String fileName = startDateTextView.getText().toString() + "_" + endDateTextView.getText().toString() + ".pdf";
-            boolean success = pdfManager.createPDF(fileName, getValidDiaries());
+            List<DiaryEntity> entities = getValidDiaries(
+                    new DateTime(startDateTextView.getText().toString()).toZeroTime(),
+                    new DateTime(endDateTextView.getText().toString()).toZeroTime()
+            );
+            boolean success = pdfManager.createPDF(fileName, entities);
             if (!success) {
                 Toast.makeText(this, getString(R.string.export_fail), Toast.LENGTH_SHORT).show();
             } else {
@@ -193,17 +231,26 @@ public class ExportDiaryActivity extends BaseActivity implements ExportTitleBar.
         }
     }
 
+    /**
+     * 更新此activity主题
+     */
     private void refreshTheme() {
         int color = TheApplication.getThemeData().getColor();
         exportTitleBar.setBackgroundColor(color);
         setDatePickerColor(dateStartPicker, color);
         setDatePickerColor(dateEndPicker, color);
         setFilePickerColor(filePicker, color);
+        setFilePickerColor(chooseFilePicker, color);
     }
 
+    /**
+     * 历史导出pdf被选择时的响应
+     *
+     * @param currentPath 被选择pdf的路径
+     */
     @Override
     public void onFilePicked(String currentPath) {
-        if(!currentPath.endsWith(".pdf")){
+        if (!currentPath.endsWith(".pdf")) {
             Toast.makeText(this, getString(R.string.not_pdf), Toast.LENGTH_SHORT).show();
             return;
         }
