@@ -23,4 +23,11 @@ public class DiaryFactory implements Generator<DiaryEntity>{
         return new DiaryEntity(typeEntity.getType() + ": 内容" + count++, typeEntity);
     }
 
+    public DiaryEntity createDefaultDairy(){
+        DiaryEntity diaryEntity = new DiaryEntity();
+        diaryEntity.setMood(DiaryEntity.MIRTHFUL);
+        diaryEntity.setContent(TheApplication.getContext().getString(R.string.welcome_use));
+        return diaryEntity;
+    }
+
 }

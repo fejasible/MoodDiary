@@ -62,7 +62,7 @@ public class CategoryActivity extends BaseActivity implements CategoryView,
         articleListPresenter = new ArticleListPresenter(this);
 
         categoryEditLayout = (LinearLayout) LayoutInflater.from(this)
-                .inflate(R.layout.item_category_edit_input, null);
+                .inflate(R.layout.item_category_edit_input, null, false);
         confirmCancelButton = (ConfirmCancelButton) categoryEditLayout.findViewById(R.id.id_confirm_cancel_button);
         editText = (EditText) categoryEditLayout.findViewById(R.id.editText);
 

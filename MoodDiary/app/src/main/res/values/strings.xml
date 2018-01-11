@@ -2,6 +2,7 @@
     <string name="app_name">心情日记</string>
     <string name="app_name_ch">心情日记</string>
     <string name="app_name_en">Mood diary</string>
+    <string name="welcome_use">欢迎使用心情日记！</string>
 
     <string name="enter_password">输入口令</string>
     <string name="enter_old_password">原口令</string>

@@ -199,7 +199,9 @@ public class PasswordView extends BaseView {
                                 password += i+1;
                             }
                             if(password.length() == circleNum){
-                                this.enterFinishListener.enterFinish(password);// 密码录入结束
+                                if(this.enterFinishListener != null){
+                                    this.enterFinishListener.enterFinish(password);// 密码录入结束
+                                }
                             }
                         }
                         break;

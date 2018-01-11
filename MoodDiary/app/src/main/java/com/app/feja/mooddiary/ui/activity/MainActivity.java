@@ -15,10 +15,12 @@ import android.widget.LinearLayout;
 import com.app.feja.mooddiary.R;
 import com.app.feja.mooddiary.adapter.PopupWindowAdapter;
 import com.app.feja.mooddiary.application.TheApplication;
+import com.app.feja.mooddiary.factory.DiaryFactory;
 import com.app.feja.mooddiary.factory.TypeFactory;
 import com.app.feja.mooddiary.http.model.WeatherModel;
 import com.app.feja.mooddiary.model.entity.DiaryEntity;
 import com.app.feja.mooddiary.model.entity.TypeEntity;
+import com.app.feja.mooddiary.presenter.ArticleEditPresenter;
 import com.app.feja.mooddiary.presenter.ArticleListPresenter;
 import com.app.feja.mooddiary.ui.fragment.ArticleList2Fragment;
 import com.app.feja.mooddiary.ui.fragment.ArticleListFragment;
@@ -100,10 +102,11 @@ public class MainActivity extends BaseActivity implements TabView.OnTabClickList
 
         if (isFirstStart()) {
             TypeFactory typeFactory = new TypeFactory();
-//            DiaryFactory diaryFactory = new DiaryFactory();
+            DiaryFactory diaryFactory = new DiaryFactory();
             presenter.editType(typeFactory.nextStandard().getType());
 
-//            ArticleEditPresenter articleEditPresenter = new ArticleEditPresenter(null);
+            ArticleEditPresenter articleEditPresenter = new ArticleEditPresenter(null);
+            articleEditPresenter.editArticle(diaryFactory.createDefaultDairy());
 //            for (int i = 0; i < 50; i++) {
 //                TypeEntity typeEntity = typeFactory.next();
 //                presenter.editType(typeEntity.getType());

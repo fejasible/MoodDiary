@@ -151,7 +151,7 @@ public class ArticleListFragment extends Fragment implements ArticleListView,
         if(handler == null){
             handler = new Handler();
         }
-        handler.postDelayed(this, random.nextInt(1000)+500);
+        handler.postDelayed(this, random.nextInt(1000)+300);
     }
 
     @Override

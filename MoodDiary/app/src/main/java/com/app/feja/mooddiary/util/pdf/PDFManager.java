@@ -1,6 +1,7 @@
 package com.app.feja.mooddiary.util.pdf;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Environment;
 import android.widget.Toast;
 
@@ -144,6 +145,10 @@ public class PDFManager {
 
     private Image createImage(File imagePath) throws IOException, BadElementException {
         return Image.getInstance(imagePath.getPath());
+    }
+
+    private Image createImage(Bitmap bitmap) throws IOException, BadElementException {
+        return Image.getInstance(bitmap.getNinePatchChunk());
     }
 
     public static boolean isSdCardExist() {
